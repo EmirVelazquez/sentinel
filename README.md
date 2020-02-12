@@ -1,4 +1,4 @@
-# (Untitled) Project 3
+# Sentinel
 
 Collaboration Project
 
