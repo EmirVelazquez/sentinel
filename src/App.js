@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { Text, View, StyleSheet } from "react-native";
+import Constants from "expo-constants";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// You can import from local files
+import AssetExample from "./components/AssetExample";
+
+// or any pure javascript modules available in npm
+import { Card } from "react-native-paper";
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Card>
+          <AssetExample />
+        </Card>
+      </View>
+    );
+  }
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: "#ecf0f1",
+    padding: 8
+  }
+});
