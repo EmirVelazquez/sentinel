@@ -1,23 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
-import { Card } from "react-native-paper";
-
-import Welcome from "./components/entry";
-import WelcomeImage from "./components/picture";
+import { StyleSheet, Text, View } from "react-native";
+import Routes from "./Routes";
+import { render } from "react-dom";
 
 export default function App() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <Card style={styles.card}>
-          <Welcome />
-        </Card>
-        <Card style={styles.card}>
-          <WelcomeImage />
-        </Card>
-      </ScrollView>
-    </SafeAreaView>
-  );
+  return <Routes />;
 }
 
 const styles = StyleSheet.create({
@@ -26,8 +13,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
-  },
-  card: {
-    bottom: 0
   }
 });
