@@ -12,3 +12,7 @@ web-report/
 
 # macOS
 .DS_Store
+
+#misc
+package-lock.json
+
