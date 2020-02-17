@@ -1,4 +1,4 @@
-node_modules/**/*
+node_modules
 .expo/*
 npm-debug.*
 *.jks
@@ -13,6 +13,5 @@ web-report/
 # macOS
 .DS_Store
 
-#misc
+# misc
 package-lock.json
-
