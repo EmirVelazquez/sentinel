@@ -5,67 +5,52 @@ import Styles from "../css/styles";
 import Separator from "./Separator";
 import { Actions } from "react-native-router-flux";
 
-class MasterCreate extends Component {
+class SlaveCreate extends Component {
   state = {
-    fName: "",
-    lName: ""
-  };
-
-  goToChildUser = () => {
-    Actions.ChildUser();
+    childFName: "",
+    childLName: "",
+    childEmail: ""
   };
 
   //Individual onChange handlers for each part of state
   //=========================================================
-  handleFNameChange = event => {
-    console.log("First Name Change: " + event);
+  handleChildFNameChange = event => {
+    console.log("Child's First Name Change: " + event);
     this.setState({
-      fName: event
+      childFName: event
     });
   };
-
-  handleLNameChange = event => {
-    console.log("Last Name Change: " + event);
+  handleChildLNameChange = event => {
+    console.log("Child's Last Name Change: " + event);
     this.setState({
-      LName: event
+      childLName: event
     });
   };
-  handleSwitchChange = event => {
-    console.log("Switch was changed to: " + event);
+  handleChildEmail = event => {
+    console.log("Child's Email Change: " + event);
     this.setState({
-      addUsersNow: event
+      childEmail: event
     });
   };
   //=========================================================
 
-  // State can be passed to the backend -Justin
   handleFormSubmit = event => {
     event.preventDefault();
     console.log(this.state);
     this.setState({
-      fName: this.state.fName,
-      lName: this.state.lName
+      childFName: this.state.childFName,
+      childLName: this.state.childLName,
+      childEmail: this.state.childEmail
     });
   };
-
-  handleFormSubmitToNewUser = event => {
-    event.preventDefault();
-    console.log(this.state);
-    this.setState({
-      fName: this.state.fName,
-      lName: this.state.lName
-    });
-    this.goToChildUser();
-  };
-
   render() {
     return (
       <View style={Styles.container}>
-        <Text style={Styles.header}>Let's get to know each other</Text>
+        <Text style={Styles.header}>Children</Text>
         <View style={Styles.innerContainer}>
           <TextInput
-            name="fName"
-            placeholder="First Name"
+            name="ChildFName"
+            placeholder="Child's First Name"
             style={{
               height: 40,
               backgroundColor: "black",
@@ -76,15 +61,32 @@ class MasterCreate extends Component {
               borderWidth: 2,
               color: "white"
             }}
-            onChangeText={this.handleFNameChange}
-            fName={this.state.fName}
+            onChangeText={this.handleChildFNameChange}
+            childFName={this.state.childFName}
+          />
+          <Separator />
+          <TextInput
+            name="ChildLName"
+            placeholder="Child's Last Name"
+            style={{
+              height: 40,
+              backgroundColor: "black",
+              borderColor: "gray",
+              borderTopWidth: 0,
+              borderLeftWidth: 0,
+              borderRightWidth: 0,
+              borderWidth: 2,
+              color: "white"
+            }}
+            onChangeText={this.handleChildLNameChange}
+            childFName={this.state.childLName}
           />
 
           <Separator />
 
           <TextInput
-            name="lName"
-            placeholder="Last Name"
+            name="ChildEmail"
+            placeholder="Child's Email"
             style={{
               height: 40,
               backgroundColor: "black",
@@ -95,15 +97,8 @@ class MasterCreate extends Component {
               borderWidth: 2,
               color: "white"
             }}
-            onChangeText={this.handleLNameChange}
-            lName={this.state.lName}
-          />
-
-          <Separator />
-
-          <Button
-            title="Add Family Members"
-            onPress={this.handleFormSubmitToNewUser}
+            onChangeText={this.handleChildEmail}
+            childFName={this.state.childEmail}
           />
 
           <Separator />
@@ -114,5 +109,4 @@ class MasterCreate extends Component {
     );
   }
 }
-
-export default MasterCreate;
+export default SlaveCreate;
