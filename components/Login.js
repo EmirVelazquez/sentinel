@@ -16,14 +16,14 @@ class LogIn extends Component {
   //Individual onChange handlers for each part of state
   //=========================================================
   handleEmailChange = event => {
-    console.log(event);
+    console.log("Email Change: " + event);
     this.setState({
       email: event
     });
   };
 
   handlePasswordChange = event => {
-    console.log(event);
+    console.log("Password Change: " + event);
 
     this.setState({
       password: event

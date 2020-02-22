@@ -10,6 +10,7 @@ const Routes = () => (
       <Scene key="home" component={Home} title="Home" initial={true} />
       <Scene key="LogIn" component={LogIn} title="Log In" />
       <Scene key="SignUp" component={SignUp} title="Signup" />
+      <Scene Key="MasterCreate" component={MasterCreate} title="Set Up" />
     </Scene>
   </Router>
 );

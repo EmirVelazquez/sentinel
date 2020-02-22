@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  KeyboardAvoidingView
-} from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 
 import Styles from "../css/styles";
 import Separator from "./Separator";
-import { ScrollView } from "react-native-gesture-handler";
+import { Actions } from "react-native-router-flux";
 
 class SignUp extends Component {
   // Retrieving input data
@@ -21,22 +14,26 @@ class SignUp extends Component {
     hidePassword: true
   };
 
+  goToMasterCreate = () => {
+    Actions.CreateMaster();
+  };
+
   //Individual onChange handlers for each part of state
   //=========================================================
   handleSignupEmailChange = event => {
-    console.log(event);
+    console.log("Email Change: " + event);
     this.setState({
       signUpEmail: event
     });
   };
   handleSignUpPasswordChange = event => {
-    console.log(event);
+    console.log("Password Change: " + event);
     this.setState({
       signUpPassword: event
     });
   };
   handleSignupConfirmChange = event => {
-    console.log(event);
+    console.log("Confirm Password Change: " + event);
     this.setState({
       signUpConfirm: event
     });
@@ -52,6 +49,7 @@ class SignUp extends Component {
       signUpPassword: this.state.signUpPassword,
       signUpConfirm: this.state.signUpConfirm
     });
+    this.goToMasterCreate();
   };
 
   managePasswordVisability = () => {
