@@ -18,6 +18,10 @@ module.exports = function (sequelize, DataTypes) {
         phone_number: {
             type: DataTypes.STRING
         },
+        admin: {
+            type: DataTypes.BOOLEAN,
+            default: false
+        },
         group: {
             type: DataTypes.BOOLEAN,
             default: false
@@ -30,4 +34,4 @@ module.exports = function (sequelize, DataTypes) {
     };
 
     return User;
-}
+};
