@@ -1,5 +1,8 @@
-node_modules
+
+node_modules/
+api/node_modules
 .expo/*
+.expo-shared/
 npm-debug.*
 *.jks
 *.p8
@@ -9,9 +12,11 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
+package-lock.json
 
 # macOS
 .DS_Store
 
 # misc
 package-lock.json
+api/package-lock.json
