@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, View, StyleSheet, Dimensions, Image } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "react-native-elements";
-import Logo from "../Logo";
+import Logo from "./Logo";
 import Styles from "../css/styles";
 
 const Home = () => {
@@ -59,13 +59,6 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  paragraph: {
-    fontSize: 17,
-    justifyContent: "center",
-    textAlign: "center",
-    marginBottom: 14,
-    color: "white"
-  },
   fixToText: {
     justifyContent: "center",
     height: 55,
