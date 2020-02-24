@@ -17,6 +17,10 @@ module.exports = function (sequelize, DataTypes) {
         },
         phone_number: {
             type: DataTypes.STRING
+        },
+        group: {
+            type: DataTypes.BOOLEAN,
+            default: false
         }
     });
 
