@@ -1,4 +1,6 @@
+
 node_modules/
+api/node_modules
 .expo/*
 .expo-shared/
 npm-debug.*
@@ -14,3 +16,7 @@ package-lock.json
 
 # macOS
 .DS_Store
+
+# misc
+package-lock.json
+api/package-lock.json
