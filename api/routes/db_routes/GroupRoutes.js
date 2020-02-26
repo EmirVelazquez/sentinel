@@ -3,27 +3,27 @@ var db = require("../../../models/index");
 module.exports = function (app) {
 
     //this route finds all the groups for a users with the same group id //
-    db.get("/api/group/user/:UserId", function (req, res) {
+    app.get("/api/group/user/:UserId", function (req, res) {
         db.Group.findAll({
             where:
             {
                 UserId: req.params.UserId
             }
-        })
-    }).then(function (dbGroup) {
-        res.json(dbGroup);
+        }).then(function (dbGroup) {
+            res.json(dbGroup);
+        });
     });
 
     //find one group by id //
-    db.get("/api/group/:Id", function (req, res) {
+    app.get("/api/group/:Id", function (req, res) {
         db.Group.findOne({
             where: {
                 Id: req.params.Id
             }
-        })
-    }).then(function (dbGroup) {
-        res.json(dbGroup);
-    })
+        }).then(function (dbGroup) {
+            res.json(dbGroup);
+        });
+    });
 
     // this route deletes a group by id
     app.delete("/api/group/:id", function (req, res) {
@@ -33,8 +33,8 @@ module.exports = function (app) {
             }
         }).then(function (dbGroup) {
             res.json(dbGroup);
-        })
-    })
+        });
+    });
 
     //this route creates a new group //
     app.post("/api/group", function (req, res) {
@@ -51,7 +51,7 @@ module.exports = function (app) {
             }
         }).then(function (dbGroup) {
             res.json(dbGroup);
-        })
-    })
+        });
+    });
 
 };

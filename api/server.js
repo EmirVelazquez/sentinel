@@ -28,6 +28,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // require('./routes/apiRoutes')(app);
+require("../api/routes/db_routes/GroupRoutes")(app);
+require("../api/routes/db_routes/UserRoutes")(app);
 
 // require('./routes/htmlRoutes')(app);
 
@@ -54,7 +56,7 @@ app.use(express.json());
 //     res.status(err.status || 500);
 //     res.render('error');
 // });
-var syncOptions = { force: false };
+var syncOptions = { force: true };
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test") {

@@ -42,5 +42,16 @@ module.exports = function (app) {
         });
     });
 
+    // this route finds all users with the same group id //
+    app.get("/api/user/group/:GroupId", function (req, res) {
+        db.User.findAll({
+            where: {
+                GroupId: req.params.GroupId
+            }
+        }).then(function (dbUser) {
+            res.json(dbUser);
+        });
+    });
+
 
 };
