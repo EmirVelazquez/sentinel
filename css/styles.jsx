@@ -14,6 +14,7 @@ const Styles = {
     marginBottom: 14,
     color: "white"
   },
+
   container: {
     paddingLeft: 50,
     paddingRight: 50,
@@ -22,6 +23,13 @@ const Styles = {
     backgroundColor: "#121212",
     height: Dimensions.get("window").height,
     width: Dimensions.get("window").width
+  },
+
+  family: {
+    width: Dimensions.get("window").width,
+    height: "30%",
+    flex: 0.4,
+    backgroundColor: "white"
   },
 
   footer: {
@@ -51,9 +59,10 @@ const Styles = {
   },
 
   mapUI: {
-    paddingTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingTop: "2.5%",
+    paddingLeft: "2.5%",
+    paddingRight: "2.5%",
+    paddingBottom: "2.5%",
 
     color: "#ffffff",
     fontSize: 17
@@ -91,6 +100,17 @@ const Styles = {
   smParagraph: {
     fontSize: 15,
     color: "white"
+  },
+
+  switch: {
+    width: Dimensions.get("window").width,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 20,
+    borderRadius: 50,
+    height: "20%"
+    // backgroundColor: "rgb(31,76,198)"
   }
 };
 export default Styles;
