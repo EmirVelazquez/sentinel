@@ -57,6 +57,7 @@ class Home extends Component {
 
     //=========================================================
     //Insert logic for Authentication of characters
+    Actions.MapLanding();
     //=========================================================
   };
 
