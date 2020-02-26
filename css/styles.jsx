@@ -4,11 +4,18 @@ const Styles = {
   container: {
     paddingLeft: 50,
     paddingRight: 50,
-    paddingTop: 15,
+    paddingTop: 75,
     flex: 1,
     backgroundColor: "#121212",
-    height: Dimensions.get("window").height,
+    height: Dimensions.get("window").height + 50,
     width: Dimensions.get("window").width
+  },
+
+  footer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0
   },
 
   innerContainer: {
@@ -57,8 +64,9 @@ const Styles = {
   },
 
   smButton: {
-    backgroundColor: "rgb(13,13,13)",
+    backgroundColor: "#121212",
     color: "rgb(90,89,89)"
+    // position: "fixed"
   },
 
   smButtonText: {
