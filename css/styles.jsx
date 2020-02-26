@@ -7,7 +7,7 @@ const Styles = {
     paddingTop: 75,
     flex: 1,
     backgroundColor: "#121212",
-    height: Dimensions.get("window").height + 50,
+    height: Dimensions.get("window").height,
     width: Dimensions.get("window").width
   },
 
