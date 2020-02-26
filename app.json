@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "Sentinel.v2",
+    "name": "template",
+    "slug": "sentinelv1",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
