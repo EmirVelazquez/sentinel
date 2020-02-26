@@ -17,7 +17,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 // 
-const db = require("../models/index");
+const db = require("./models/index");
 
 // const keys = require("./keys");
 

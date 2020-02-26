@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, KeyboardAvoidingView } from "react-native";
+import { View, Text, TextInput, KeyboardAvoidingView, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 
 import Styles from "../css/styles";
@@ -34,6 +34,7 @@ class SignUp extends Component {
     this.setState({
       signUpLName: event.toLowerCase()
     });
+
   };
 
   handleSignupEmailChange = event => {
