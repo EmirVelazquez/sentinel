@@ -1,6 +1,19 @@
 import { Dimensions } from "react-native";
 
 const Styles = {
+  button: {
+    borderRadius: 50,
+    backgroundColor: "rgb(31,76,198)"
+  },
+
+  buttonText: {
+    fontSize: 17,
+    justifyContent: "center",
+    textAlign: "center",
+    paddingTop: 15,
+    marginBottom: 14,
+    color: "white"
+  },
   container: {
     paddingLeft: 50,
     paddingRight: 50,
@@ -18,12 +31,6 @@ const Styles = {
     bottom: 0
   },
 
-  innerContainer: {
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: "rgb(53,53,53)"
-  },
-
   header: {
     marginTop: 0,
     fontSize: 30,
@@ -32,8 +39,24 @@ const Styles = {
     paddingBottom: 5
   },
 
-  separator: {
-    marginVertical: 6
+  innerContainer: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "rgb(53,53,53)"
+  },
+
+  mapStyle: {
+    width: Dimensions.get("window").width,
+    height: "75%"
+  },
+
+  mapUI: {
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+
+    color: "#ffffff",
+    fontSize: 17
   },
 
   paragraph: {
@@ -44,29 +67,19 @@ const Styles = {
     color: "white"
   },
 
-  smParagraph: {
-    fontSize: 15,
-    color: "white"
+  textContainer: {
+    width: Dimensions.get("window").width,
+    height: "25%",
+    backgroundColor: "#121212"
   },
 
-  button: {
-    borderRadius: 50,
-    backgroundColor: "rgb(31,76,198)"
-  },
-
-  buttonText: {
-    fontSize: 17,
-    justifyContent: "center",
-    textAlign: "center",
-    paddingTop: 15,
-    marginBottom: 14,
-    color: "white"
+  separator: {
+    marginVertical: 6
   },
 
   smButton: {
     backgroundColor: "#121212",
     color: "rgb(90,89,89)"
-    // position: "fixed"
   },
 
   smButtonText: {
@@ -75,8 +88,9 @@ const Styles = {
     textAlign: "center"
   },
 
-  kbav: {
-    flex: 1
+  smParagraph: {
+    fontSize: 15,
+    color: "white"
   }
 };
 export default Styles;
