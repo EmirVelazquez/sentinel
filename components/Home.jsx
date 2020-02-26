@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, KeyboardAvoidingView } from "react-native";
+import { Text, View, TextInput, KeyboardAvoidingView, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
@@ -15,6 +15,13 @@ class Home extends Component {
     password: "",
     hidePassword: true
   };
+
+  // AsyncStorage function to store current user infomation
+  //========================================================
+
+
+
+  //========================================================
 
   //Individual onChange handlers for each part of state
   //=========================================================
@@ -50,6 +57,7 @@ class Home extends Component {
 
     //=========================================================
     //Insert logic for Authentication of characters
+    Actions.MapLanding();
     //=========================================================
   };
 
@@ -119,19 +127,13 @@ class Home extends Component {
             <Separator />
             <Separator />
             <Separator />
-
-            <View
-              style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}
-            >
-              <TouchableOpacity
-                style={Styles.smButton}
-                onPress={this.goToSignUp}
-              >
-                <Text style={Styles.smButtonText}>
-                  Don't have an account? Sign Up
-                </Text>
-              </TouchableOpacity>
-            </View>
+          </View>
+          <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
+            <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
+              <Text style={Styles.smButtonText}>
+                Don't have an account? Sign Up
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
