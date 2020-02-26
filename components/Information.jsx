@@ -55,11 +55,14 @@ class Information extends Component {
         <Separator />
         <Separator />
         <Separator />
-        <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
-          <Text style={Styles.smButtonText}>
-            Ready to sign up? Yes, I'm Ready
-          </Text>
-        </TouchableOpacity>
+
+        <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
+          <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
+            <Text style={Styles.smButtonText}>
+              Ready to sign up? Yes, I'm Ready
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
