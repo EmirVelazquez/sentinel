@@ -10,12 +10,12 @@ import Information from "./components/Information";
 const Routes = () => (
   <Router>
     <Stack key="root">
-      <Scene key="home" component={Home} title="Home" initial={true} />
-      <Scene key="LogIn" component={LogIn} title="Log In" />
-      <Scene key="SignUp" component={SignUp} title="Signup" />
-      <Scene key="SetUp" component={MasterCreate} title="Signup" />
-      <Scene key="ChildUser" component={SlaveCreate} title="Children" />
-      <Scene key="Information" component={Information} />
+      <Scene key="home" component={Home} initial={true} hideNavBar />
+      <Scene key="LogIn" component={LogIn} hideNavBar />
+      <Scene key="SignUp" component={SignUp} hideNavBar />
+      <Scene key="SetUp" component={MasterCreate} hideNavBar />
+      <Scene key="ChildUser" component={SlaveCreate} hideNavBar />
+      <Scene key="Information" component={Information} hideNavBar />
     </Stack>
   </Router>
 );

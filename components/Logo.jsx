@@ -5,7 +5,7 @@ import { Image, StyleSheet } from "react-native";
 const Logo = () => {
   return (
     <Image
-      source={require("../assets/SentinelLogo.png")}
+      source={require("../assets/logoShadow.png")}
       style={styles.image}
     />
   );
@@ -13,9 +13,11 @@ const Logo = () => {
 
 const styles = StyleSheet.create({
   image: {
-    height: 200,
-    width: 200,
-    left: 58
+    height: 250,
+    width: 250,
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "20%"
   }
 });
 export default Logo;
