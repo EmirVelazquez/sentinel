@@ -25,28 +25,28 @@ class SignUp extends Component {
   handleSignUpFNameChange = event => {
     console.log("First Name Change: " + event);
     this.setState({
-      signUpFName: event
+      signUpFName: event.toLowerCase()
     });
   };
 
   handleSignUpLNameChange = event => {
     console.log("Last Name Change: " + event);
     this.setState({
-      signUpLName: event
+      signUpLName: event.toLowerCase()
     });
   };
 
   handleSignupEmailChange = event => {
     console.log("Email Change: " + event);
     this.setState({
-      signUpEmail: event
+      signUpEmail: event.toLowerCase()
     });
   };
 
   handleSignUpPasswordChange = event => {
     console.log("Password Change: " + event);
     this.setState({
-      signUpPassword: event
+      signUpPassword: event.toLowerCase()
     });
   };
 
@@ -171,15 +171,33 @@ class SignUp extends Component {
             <Separator />
             <Separator />
             <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
 
-            <TouchableOpacity
-              style={Styles.smButton}
-              onPress={this.goToInformation}
+            <View
+              style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}
             >
-              <Text style={Styles.smButtonText}>
-                How will we use your information? Learn More
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={Styles.smButton}
+                onPress={this.goToInformation}
+              >
+                <Text style={Styles.smButtonText}>
+                  How will we use your information? Learn More
+                </Text>
+              </TouchableOpacity>
+            </View>
           </KeyboardAvoidingView>
         </ScrollView>
       </View>

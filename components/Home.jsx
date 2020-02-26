@@ -21,14 +21,14 @@ class Home extends Component {
   handleEmailChange = event => {
     console.log("Email Change: " + event);
     this.setState({
-      email: event
+      email: event.toLowerCase()
     });
   };
 
   handlePasswordChange = event => {
     console.log("Password Change: " + event);
     this.setState({
-      password: event
+      password: event.toLowerCase()
     });
   };
   //=========================================================
@@ -119,13 +119,19 @@ class Home extends Component {
             <Separator />
             <Separator />
             <Separator />
-            <Separator />
 
-            <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
-              <Text style={Styles.smButtonText}>
-                Don't have an account? Sign Up
-              </Text>
-            </TouchableOpacity>
+            <View
+              style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}
+            >
+              <TouchableOpacity
+                style={Styles.smButton}
+                onPress={this.goToSignUp}
+              >
+                <Text style={Styles.smButtonText}>
+                  Don't have an account? Sign Up
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
