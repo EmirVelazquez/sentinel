@@ -119,19 +119,13 @@ class Home extends Component {
             <Separator />
             <Separator />
             <Separator />
-
-            <View
-              style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}
-            >
-              <TouchableOpacity
-                style={Styles.smButton}
-                onPress={this.goToSignUp}
-              >
-                <Text style={Styles.smButtonText}>
-                  Don't have an account? Sign Up
-                </Text>
-              </TouchableOpacity>
-            </View>
+          </View>
+          <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
+            <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
+              <Text style={Styles.smButtonText}>
+                Don't have an account? Sign Up
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

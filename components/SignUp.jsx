@@ -49,7 +49,6 @@ class SignUp extends Component {
       signUpPassword: event.toLowerCase()
     });
   };
-
   //=========================================================
 
   // State can be passed to the backend for auth -Justin
@@ -59,7 +58,6 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     });
-    // this.goToSetUp();
   };
 
   managePasswordVisability = () => {
@@ -182,24 +180,18 @@ class SignUp extends Component {
             <Separator />
             <Separator />
             <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-
-            <View
-              style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}
-            >
-              <TouchableOpacity
-                style={Styles.smButton}
-                onPress={this.goToInformation}
-              >
-                <Text style={Styles.smButtonText}>
-                  How will we use your information? Learn More
-                </Text>
-              </TouchableOpacity>
-            </View>
           </KeyboardAvoidingView>
         </ScrollView>
+        <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
+          <TouchableOpacity
+            style={Styles.smButton}
+            onPress={this.goToInformation}
+          >
+            <Text style={Styles.smButtonText}>
+              How will we use your information? Learn More
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
