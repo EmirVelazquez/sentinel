@@ -1,7 +1,10 @@
 {
   "expo": {
-    "name": "sentinel",
-    "slug": "sentivelV1",
+    "name": "Sentinel",
+    "description": "App that allows users to keep track of their loved ones",
+    "slug": "sentinelApp",
+    "backgroundColor": "#121212",
+    "owner": "ELV, MS, CM, AD, JC",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -9,11 +12,13 @@
       "android",
       "web"
     ],
+    "githubUrl": "https://github.com/EmirVelazquez/sentinel",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "primaryColor": "#121212",
+    "icon": "./assets/iconLogo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashImage.png",
       "resizeMode": "contain",
       "backgroundColor": "#121212"
     },
@@ -25,6 +30,15 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "androidStatusBar": {
+      "barStyle:": "dark-content",
+      "backgroundColor": "#000000"
+    },
+    "androidNavigationBar": {
+      "visible": true,
+      "barStyle": "dark-content",
+      "backgroundColor": "#000000"
     }
   }
 }
