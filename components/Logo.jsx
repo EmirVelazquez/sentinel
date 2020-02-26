@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     width: 250,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: "20%"
+    marginTop: "10%"
   }
 });
 export default Logo;
