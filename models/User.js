@@ -25,6 +25,18 @@ module.exports = function (sequelize, DataTypes) {
         group: {
             type: DataTypes.BOOLEAN,
             default: false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        current_location: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        GroupId: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         }
     });
 

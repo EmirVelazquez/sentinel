@@ -6,7 +6,11 @@ module.exports = function (sequelize, DataTypes) {
         name: {
             type: DataTypes.STRING,
         }
-    })
+    });
+
+    Group.associate = function (models) {
+        Group.hasMany(models.User);
+    };
 
     return Group;
 };
