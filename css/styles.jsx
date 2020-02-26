@@ -1,33 +1,74 @@
 import { Dimensions } from "react-native";
+
 const Styles = {
   container: {
     paddingLeft: 50,
     paddingRight: 50,
-    paddingTop: 50,
-    backgroundColor: "black",
-    height: Dimensions.get("window").height - 80
+    paddingTop: 15,
+    flex: 1,
+    backgroundColor: "rgb(13,13,13)",
+    height: Dimensions.get("window").height - 80,
+    width: Dimensions.get("window").width
   },
-  innerContainer: {},
+
+  innerContainer: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "rgb(53,53,53)"
+  },
+
   header: {
-    margin: 24,
     marginTop: 0,
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
-    borderBottomWidth: 2,
-    borderBottomColor: "grey",
+    textAlign: "left",
+    color: "rgb(0,234,233)",
     paddingBottom: 5
   },
+
   separator: {
-    marginVertical: 8
+    marginVertical: 6
   },
+
   paragraph: {
     fontSize: 17,
     justifyContent: "center",
     textAlign: "left",
     marginBottom: 14,
     color: "white"
+  },
+
+  smParagraph: {
+    fontSize: 15,
+    color: "white"
+  },
+
+  button: {
+    borderRadius: 50,
+    backgroundColor: "rgb(31,76,198)"
+  },
+
+  buttonText: {
+    fontSize: 17,
+    justifyContent: "center",
+    textAlign: "center",
+    paddingTop: 15,
+    marginBottom: 14,
+    color: "white"
+  },
+
+  smButton: {
+    backgroundColor: "rgb(13,13,13)",
+    color: "rgb(90,89,89)"
+  },
+
+  smButtonText: {
+    fontSize: 13,
+    color: "white",
+    textAlign: "center"
+  },
+
+  kbav: {
+    flex: 1
   }
 };
 export default Styles;
