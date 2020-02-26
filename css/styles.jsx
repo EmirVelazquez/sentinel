@@ -6,8 +6,8 @@ const Styles = {
     paddingRight: 50,
     paddingTop: 15,
     flex: 1,
-    backgroundColor: "rgb(13,13,13)",
-    height: Dimensions.get("window").height - 80,
+    backgroundColor: "#121212",
+    height: Dimensions.get("window").height,
     width: Dimensions.get("window").width
   },
 
