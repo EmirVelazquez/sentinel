@@ -60,7 +60,8 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     });
-    // this.goToSetUp();
+    // User info gets sent to database and is verified, then we send them to the maplanding page
+    Actions.MapLanding();
   };
 
   managePasswordVisability = () => {
