@@ -17,7 +17,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 // 
-// const db = require("");
+const db = require("../models/index");
 
 // const keys = require("./keys");
 
@@ -54,22 +54,23 @@ app.use(express.json());
 //     res.status(err.status || 500);
 //     res.render('error');
 // });
+var syncOptions = { force: false };
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
-// if (process.env.NODE_ENV === "test") {
-//     syncOptions.force = true;
-// }
+if (process.env.NODE_ENV === "test") {
+    syncOptions.force = true;
+}
 
 // starting the server, syncing our models
-// db.sequelize.sync(syncOptions).then(function () {
-    // app.listen(PORT, function () {
-    //     console.log(
-    //         "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-    //         PORT
-    //     );
-    // });
-// });
+db.sequelize.sync(syncOptions).then(function () {
+    app.listen(PORT, function () {
+        console.log(
+            "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+            PORT
+        );
+    });
+});
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
 module.exports = app;
