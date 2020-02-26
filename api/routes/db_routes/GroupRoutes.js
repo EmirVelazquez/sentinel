@@ -2,12 +2,12 @@ var db = require("../../../models/index");
 
 module.exports = function (app) {
 
-    //this route finds all the users with the same group id //
-    db.get("/api/group/user/:GroupId", function (req, res) {
+    //this route finds all the groups for a users with the same group id //
+    db.get("/api/group/user/:UserId", function (req, res) {
         db.Group.findAll({
             where:
             {
-                GroupId: req.params.GroupId
+                UserId: req.params.UserId
             }
         })
     }).then(function (dbGroup) {

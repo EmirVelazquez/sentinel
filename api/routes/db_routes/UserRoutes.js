@@ -20,5 +20,27 @@ module.exports = function (app) {
         });
     });
 
+    // this is the route to delete a user //
+    app.delete("/api/user/:id", function (req, res) {
+        db.User.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(function (dbUser) {
+            res.json(dbUser);
+        });
+    });
+
+    // this route updates the user //
+    app.put("/api/user", function (req, res) {
+        db.User.update(req.body, {
+            where: {
+                id: req.body.id
+            }
+        }).then(function (dbUser) {
+            res.json(dbUser);
+        });
+    });
+
 
 };
