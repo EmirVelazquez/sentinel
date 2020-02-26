@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, KeyboardAvoidingView } from "react-native";
+import { Text, View, TextInput, KeyboardAvoidingView, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
@@ -15,6 +15,13 @@ class Home extends Component {
     password: "",
     hidePassword: true
   };
+
+  // AsyncStorage function to store current user infomation
+  //========================================================
+
+
+
+  //========================================================
 
   //Individual onChange handlers for each part of state
   //=========================================================
