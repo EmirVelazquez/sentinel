@@ -1,7 +1,7 @@
 
 
 module.exports = function (sequelize, DataTypes) {
-    var User = sequelize.difine("User", {
+    var User = sequelize.define("User", {
 
         first_name: {
             type: DataTypes.STRING
@@ -30,13 +30,16 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        current_location: {
+        lat: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        long: {
             type: DataTypes.STRING,
             allowNull: true,
         },
         GroupId: {
-            type: DataTypes.INTEGER,
-            allowNull: true
+            type: DataTypes.INTEGER
         }
     });
 
