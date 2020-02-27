@@ -1,13 +1,13 @@
 // database
-// const db = require('../models');
+const db = require('../models');
 
 // npm jsonwebtoken - JSON Web Tokens for authentication
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 // // npm bcryptjs - password encryption
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
-// module.exports = function (app) {
+module.exports = function (app) {
 
 //     // parsing form data
 //     app.post('/login/submit', (req, res) => {
@@ -106,4 +106,4 @@
 //         res.redirect('/login');
 
 //     });
-// }
+}
