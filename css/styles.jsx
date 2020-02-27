@@ -1,10 +1,11 @@
 import { Dimensions } from "react-native";
 
 const Styles = {
-  button: {
-    borderRadius: 50,
-    backgroundColor: "rgb(31,76,198)"
-  },
+  // button: {
+  //   borderRadius: 50,
+  //   backgroundColor: "#1F4CC6",
+  //   height: 50
+  // },
 
   buttonText: {
     fontSize: 17,
@@ -40,10 +41,10 @@ const Styles = {
   },
 
   header: {
-    marginTop: 0,
-    fontSize: 30,
+    marginTop: 50,
+    fontSize: 40,
     textAlign: "left",
-    color: "rgb(0,234,233)",
+    color: "#1BCBC0",
     paddingBottom: 5
   },
 
@@ -105,7 +106,7 @@ const Styles = {
 
   smButtonText: {
     fontSize: 13,
-    color: "white",
+    color: "#1BCBC0",
     textAlign: "center"
   },
 
