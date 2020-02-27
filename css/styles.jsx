@@ -1,33 +1,116 @@
 import { Dimensions } from "react-native";
+
 const Styles = {
+  button: {
+    borderRadius: 50,
+    backgroundColor: "rgb(31,76,198)"
+  },
+
+  buttonText: {
+    fontSize: 17,
+    justifyContent: "center",
+    textAlign: "center",
+    paddingTop: 15,
+    marginBottom: 14,
+    color: "white"
+  },
+
   container: {
     paddingLeft: 50,
     paddingRight: 50,
-    paddingTop: 50,
-    backgroundColor: "black",
-    height: Dimensions.get("window").height - 80
+    paddingTop: 75,
+    flex: 1,
+    backgroundColor: "#121212",
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width
   },
-  innerContainer: {},
+
+  family: {
+    width: Dimensions.get("window").width,
+    height: "30%",
+    flex: 0.4,
+    backgroundColor: "white"
+  },
+
+  footer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+
   header: {
-    margin: 24,
     marginTop: 0,
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "white",
-    borderBottomWidth: 2,
-    borderBottomColor: "grey",
+    textAlign: "left",
+    color: "rgb(0,234,233)",
     paddingBottom: 5
   },
-  separator: {
-    marginVertical: 8
+
+  innerContainer: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "rgb(53,53,53)"
   },
+
+  mapStyle: {
+    width: Dimensions.get("window").width,
+    height: "75%"
+  },
+
+  mapUI: {
+    paddingTop: "2.5%",
+    paddingLeft: "2.5%",
+    paddingRight: "2.5%",
+    paddingBottom: "2.5%",
+
+    color: "#ffffff",
+    fontSize: 17
+  },
+
   paragraph: {
     fontSize: 17,
     justifyContent: "center",
     textAlign: "left",
     marginBottom: 14,
     color: "white"
+  },
+
+  textContainer: {
+    width: Dimensions.get("window").width,
+    height: "25%",
+    backgroundColor: "#121212"
+  },
+
+  separator: {
+    marginVertical: 6
+  },
+
+  smButton: {
+    backgroundColor: "#121212",
+    color: "rgb(90,89,89)"
+  },
+
+  smButtonText: {
+    fontSize: 13,
+    color: "white",
+    textAlign: "center"
+  },
+
+  smParagraph: {
+    fontSize: 15,
+    color: "white"
+  },
+
+  switch: {
+    width: Dimensions.get("window").width,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 20,
+    borderRadius: 50,
+    height: "20%"
+    // backgroundColor: "rgb(31,76,198)"
   }
 };
 export default Styles;
