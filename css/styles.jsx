@@ -53,10 +53,22 @@ const Styles = {
     backgroundColor: "rgb(53,53,53)"
   },
 
+  mapContainer: {
+    backgroundColor: "#121212",
+    width: "100%",
+    height: "100%"
+  },
+
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: "75%"
+    height: "60%",
+    marginTop: 30
   },
+
+  // Nav: {
+  //   marginRight: "80%",
+  //   backgroundColor: "#000000"
+  // },
 
   mapUI: {
     paddingTop: "2.5%",

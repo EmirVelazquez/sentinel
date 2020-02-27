@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MapView from "react-native-maps";
-import { Text, View, Slider } from "react-native";
+import { Text, View, Slider, Button } from "react-native";
 import Styles from "../css/styles";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -15,7 +15,9 @@ class MapLanding extends Component {
   render() {
     return (
       <View style={Styles.mapContainer}>
-        <MapView style={Styles.mapStyle} />
+        <MapView style={Styles.mapStyle}>
+          <Button style={Styles.Nav} title="Nav"></Button>
+        </MapView>
         <View style={Styles.textContainer}>
           <Text style={Styles.mapUI}>Your Family:</Text>
           <View style={Styles.family}>
