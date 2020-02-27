@@ -81,19 +81,33 @@ class Home extends Component {
             <Separator />
             <Separator />
 
-            <TextInput
-              name="email"
-              placeholder="Email"
-              style={{
-                height: 45,
-                backgroundColor: "rgb(53,53,53)",
-                color: "white",
-                borderRadius: 5
-              }}
-              onChangeText={this.handleEmailChange}
-              email={this.state.email}
-              keyboardType="email-address"
-            />
+            <View style={{
+              height: 60,
+              width: 360,
+              backgroundColor: "rgb(53,53,53)",
+              color: "white",
+              borderRadius: 5,
+              alignSelf: "center"
+            }}>
+              <Text style={{
+                marginLeft: 12,
+                fontSize: 12,
+                marginTop: 9,
+                marginBottom: 12,
+                color: "#8D8C8C"
+              }}>Email</Text>
+              <TextInput name="email"
+                style={{
+                  marginLeft: 12,
+                  marginBottom: 12,
+                  fontSize: 18,
+                  color: "white"
+                }}
+                onChangeText={this.handleEmailChange}
+                email={this.state.email}
+                keyboardType="email-address">
+              </TextInput>
+            </View>
 
             <Separator />
 
