@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, View, TextInput, KeyboardAvoidingView, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import Button from "apsl-react-native-button";
 
 import Logo from "./Logo";
 
@@ -81,59 +82,92 @@ class Home extends Component {
             <Separator />
             <Separator />
 
-            <TextInput
-              name="email"
-              placeholder="Email"
+            <View style={{
+              height: 60,
+              width: "115%",
+              backgroundColor: "rgb(53,53,53)",
+              color: "white",
+              borderRadius: 5,
+              alignSelf: "center",
+              marginBottom: 10
+            }}>
+              <Text style={{
+                marginLeft: 12,
+                fontSize: 12,
+                marginTop: 9,
+                marginBottom: 12,
+                color: "#8D8C8C"
+              }}>Email</Text>
+              <TextInput name="email"
+                style={{
+                  marginLeft: 12,
+                  marginBottom: 16,
+                  fontSize: 18,
+                  color: "white"
+                }}
+                onChangeText={this.handleEmailChange}
+                email={this.state.email}
+                keyboardType="email-address">
+              </TextInput>
+            </View>
+
+            <View style={{
+              height: 60,
+              width: "115%",
+              backgroundColor: "rgb(53,53,53)",
+              color: "white",
+              borderRadius: 5,
+              alignSelf: "center",
+              marginBottom: 32,
+              position: "relative"
+            }}>
+              <Text style={{
+                marginLeft: 12,
+                fontSize: 12,
+                marginTop: 9,
+                marginBottom: 12,
+                color: "#8D8C8C"
+              }}>Password</Text>
+              <Text style={{
+                color: "#1BCBC0",
+                position: "absolute",
+                top: 30,
+                right: 23,
+                fontSize: 14
+              }}>FORGOT</Text>
+              <TextInput name="password"
+                style={{
+                  marginLeft: 12,
+                  marginBottom: 16,
+                  fontSize: 18,
+                  color: "white"
+                }}
+                onChangeText={this.handlePasswordChange}
+                password={this.state.password}
+                secureTextEntry={this.state.hidePassword}>
+              </TextInput>
+            </View>
+
+            <Button
               style={{
-                height: 45,
-                backgroundColor: "rgb(53,53,53)",
-                color: "white",
-                borderRadius: 5
+                height: 50,
+                width: "115%",
+                alignSelf: "center",
+                borderRadius: 50,
+                backgroundColor: "#1F4CC6",
+                marginBottom: 50
               }}
-              onChangeText={this.handleEmailChange}
-              email={this.state.email}
-              keyboardType="email-address"
-            />
-
-            <Separator />
-
-            <TextInput
-              name="password"
-              placeholder="Password"
-              style={{
-                height: 45,
-                backgroundColor: "rgb(53,53,53)",
-                color: "white",
-                borderRadius: 5
-              }}
-              type="password"
-              onChangeText={this.handlePasswordChange}
-              password={this.state.password}
-              secureTextEntry={this.state.hidePassword}
-            />
-
-            <Separator />
-            <Separator />
-
-            <TouchableOpacity
-              style={Styles.button}
               onPress={this.handleFormSubmit}
             >
               <Text style={Styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-          </View>
-          <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
-            <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
-              <Text style={Styles.smButtonText}>
-                Don't have an account? Sign Up
+            </Button>
+            <View>
+              <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
+                <Text style={Styles.smButtonText}>
+                  Don't have an account? Sign Up
               </Text>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

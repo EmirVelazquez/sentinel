@@ -13,11 +13,10 @@ const Logo = () => {
 
 const styles = StyleSheet.create({
   image: {
-    height: 200,
-    width: 200,
+    height: 190,
+    width: 190,
     marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: "10%"
+    marginRight: "auto"
   }
 });
 export default Logo;

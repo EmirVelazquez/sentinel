@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MapView from "react-native-maps";
-import { Text, View, Slider } from "react-native";
+import { Text, View, Slider, Button, KeyboardAvoidingView } from "react-native";
 import Styles from "../css/styles";
 import { ScrollView } from "react-native-gesture-handler";
 import { Location } from "expo-location";
@@ -37,26 +37,29 @@ class MapLanding extends Component {
 
   render() {
     return (
-      <View style={Styles.mapContainer}>
-        <MapView style={Styles.mapStyle} />
-        <View style={Styles.textContainer}>
-          <Text style={Styles.mapUI}>Your Family:</Text>
-          <View style={Styles.family}>
-            <ScrollView>
-              <Text></Text>
-            </ScrollView>
+      <KeyboardAvoidingView behavior="position">
+        <ScrollView>
+          <View style={Styles.mapContainer}>
+            <MapView style={Styles.mapStyle}>
+              <Button style={Styles.Nav} title="Nav"></Button>
+            </MapView>
+            <View style={Styles.textContainer}>
+              <Text style={Styles.mapUI}>Your Family:</Text>
+              <View style={Styles.family}>
+              </View>
+              <Slider
+                style={Styles.switch}
+                step={1}
+                thumbTintColor="red"
+                minimumTrackTintColor="red"
+                minimumValue={0}
+                maximumValue={1}
+                onSlidingComplete={this.Emergency}
+              ></Slider>
+            </View>
           </View>
-          <Slider
-            style={Styles.switch}
-            step={1}
-            thumbTintColor="red"
-            minimumTrackTintColor="red"
-            minimumValue={0}
-            maximumValue={1}
-            onSlidingComplete={this.Emergency}
-          ></Slider>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
