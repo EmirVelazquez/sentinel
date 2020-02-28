@@ -131,10 +131,11 @@ class Home extends Component {
               onPress={this.forgotEmail}
               style={{
                 color: "#1BCBC0",
-                top: 5,
+                top: -5,
                 left: "80%",
                 width: "15%",
-                fontSize: 14
+                fontSize: 14,
+                paddingBottom: 10
               }}
             >
               <Text style={{ color: "#1BCBC0" }}>FORGOT</Text>
@@ -145,7 +146,7 @@ class Home extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                top: -19,
+                top: -25,
                 width: "75%",
                 color: "white"
               }}
@@ -170,10 +171,38 @@ class Home extends Component {
             <Text style={Styles.buttonText}>Login</Text>
           </Button>
           <View style={Styles.smContainerView}>
-            <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
-              <Text style={Styles.smButtonText}>Sign Up</Text>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#121212",
+                color: "rgb(90,89,89)",
+                width: "10%",
+                left: "62%",
+                paddingTop: 10,
+                paddingRight: 60
+              }}
+              onPress={this.goToSignUp}
+            >
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: "#1BCBC0",
+                  textAlign: "center",
+                  width: 50,
+                  bottom: 1
+                }}
+              >
+                Sign Up
+              </Text>
             </TouchableOpacity>
-            <Text style={{ left: 105, top: -19, color: "#8D8C8C", width: 150 }}>
+            <Text
+              style={{
+                fontSize: 13,
+                left: "27%",
+                top: "-41%",
+                color: "#8D8C8C",
+                width: "33%"
+              }}
+            >
               Don't have an account?
             </Text>
           </View>

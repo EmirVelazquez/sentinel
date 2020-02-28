@@ -47,7 +47,7 @@ const Styles = {
     padding: "3.25%",
     borderRadius: 5,
     marginLeft: -20,
-    width: "110%",
+    width: "112%",
     backgroundColor: "rgb(53,53,53)"
   },
 
@@ -93,26 +93,15 @@ const Styles = {
     marginVertical: 6
   },
 
-  smButton: {
-    backgroundColor: "#121212",
-    color: "rgb(90,89,89)",
-    // backgroundColor: "white",
-    width: 50,
-    left: "62%"
-  },
+  smButton: {},
 
-  smButtonText: {
-    fontSize: 13,
-    color: "#1BCBC0",
-    textAlign: "center",
-    width: 50
-  },
+  smButtonText: {},
 
   smContainerView: {
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: 10,
+    bottom: 0,
     backgroundColor: "transparent",
     alignSelf: "center",
     justifyContent: "center"

@@ -203,7 +203,7 @@ class SignUp extends Component {
                 fontSize: 12
               }}
             >
-              Account Completion 0%
+              Account Completion:
             </Text>
             <Image
               source={require("../assets/completeZero.png")}
@@ -231,13 +231,30 @@ class SignUp extends Component {
 
           <View style={Styles.smContainerView}>
             <TouchableOpacity
-              style={Styles.smButton}
+              style={{
+                backgroundColor: "#121212",
+                fontSize: 13,
+                color: "rgb(90,89,89)",
+                width: "17%",
+                left: "65%"
+              }}
               onPress={this.goToInformation}
             >
-              <Text style={Styles.smButtonText}>
-                How will we use your information? Learn More
+              <Text style={{ fontSize: 13, color: "#1BCBC0", bottom: 0.5 }}>
+                Learn More
               </Text>
             </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 13,
+                left: "15%",
+                top: "-50%",
+                color: "#8D8C8C",
+                width: "49%"
+              }}
+            >
+              How will we use your information?
+            </Text>
           </View>
         </View>
       </ScrollView>

@@ -6,7 +6,6 @@ import Separator from "./Separator";
 import { Actions } from "react-native-router-flux";
 
 class Information extends Component {
-
   //Routing
   //=========================================================
   goToSignUp = () => {
@@ -64,10 +63,30 @@ class Information extends Component {
 
         <View style={Styles.smContainerView}>
           <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
-            <Text style={Styles.smButtonText}>
-              Ready to sign up? Yes, I'm Ready
+            <Text
+              style={{
+                fontSize: 13,
+
+                left: "51%",
+                width: "22%",
+                color: "#1BCBC0"
+              }}
+            >
+              Yes, I'm Ready
             </Text>
           </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 13,
+
+              left: "23%",
+              width: "27%",
+              top: "-50%",
+              color: "#8D8C8C"
+            }}
+          >
+            Ready to sign up?
+          </Text>
         </View>
       </View>
     );
