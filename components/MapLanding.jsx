@@ -53,9 +53,14 @@ class MapLanding extends Component {
       <KeyboardAvoidingView behavior="position">
         <ScrollView>
           <View style={Styles.mapContainer}>
+<<<<<<< HEAD
             <MapView style={Styles.mapStyle}
               provider={PROVIDER_GOOGLE}>
               <Button style={Styles.Nav} title="Nav"></Button>
+=======
+            <MapView style={Styles.mapStyle}>
+              {/* <Button style={Styles.Nav} title="Nav"></Button> */}
+>>>>>>> workBuild
             </MapView>
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
