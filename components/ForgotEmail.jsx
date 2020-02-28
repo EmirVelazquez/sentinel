@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Image } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { Actions } from "react-native-router-flux";
 import Styles from "../css/styles";
 import Separator from "./Separator";
-import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
 
 import Logo from "./Logo";
@@ -29,6 +28,7 @@ class ForgotEmail extends Component {
     this.setState({
       forgotEmail: this.state.forgotEmail
     });
+    Actions.ForgotEmailSubmit();
   };
 
   render() {
@@ -87,7 +87,7 @@ class ForgotEmail extends Component {
           }}
           onPress={this.handleFormSubmit}
         >
-          <Text style={Styles.buttonText}>Submit</Text>
+          <Text style={Styles.buttonText}>Send Reset Link</Text>
         </Button>
       </View>
     );

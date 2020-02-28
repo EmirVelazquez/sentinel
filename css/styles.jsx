@@ -43,6 +43,17 @@ const Styles = {
     paddingBottom: 5
   },
 
+  headerCentered: {
+    marginTop: 30,
+    marginLeft: -10,
+    fontSize: 40,
+    textAlign: "left",
+    color: "#1BCBC0",
+    paddingBottom: 5,
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+
   innerContainer: {
     padding: "3.25%",
     borderRadius: 5,
@@ -83,6 +94,17 @@ const Styles = {
     color: "white"
   },
 
+  paragraphCentered: {
+    fontSize: 17,
+    marginLeft: -10,
+    justifyContent: "center",
+    textAlign: "left",
+    marginBottom: 14,
+    color: "white",
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+
   textContainer: {
     width: Dimensions.get("window").width,
     height: "25%",
@@ -92,10 +114,6 @@ const Styles = {
   separator: {
     marginVertical: 6
   },
-
-  smButton: {},
-
-  smButtonText: {},
 
   smContainerView: {
     position: "absolute",
