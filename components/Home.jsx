@@ -50,7 +50,15 @@ class Home extends Component {
 
   // State can be passed to the backend for auth -Justin
   handleFormSubmit = event => {
-    console.log(this.state);
+    fetch('https://sentinel-api.herokuapp.com/login/submit',
+      {
+        method: 'POST',
+        body: this.state
+      })
+      .then(res => {
+        console.log(res.status);
+      });
+    // console.log(this.state);
     this.setState({
       email: this.state.email,
       password: this.state.password
