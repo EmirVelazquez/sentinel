@@ -19,19 +19,21 @@ class SignUp extends Component {
   test() {
 
     // e.preventDefault();
-    var url = 'http://71.128.244.19:8081/api/user';
-    axios.post(url, {
-      first_name: this.state.signUpFName,
-      last_name: this.state.signUpLName,
-      email: this.state.signUpEmail,
-      password: this.state.signUpPassword
-    })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    var url = 'https://sentinel-api.herokuapp.com/api/user';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: this.state.signUpFName,
+        last_name: this.state.signUpLName,
+        email: this.state.signUpEmail,
+        password: this.state.signUpPassword
+
+      }),
+    });
 
   }
 
