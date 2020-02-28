@@ -1,10 +1,11 @@
 import { Dimensions } from "react-native";
 
 const Styles = {
-  button: {
-    borderRadius: 50,
-    backgroundColor: "rgb(31,76,198)"
-  },
+  // button: {
+  //   borderRadius: 50,
+  //   backgroundColor: "#1F4CC6",
+  //   height: 50
+  // },
 
   buttonText: {
     fontSize: 17,
@@ -18,7 +19,7 @@ const Styles = {
   container: {
     paddingLeft: 50,
     paddingRight: 50,
-    paddingTop: 75,
+    paddingTop: 10,
     flex: 1,
     backgroundColor: "#121212",
     height: Dimensions.get("window").height,
@@ -40,10 +41,10 @@ const Styles = {
   },
 
   header: {
-    marginTop: 0,
-    fontSize: 30,
+    marginTop: 30,
+    fontSize: 40,
     textAlign: "left",
-    color: "rgb(0,234,233)",
+    color: "#1BCBC0",
     paddingBottom: 5
   },
 
@@ -53,9 +54,16 @@ const Styles = {
     backgroundColor: "rgb(53,53,53)"
   },
 
+  mapContainer: {
+    backgroundColor: "#121212",
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width
+  },
+
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: "75%"
+    height: "60%",
+    marginTop: 30
   },
 
   mapUI: {
@@ -93,7 +101,7 @@ const Styles = {
 
   smButtonText: {
     fontSize: 13,
-    color: "white",
+    color: "#1BCBC0",
     textAlign: "center"
   },
 
