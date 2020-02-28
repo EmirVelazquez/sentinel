@@ -16,6 +16,27 @@ class SignUp extends Component {
     hidePassword: true
   };
 
+  test() {
+
+    // e.preventDefault();
+    var url = 'https://sentinel-api.herokuapp.com/api/user';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: this.state.signUpFName,
+        last_name: this.state.signUpLName,
+        email: this.state.signUpEmail,
+        password: this.state.signUpPassword
+
+      }),
+    });
+
+  }
+
   goToInformation = () => {
     Actions.Information();
   };
@@ -58,6 +79,7 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     });
+    this.test();
     // User info gets sent to database and is verified, then we send them to the maplanding page
     Actions.MapLanding();
   };
