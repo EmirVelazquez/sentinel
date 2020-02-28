@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+  AsyncStorage
+} from "react-native";
 import { Actions } from "react-native-router-flux";
 
 import Styles from "../css/styles";
@@ -25,31 +31,30 @@ class SignUp extends Component {
   handleSignUpFNameChange = event => {
     console.log("First Name Change: " + event);
     this.setState({
-      signUpFName: event
+      signUpFName: event.toLowerCase()
     });
   };
 
   handleSignUpLNameChange = event => {
     console.log("Last Name Change: " + event);
     this.setState({
-      signUpLName: event
+      signUpLName: event.toLowerCase()
     });
   };
 
   handleSignupEmailChange = event => {
     console.log("Email Change: " + event);
     this.setState({
-      signUpEmail: event
+      signUpEmail: event.toLowerCase()
     });
   };
 
   handleSignUpPasswordChange = event => {
     console.log("Password Change: " + event);
     this.setState({
-      signUpPassword: event
+      signUpPassword: event.toLowerCase()
     });
   };
-
   //=========================================================
 
   // State can be passed to the backend for auth -Justin
@@ -59,7 +64,8 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     });
-    // this.goToSetUp();
+    // User info gets sent to database and is verified, then we send them to the maplanding page
+    Actions.MapLanding();
   };
 
   managePasswordVisability = () => {
@@ -171,17 +177,28 @@ class SignUp extends Component {
             <Separator />
             <Separator />
             <Separator />
-
-            <TouchableOpacity
-              style={Styles.smButton}
-              onPress={this.goToInformation}
-            >
-              <Text style={Styles.smButtonText}>
-                How will we use your information? Learn More
-              </Text>
-            </TouchableOpacity>
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
+            <Separator />
           </KeyboardAvoidingView>
         </ScrollView>
+        <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
+          <TouchableOpacity
+            style={Styles.smButton}
+            onPress={this.goToInformation}
+          >
+            <Text style={Styles.smButtonText}>
+              How will we use your information? Learn More
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

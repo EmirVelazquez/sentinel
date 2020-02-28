@@ -1,47 +1,6 @@
 import { Dimensions } from "react-native";
 
 const Styles = {
-  container: {
-    paddingLeft: 50,
-    paddingRight: 50,
-    paddingTop: 15,
-    flex: 1,
-    backgroundColor: "#121212",
-    height: Dimensions.get("window").height,
-    width: Dimensions.get("window").width
-  },
-
-  innerContainer: {
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: "rgb(53,53,53)"
-  },
-
-  header: {
-    marginTop: 0,
-    fontSize: 30,
-    textAlign: "left",
-    color: "rgb(0,234,233)",
-    paddingBottom: 5
-  },
-
-  separator: {
-    marginVertical: 6
-  },
-
-  paragraph: {
-    fontSize: 17,
-    justifyContent: "center",
-    textAlign: "left",
-    marginBottom: 14,
-    color: "white"
-  },
-
-  smParagraph: {
-    fontSize: 15,
-    color: "white"
-  },
-
   button: {
     borderRadius: 50,
     backgroundColor: "rgb(31,76,198)"
@@ -56,8 +15,79 @@ const Styles = {
     color: "white"
   },
 
+  container: {
+    paddingLeft: 50,
+    paddingRight: 50,
+    paddingTop: 75,
+    flex: 1,
+    backgroundColor: "#121212",
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width
+  },
+
+  family: {
+    width: Dimensions.get("window").width,
+    height: "30%",
+    flex: 0.4,
+    backgroundColor: "white"
+  },
+
+  footer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+
+  header: {
+    marginTop: 0,
+    fontSize: 30,
+    textAlign: "left",
+    color: "rgb(0,234,233)",
+    paddingBottom: 5
+  },
+
+  innerContainer: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "rgb(53,53,53)"
+  },
+
+  mapStyle: {
+    width: Dimensions.get("window").width,
+    height: "75%"
+  },
+
+  mapUI: {
+    paddingTop: "2.5%",
+    paddingLeft: "2.5%",
+    paddingRight: "2.5%",
+    paddingBottom: "2.5%",
+
+    color: "#ffffff",
+    fontSize: 17
+  },
+
+  paragraph: {
+    fontSize: 17,
+    justifyContent: "center",
+    textAlign: "left",
+    marginBottom: 14,
+    color: "white"
+  },
+
+  textContainer: {
+    width: Dimensions.get("window").width,
+    height: "25%",
+    backgroundColor: "#121212"
+  },
+
+  separator: {
+    marginVertical: 6
+  },
+
   smButton: {
-    backgroundColor: "rgb(13,13,13)",
+    backgroundColor: "#121212",
     color: "rgb(90,89,89)"
   },
 
@@ -67,8 +97,20 @@ const Styles = {
     textAlign: "center"
   },
 
-  kbav: {
-    flex: 1
+  smParagraph: {
+    fontSize: 15,
+    color: "white"
+  },
+
+  switch: {
+    width: Dimensions.get("window").width,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 20,
+    borderRadius: 50,
+    height: "20%"
+    // backgroundColor: "rgb(31,76,198)"
   }
 };
 export default Styles;
