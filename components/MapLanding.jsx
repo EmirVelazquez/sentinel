@@ -59,7 +59,7 @@ class MapLanding extends Component {
         <ScrollView>
           <View style={Styles.mapContainer}>
             <MapView style={Styles.mapStyle}>
-              {/* <Button style={Styles.Nav} title="Nav"></Button> */}
+              {/* Here We need to figure out how to use the MapView Props to render two buttons on top of the map */}
             </MapView>
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
