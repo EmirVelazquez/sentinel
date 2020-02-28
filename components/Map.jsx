@@ -1,13 +1,13 @@
-import React from 'react';
-import { MapView } from 'expo';
+// import React from 'react';
+// import { MapView } from 'expo';
 
 
-const Map = () => {
+// const Map = () => {
 
 
-    return (
-        <MapView />
-    )
-}
+//     return (
+//         <MapView />
+//     )
+// }
 
-export default Map;
+// export default Map;
