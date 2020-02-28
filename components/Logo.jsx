@@ -13,8 +13,9 @@ const Logo = () => {
 
 const styles = StyleSheet.create({
   image: {
-    height: 190,
-    width: 190,
+    marginTop: "10%",
+    height: "30%",
+    width: "60%",
     marginLeft: "auto",
     marginRight: "auto"
   }
