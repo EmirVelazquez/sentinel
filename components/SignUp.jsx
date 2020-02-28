@@ -17,24 +17,21 @@ class SignUp extends Component {
   };
 
   test() {
-
     // e.preventDefault();
-    var url = 'https://sentinel-api.herokuapp.com/api/user';
+    var url = "https://sentinel-api.herokuapp.com/api/user";
     fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         first_name: this.state.signUpFName,
         last_name: this.state.signUpLName,
         email: this.state.signUpEmail,
         password: this.state.signUpPassword
-
-      }),
+      })
     });
-
   }
 
   goToInformation = () => {
@@ -90,7 +87,6 @@ class SignUp extends Component {
 
   render() {
     return (
-      // <KeyboardAvoidingView behavior="position">
       <ScrollView>
         <View style={Styles.container}>
           <Text style={Styles.header}>Welcome!</Text>
@@ -280,7 +276,6 @@ class SignUp extends Component {
           </View>
         </View>
       </ScrollView>
-      // </KeyboardAvoidingView>
     );
   }
 }

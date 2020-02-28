@@ -61,8 +61,9 @@ class Home extends Component {
   };
   //=========================================================
   //Forgot email route:
-  forgotEmail = () => {
+  goToForgotEmail = () => {
     console.log("Forgot Password! Sending user to forgotPassword component");
+    Actions.ForgotEmail();
   };
 
   //=========================================================
@@ -128,7 +129,7 @@ class Home extends Component {
           >
             <Text style={Styles.inputText}>Password</Text>
             <TouchableOpacity
-              onPress={this.forgotEmail}
+              onPress={this.goToForgotEmail}
               style={{
                 color: "#1BCBC0",
                 top: -5,

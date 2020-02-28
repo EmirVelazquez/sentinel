@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import Information from "./components/Information";
 import MapLanding from "./components/MapLanding";
+import ForgotEmail from "./components/ForgotEmail";
 
 const Routes = () => (
   <Router>
@@ -12,6 +13,7 @@ const Routes = () => (
       <Scene key="SignUp" component={SignUp} hideNavBar />
       <Scene key="Information" component={Information} hideNavBar />
       <Scene key="MapLanding" component={MapLanding} hideNavBar />
+      <Scene key="ForgotEmail" component={ForgotEmail} hideNavBar />
     </Stack>
   </Router>
 );
