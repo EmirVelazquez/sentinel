@@ -1,12 +1,6 @@
 import { Dimensions } from "react-native";
 
 const Styles = {
-  // button: {
-  //   borderRadius: 50,
-  //   backgroundColor: "#1F4CC6",
-  //   height: 50
-  // },
-
   buttonText: {
     fontSize: 17,
     justifyContent: "center",
@@ -42,6 +36,7 @@ const Styles = {
 
   header: {
     marginTop: 30,
+    marginLeft: -10,
     fontSize: 40,
     textAlign: "left",
     color: "#1BCBC0",
@@ -49,10 +44,14 @@ const Styles = {
   },
 
   innerContainer: {
-    padding: 10,
+    padding: "3.25%",
     borderRadius: 5,
+    marginLeft: -20,
+    width: "112%",
     backgroundColor: "rgb(53,53,53)"
   },
+
+  inputText: { marginLeft: 12, fontSize: 12, marginTop: 9, color: "#8D8C8C" },
 
   mapContainer: {
     backgroundColor: "#121212",
@@ -71,13 +70,13 @@ const Styles = {
     paddingLeft: "2.5%",
     paddingRight: "2.5%",
     paddingBottom: "2.5%",
-
     color: "#ffffff",
     fontSize: 17
   },
 
   paragraph: {
     fontSize: 17,
+    marginLeft: -10,
     justifyContent: "center",
     textAlign: "left",
     marginBottom: 14,
@@ -94,15 +93,18 @@ const Styles = {
     marginVertical: 6
   },
 
-  smButton: {
-    backgroundColor: "#121212",
-    color: "rgb(90,89,89)"
-  },
+  smButton: {},
 
-  smButtonText: {
-    fontSize: 13,
-    color: "#1BCBC0",
-    textAlign: "center"
+  smButtonText: {},
+
+  smContainerView: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "transparent",
+    alignSelf: "center",
+    justifyContent: "center"
   },
 
   smParagraph: {

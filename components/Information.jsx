@@ -6,7 +6,6 @@ import Separator from "./Separator";
 import { Actions } from "react-native-router-flux";
 
 class Information extends Component {
-
   //Routing
   //=========================================================
   goToSignUp = () => {
@@ -46,8 +45,13 @@ class Information extends Component {
 
           <Text style={Styles.smParagraph}>
             We at Sentinel pride ourselves in not selling any personal data
-            without asking our users for their permission. Welcome to the
-            Sentinel Family.
+            without asking our users for their permission.
+          </Text>
+
+          <Separator />
+
+          <Text style={Styles.smParagraph}>
+            Welcome to the Sentinel Family.
           </Text>
         </View>
 
@@ -57,12 +61,32 @@ class Information extends Component {
         <Separator />
         <Separator />
 
-        <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
+        <View style={Styles.smContainerView}>
           <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
-            <Text style={Styles.smButtonText}>
-              Ready to sign up? Yes, I'm Ready
+            <Text
+              style={{
+                fontSize: 13,
+
+                left: "51%",
+                width: "22%",
+                color: "#1BCBC0"
+              }}
+            >
+              Yes, I'm Ready
             </Text>
           </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 13,
+
+              left: "23%",
+              width: "27%",
+              top: "-50%",
+              color: "#8D8C8C"
+            }}
+          >
+            Ready to sign up?
+          </Text>
         </View>
       </View>
     );
