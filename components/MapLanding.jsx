@@ -18,7 +18,7 @@ class MapLanding extends Component {
         <ScrollView>
           <View style={Styles.mapContainer}>
             <MapView style={Styles.mapStyle}>
-              <Button style={Styles.Nav} title="Nav"></Button>
+              {/* <Button style={Styles.Nav} title="Nav"></Button> */}
             </MapView>
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
