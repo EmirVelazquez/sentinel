@@ -1,31 +1,44 @@
 import React, { Component } from "react";
-import MapView from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { Text, View, Slider, Button, KeyboardAvoidingView } from "react-native";
 import Styles from "../css/styles";
 import { ScrollView } from "react-native-gesture-handler";
-import { Location } from "expo-location";
-import { Permissions } from "expo-permissions";
+import * as Location from "expo-location";
+import * as Permissions from 'expo-permissions';
 
 class MapLanding extends Component {
 
   state = {
-    location: {}
+    location: {},
+    region: {}
   }
 
-  getLocation = async () => {
-    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+  componentDidMount() {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
+  }
 
-    if (status !== "granted") {
-      console.log("not granted")
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
     }
 
-    const location = await Location.getCurrentPositionAsync();
-
+    let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+    this.setState({ location });
+    this.setState({ region: { latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude } })
+    console.log(this.state.region)
     console.log(this.state.location)
-    this.setState({
-      location: this.state.location
-    })
-  }
+
+  };
+
 
   Emergency = event => {
     if (event == 0) {
@@ -40,7 +53,8 @@ class MapLanding extends Component {
       <KeyboardAvoidingView behavior="position">
         <ScrollView>
           <View style={Styles.mapContainer}>
-            <MapView style={Styles.mapStyle}>
+            <MapView style={Styles.mapStyle}
+              provider={PROVIDER_GOOGLE}>
               <Button style={Styles.Nav} title="Nav"></Button>
             </MapView>
             <View style={Styles.textContainer}>

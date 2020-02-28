@@ -17,11 +17,13 @@
     "apsl-react-native-button": "^3.1.1",
     "expo": "~36.0.0",
     "expo-location": "^8.0.0",
+    "expo-permissions": "~8.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "~1.5.0",
+    "react-native-maps": "0.26.1",
     "react-native-paper": "^3.6.0",
     "react-native-reanimated": "~1.4.0",
     "react-native-router-flux": "^4.2.0",
@@ -31,8 +33,7 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.1.1",
     "react-navigation-stack": "^2.1.1",
-    "tcomb-form-native": "^0.6.20",
-    "react-native-maps": "0.26.1"
+    "tcomb-form-native": "^0.6.20"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",
