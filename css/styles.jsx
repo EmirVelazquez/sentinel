@@ -19,7 +19,7 @@ const Styles = {
   container: {
     paddingLeft: 50,
     paddingRight: 50,
-    paddingTop: 75,
+    paddingTop: 10,
     flex: 1,
     backgroundColor: "#121212",
     height: Dimensions.get("window").height,
@@ -41,7 +41,7 @@ const Styles = {
   },
 
   header: {
-    marginTop: 50,
+    marginTop: 30,
     fontSize: 40,
     textAlign: "left",
     color: "#1BCBC0",
@@ -56,8 +56,8 @@ const Styles = {
 
   mapContainer: {
     backgroundColor: "#121212",
-    width: "100%",
-    height: "100%"
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width
   },
 
   mapStyle: {
@@ -65,11 +65,6 @@ const Styles = {
     height: "60%",
     marginTop: 30
   },
-
-  // Nav: {
-  //   marginRight: "80%",
-  //   backgroundColor: "#000000"
-  // },
 
   mapUI: {
     paddingTop: "2.5%",

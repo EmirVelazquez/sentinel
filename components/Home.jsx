@@ -161,7 +161,7 @@ class Home extends Component {
             >
               <Text style={Styles.buttonText}>Login</Text>
             </Button>
-            <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
+            <View>
               <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
                 <Text style={Styles.smButtonText}>
                   Don't have an account? Sign Up
