@@ -6,6 +6,7 @@ import Separator from "./Separator";
 import { Actions } from "react-native-router-flux";
 
 class Information extends Component {
+
   //Routing
   //=========================================================
   goToSignUp = () => {
