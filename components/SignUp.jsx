@@ -23,6 +23,25 @@ class SignUp extends Component {
     hidePassword: true
   };
 
+  test() {
+
+    // e.preventDefault();
+    var url = 'http://71.128.244.19:8081/api/user';
+    axios.post(url, {
+      first_name: this.state.signUpFName,
+      last_name: this.state.signUpLName,
+      email: this.state.signUpEmail,
+      password: this.state.signUpPassword
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
   goToInformation = () => {
     Actions.Information();
   };
@@ -65,6 +84,7 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     });
+    this.test();
     // User info gets sent to database and is verified, then we send them to the maplanding page
     Actions.MapLanding();
   };
