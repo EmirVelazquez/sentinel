@@ -7,7 +7,6 @@ import Styles from "../css/styles";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import Button from "apsl-react-native-button";
 import { } from '@expo/vector-icons';
 import { GOOGLE_API_KEY } from "react-native-dotenv";
 
@@ -262,8 +261,8 @@ class MapLanding extends Component {
     }
 
     return (
-      <KeyboardAvoidingView behavior="position">
-        <ScrollView>
+      // <KeyboardAvoidingView behavior="position">
+        // <ScrollView>
           <View style={Styles.mapContainer}>
             <MapView style={Styles.mapStyle}
               provider={PROVIDER_GOOGLE}
@@ -309,7 +308,13 @@ class MapLanding extends Component {
 
             </MapView>
             {/* THIS IS THE BUTTON FOR THE MAPVIEW */}
-            <Button style={{ position: "aboslute", backgroundColor: "white", height: 50, width: 50, borderRadius: "50%", bottom: 55, left: Dimensions.get("window").width - 65 }} />
+            <Button style={{ position: "absolute",
+             backgroundColor:"white", 
+             height: 50,
+              width: 50,
+               borderRadius: "50%",
+                bottom: 55,
+                 left: Dimensions.get("window").width - 65 }} />
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
               <View style={Styles.family}></View>
@@ -324,8 +329,6 @@ class MapLanding extends Component {
               ></Slider>
             </View>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
     );
   }
 }
