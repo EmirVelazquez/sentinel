@@ -1,12 +1,6 @@
 import { Dimensions } from "react-native";
 
 const Styles = {
-  // button: {
-  //   borderRadius: 50,
-  //   backgroundColor: "#1F4CC6",
-  //   height: 50
-  // },
-
   buttonText: {
     fontSize: 17,
     justifyContent: "center",
@@ -28,9 +22,11 @@ const Styles = {
 
   family: {
     width: Dimensions.get("window").width,
-    height: "30%",
     flex: 0.4,
-    backgroundColor: "white"
+    flexDirection: "row",
+    justifyContent: "center",
+    top: 20
+    // backgroundColor: "white"
   },
 
   footer: {
@@ -42,16 +38,38 @@ const Styles = {
 
   header: {
     marginTop: 30,
+    marginLeft: -10,
     fontSize: 40,
     textAlign: "left",
     color: "#1BCBC0",
     paddingBottom: 5
   },
 
+  headerCentered: {
+    marginTop: 30,
+    marginLeft: -10,
+    fontSize: 40,
+    textAlign: "left",
+    color: "#1BCBC0",
+    paddingBottom: 5,
+    marginLeft: "auto",
+    marginRight: "auto"
+  },
+
   innerContainer: {
-    padding: 10,
+    padding: "3.25%",
     borderRadius: 5,
+    marginLeft: -20,
+    width: "112%",
     backgroundColor: "rgb(53,53,53)"
+  },
+
+  inputText: {
+    marginLeft: 12,
+    fontSize: 12,
+    marginTop: 9,
+    color: "#8D8C8C",
+    width: "50%" // This change may also help to not cover the Forgot button on the home page - Emir
   },
 
   mapContainer: {
@@ -62,8 +80,14 @@ const Styles = {
 
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: "60%",
-    marginTop: 30
+    height: "60%"
+    // marginTop: 30
+  },
+
+  mapStyleNotLogged: {
+    width: Dimensions.get("window").width,
+    height: "85%"
+    // marginTop: 30
   },
 
   mapUI: {
@@ -71,17 +95,38 @@ const Styles = {
     paddingLeft: "2.5%",
     paddingRight: "2.5%",
     paddingBottom: "2.5%",
-
     color: "#ffffff",
     fontSize: 17
   },
 
+  noUsers: {
+    width: Dimensions.get("window").width,
+    color: "white",
+    textAlign: "center"
+  },
+
+  noUserContainer: {
+    width: Dimensions.get("window").width
+  },
+
   paragraph: {
     fontSize: 17,
+    marginLeft: -10,
     justifyContent: "center",
     textAlign: "left",
     marginBottom: 14,
     color: "white"
+  },
+
+  paragraphCentered: {
+    fontSize: 17,
+    marginLeft: -10,
+    justifyContent: "center",
+    textAlign: "left",
+    marginBottom: 14,
+    color: "white",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
 
   textContainer: {
@@ -94,15 +139,14 @@ const Styles = {
     marginVertical: 6
   },
 
-  smButton: {
-    backgroundColor: "#121212",
-    color: "rgb(90,89,89)"
-  },
-
-  smButtonText: {
-    fontSize: 13,
-    color: "#1BCBC0",
-    textAlign: "center"
+  smContainerView: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "transparent",
+    alignSelf: "center",
+    justifyContent: "center"
   },
 
   smParagraph: {
@@ -111,14 +155,35 @@ const Styles = {
   },
 
   switch: {
-    width: Dimensions.get("window").width,
+    width: "90%",
     position: "absolute",
-    left: 0,
+    left: "7%",
     right: 0,
-    bottom: 20,
+    top: Dimensions.get("window").height - 740,
     borderRadius: 50,
     height: "20%"
     // backgroundColor: "rgb(31,76,198)"
+  },
+  users: {
+    // backgroundColor: "red",
+    width: 79,
+    height: 85
+  },
+  userImage: {
+    top: 5,
+    width: "80%",
+    height: "75%",
+    borderRadius: 50,
+    alignSelf: "center",
+    borderColor: "pink",
+    borderWidth: 5
+  },
+  userText: {
+    textAlign: "center",
+    color: "black",
+    height: "19%",
+    top: 5,
+    color: "white"
   }
 };
 export default Styles;
