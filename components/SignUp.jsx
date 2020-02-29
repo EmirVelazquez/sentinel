@@ -5,6 +5,7 @@ import Styles from "../css/styles";
 import Separator from "./Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
+// import axios from "axios";
 
 class SignUp extends Component {
   // Retrieving input data
@@ -17,8 +18,8 @@ class SignUp extends Component {
   };
 
   test() {
-    // e.preventDefault();
     var url = "https://sentinel-api.herokuapp.com/api/user";
+    // e.preventDefault();
     fetch(url, {
       method: "POST",
       headers: {
@@ -26,10 +27,10 @@ class SignUp extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        first_name: this.state.signUpFName,
-        last_name: this.state.signUpLName,
-        email: this.state.signUpEmail,
-        password: this.state.signUpPassword
+        first_name: "alex",
+        last_name: "diaz",
+        email: "test@gmail.com",
+        password: "testPass"
       })
     });
   }
