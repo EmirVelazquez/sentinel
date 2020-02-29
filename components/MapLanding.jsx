@@ -31,6 +31,8 @@ class MapLanding extends Component {
       longitude: -97.0945,
       latitudeDelta: 0.05,
       longitudeDelta: 0.09
+    }
+  };
 
   // componentDidMount() {
   //   if (Platform.OS === "android" && !Constants.isDevice) {
