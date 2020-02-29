@@ -5,6 +5,8 @@ import Styles from "../css/styles";
 import Separator from "./Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
+import { getPlatformOrientationLockAsync } from "expo/build/ScreenOrientation/ScreenOrientation";
+// import axios from "axios";
 
 class SignUp extends Component {
   // Retrieving input data
@@ -17,9 +19,9 @@ class SignUp extends Component {
   };
 
   test() {
-    // e.preventDefault();
     var url = "https://sentinel-api.herokuapp.com/api/user";
-    fetch(url, {
+    // e.preventDefault();
+    return fetch(url, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -29,7 +31,7 @@ class SignUp extends Component {
         first_name: this.state.signUpFName,
         last_name: this.state.signUpLName,
         email: this.state.signUpEmail,
-        password: this.state.signUpPassword
+        pass: this.state.signUpPassword
       })
     });
   }
@@ -75,8 +77,10 @@ class SignUp extends Component {
     this.setState({
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
-    });
-    this.test();
+    })
+    this.test()
+
+
     // User info gets sent to database and is verified, then we send them to the maplanding page
     Actions.MapLanding();
   };
@@ -117,10 +121,7 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white",
-                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
-                height: 30,
-                width: "94%"
+                color: "white"
               }}
               name="signUpFName"
               returnKeyType="next"
@@ -147,10 +148,7 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white",
-                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
-                height: 30,
-                width: "94%"
+                color: "white"
               }}
               name="signUpLName"
               returnKeyType="next"
@@ -178,10 +176,7 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white",
-                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
-                height: 30,
-                width: "94%"
+                color: "white"
               }}
               name="signUpEmail"
               autoCapitalize="none"
@@ -211,10 +206,7 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white",
-                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
-                height: 30,
-                width: "94%"
+                color: "white"
               }}
               name="SignUpPassword"
               returnKeyType="go"
