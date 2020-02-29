@@ -79,7 +79,6 @@ class SignUp extends Component {
       signUpPassword: this.state.signUpPassword
     });
     this.test()
-      .then(data => console.log(data))
     // User info gets sent to database and is verified, then we send them to the maplanding page
     Actions.MapLanding();
   };
