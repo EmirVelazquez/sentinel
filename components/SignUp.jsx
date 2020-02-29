@@ -28,10 +28,10 @@ class SignUp extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        first_name: "alex",
-        last_name: "diaz",
-        email: "test@gmail.com",
-        pass: "asdfasdf"
+        first_name: this.state.signUpFName,
+        last_name: this.state.signUpLName,
+        email: this.state.signUpEmail,
+        pass: this.state.signUpPassword
       })
     });
   }
@@ -77,8 +77,10 @@ class SignUp extends Component {
     this.setState({
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
-    });
+    })
     this.test()
+
+
     // User info gets sent to database and is verified, then we send them to the maplanding page
     Actions.MapLanding();
   };
