@@ -93,37 +93,18 @@ class MapLanding extends Component {
             >
               {/* <Button style={Styles.Nav} title="Nav"></Button> */}
 
-              {/* <MapView.Marker
-                coordinate={{
-                  latitude: 32.8412,
-                  longitude: -96.7845,
-                }}
-                title={"marker.title"}
-                description={"desss"}
-              /> */}
-
-              {this.state.users.map(user => {
+              {this.state.users.map((user, i) => {
                 return <MapView.Marker
                   title={user.name}
+                  key={i}
                   description="description"
                   coordinate={{
                     latitude: user.coordinate.lat,
-                    longitude: user.coordinates.long,
+                    longitude: user.coordinate.long,
                   }}
                 />
               })}
 
-            // {/* {this.state.users.map((user, i) => {
-            //   <MapView.Marker
-            //     key={i}
-            //     coordinate={{
-            //       latitude: user.coordinate.lat,
-            //       longitude: user.coordinate.long
-            //     }}
-            //     title={user.name}
-            //     description={"stuff"}
-            //   />
-            // })} */}
             </MapView>
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
