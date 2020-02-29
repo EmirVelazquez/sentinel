@@ -22,9 +22,11 @@ const Styles = {
 
   family: {
     width: Dimensions.get("window").width,
-    height: "30%",
     flex: 0.4,
-    backgroundColor: "white"
+    flexDirection: "row",
+    justifyContent: "center",
+    top: 20
+    // backgroundColor: "white"
   },
 
   footer: {
@@ -78,8 +80,14 @@ const Styles = {
 
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: "60%",
-    marginTop: 30
+    height: "60%"
+    // marginTop: 30
+  },
+
+  mapStyleNotLogged: {
+    width: Dimensions.get("window").width,
+    height: "85%"
+    // marginTop: 30
   },
 
   mapUI: {
@@ -89,6 +97,16 @@ const Styles = {
     paddingBottom: "2.5%",
     color: "#ffffff",
     fontSize: 17
+  },
+
+  noUsers: {
+    width: Dimensions.get("window").width,
+    color: "white",
+    textAlign: "center"
+  },
+
+  noUserContainer: {
+    width: Dimensions.get("window").width
   },
 
   paragraph: {
@@ -137,14 +155,35 @@ const Styles = {
   },
 
   switch: {
-    width: Dimensions.get("window").width,
+    width: "90%",
     position: "absolute",
-    left: 0,
+    left: "7%",
     right: 0,
-    bottom: 20,
+    top: Dimensions.get("window").height - 740,
     borderRadius: 50,
     height: "20%"
     // backgroundColor: "rgb(31,76,198)"
+  },
+  users: {
+    // backgroundColor: "red",
+    width: 79,
+    height: 85
+  },
+  userImage: {
+    top: 5,
+    width: "80%",
+    height: "75%",
+    borderRadius: 50,
+    alignSelf: "center",
+    borderColor: "pink",
+    borderWidth: 5
+  },
+  userText: {
+    textAlign: "center",
+    color: "black",
+    height: "19%",
+    top: 5,
+    color: "white"
   }
 };
 export default Styles;
