@@ -6,10 +6,35 @@ import { ScrollView } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 
+
+
 class MapLanding extends Component {
   state = {
+    users: [
+      {
+        name: "User1",
+        coordinate: {
+          long: -96.780,
+          lat: 32.7844
+        }
+      },
+      {
+        name: "User2",
+        coordinate: {
+          long: -96.7845,
+          lat: 32.8412
+
+        }
+      }
+    ],
     location: {},
-    region: {}
+    region: {
+      latitude: 32.7473,
+      longitude: -97.0945,
+      latitudeDelta: 0.05,
+      longitudeDelta: 0.09
+
+    }
   };
 
   // componentDidMount() {
@@ -38,11 +63,15 @@ class MapLanding extends Component {
     this.setState({
       region: {
         latitude: this.state.location.coords.latitude,
-        longitude: this.state.location.coords.longitude
+        longitude: this.state.location.coords.longitude,
+        latitudeDelta: 0.08,
+        longitudeDelta: 0.45
       }
-    });
-    console.log(this.state.region);
-    console.log(this.state.location);
+    })
+
+
+    console.log(this.state.location)
+
   };
 
   Emergency = event => {
@@ -58,8 +87,24 @@ class MapLanding extends Component {
       <KeyboardAvoidingView behavior="position">
         <ScrollView>
           <View style={Styles.mapContainer}>
-            <MapView style={Styles.mapStyle}>
-              {/* Here We need to figure out how to use the MapView Props to render two buttons on top of the map */}
+            <MapView style={Styles.mapStyle}
+              provider={PROVIDER_GOOGLE}
+              region={this.state.region}
+            >
+              {/* <Button style={Styles.Nav} title="Nav"></Button> */}
+
+              {this.state.users.map((user, i) => {
+                return <MapView.Marker
+                  title={user.name}
+                  key={i}
+                  description="description"
+                  coordinate={{
+                    latitude: user.coordinate.lat,
+                    longitude: user.coordinate.long,
+                  }}
+                />
+              })}
+
             </MapView>
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
