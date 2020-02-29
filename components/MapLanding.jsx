@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { Text, View, Slider, KeyboardAvoidingView, Dimensions } from "react-native";
-import Button from "apsl-react-native-button";
 import Styles from "../css/styles";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Button from "apsl-react-native-button";
-import { } from '@expo/vector-icons';
 import { GOOGLE_API_KEY } from "react-native-dotenv";
 
 
@@ -52,40 +50,48 @@ class MapLanding extends Component {
     }
   };
 
-  // componentDidMount() {
-  //   if (Platform.OS === "android" && !Constants.isDevice) {
-  //     this.setState({
-  //       errorMessage:
-  //         "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-  //     });
-  //   } else {
-  //     this._getLocationAsync();
-  //   }
-  // }
+  componentDidMount() {
+    if (Platform.OS === "android" && !Constants.isDevice) {
+      this.setState({
+        errorMessage:
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+      });
+    } else {
+      this._getLocationAsync();
+    }
+  }
 
-  // _getLocationAsync = async () => {
-  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
-  //   if (status !== "granted") {
-  //     this.setState({
-  //       errorMessage: "Permission to access location was denied"
-  //     });
-  //   }
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== "granted") {
+      this.setState({
+        errorMessage: "Permission to access location was denied"
+      });
+    }
 
-  //   let location = await Location.getCurrentPositionAsync({
-  //     enableHighAccuracy: true
-  //   });
-  //   this.setState({ location });
-  //   this.setState({
-  //     region: {
-  //       latitude: this.state.location.coords.latitude,
-  //       longitude: this.state.location.coords.longitude,
-  //       latitudeDelta: 0.08,
-  //       longitudeDelta: 0.45
-  //     }
-  //   });
 
-  //   console.log(this.state.location);
-  // };
+    let location = await Location.getCurrentPositionAsync({
+      enableHighAccuracy: true
+    });
+    this.setState({ location });
+    this.setState({
+      user: {
+        coordinate: {
+          latitude: this.state.location.coords.latitude,
+          longitude: this.state.location.coords.longitude,
+        }
+      }
+    })
+    this.setState({
+      region: {
+        latitude: this.state.location.coords.latitude,
+        longitude: this.state.location.coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.35
+      }
+    })
+    console.log(this.state.location);
+  };
 
   // onPress events
   //=========================================================
@@ -105,19 +111,19 @@ class MapLanding extends Component {
   // Conditional Rendering
   //=========================================================
   IsLogged = props => {
-    if (this.state.users[0]) {
+    if (this.state.group[0]) {
       return (
         <View>
           <View style={Styles.textContainer}>
             <Text style={Styles.mapUI}> Group:</Text>
           </View>
           <View style={Styles.family}>
-            {this.state.users.map((user, i) => {
+            {this.state.group.map((member, i) => {
               return (
                 <TouchableOpacity onPress={this.UserPress} style={Styles.users}>
                   <View style={Styles.userImage} />
-                  <Text name={this.state.users[i].name} style={Styles.userText}>
-                    {this.state.users[i].name}
+                  <Text name={member.name} style={Styles.userText}>
+                    {member.name}
                   </Text>
                 </TouchableOpacity>
               );
@@ -156,31 +162,6 @@ class MapLanding extends Component {
         </View>
       );
     }
-
-    let location = await Location.getCurrentPositionAsync({
-      enableHighAccuracy: true
-    });
-    this.setState({ location });
-    this.setState({
-      user: {
-        coordinate: {
-          latitude: this.state.location.coords.latitude,
-          longitude: this.state.location.coords.longitude,
-        }
-      }
-    })
-    this.setState({
-      region: {
-        latitude: this.state.location.coords.latitude,
-        longitude: this.state.location.coords.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.35
-      }
-    })
-
-
-    console.log(this.state.location)
-
   };
 
 
@@ -217,19 +198,19 @@ class MapLanding extends Component {
         <MapView
           style={Styles.mapStyleNotLogged}
           provider={PROVIDER_GOOGLE}
-        // region={this.state.region}
+          region={this.state.region}
         >
           {/* <Button style={Styles.Nav} title="Nav"></Button> */}
 
-          {this.state.users.map((user, i) => {
+          {this.state.group.map((member, i) => {
             return (
               <MapView.Marker
-                title={user.name}
+                title={member.name}
                 key={i}
                 description="description"
                 coordinate={{
-                  latitude: user.coordinate.lat,
-                  longitude: user.coordinate.long
+                  latitude: member.coordinate.lat,
+                  longitude: member.coordinate.long
                 }}
               />
             );
@@ -260,7 +241,6 @@ class MapLanding extends Component {
             <MapView style={Styles.mapStyle}
               provider={PROVIDER_GOOGLE}
               region={this.state.region}
-
               onPress={(e) => {
                 console.log(e.nativeEvent.coordinate)
                 this.setState({
