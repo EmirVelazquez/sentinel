@@ -62,7 +62,13 @@ const Styles = {
     backgroundColor: "rgb(53,53,53)"
   },
 
-  inputText: { marginLeft: 12, fontSize: 12, marginTop: 9, color: "#8D8C8C" },
+  inputText: {
+    marginLeft: 12,
+    fontSize: 12,
+    marginTop: 9,
+    color: "#8D8C8C",
+    width: "50%" // This change may also help to not cover the Forgot button on the home page - Emir
+  },
 
   mapContainer: {
     backgroundColor: "#121212",

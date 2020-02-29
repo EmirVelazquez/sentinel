@@ -118,7 +118,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="signUpFName"
               returnKeyType="next"
@@ -145,7 +148,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="signUpLName"
               returnKeyType="next"
@@ -173,7 +179,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="signUpEmail"
               autoCapitalize="none"
@@ -203,7 +212,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="SignUpPassword"
               returnKeyType="go"
