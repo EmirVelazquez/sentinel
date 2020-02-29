@@ -16,7 +16,6 @@ class MapLanding extends Component {
         coordinate: {
           long: -96.780,
           lat: 32.7844
-
         }
       },
       {
@@ -29,7 +28,13 @@ class MapLanding extends Component {
       }
     ],
     location: {},
-    region: {}
+    region: {
+      latitude: 32.7473,
+      longitude: -97.0945,
+      latitudeDelta: 0.05,
+      longitudeDelta: 0.09
+
+    }
   };
 
   componentDidMount() {
