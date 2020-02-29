@@ -37,16 +37,16 @@ class MapLanding extends Component {
     }
   };
 
-  componentDidMount() {
-    if (Platform.OS === "android" && !Constants.isDevice) {
-      this.setState({
-        errorMessage:
-          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-      });
-    } else {
-      this._getLocationAsync();
-    }
-  }
+  // componentDidMount() {
+  //   if (Platform.OS === "android" && !Constants.isDevice) {
+  //     this.setState({
+  //       errorMessage:
+  //         "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+  //     });
+  //   } else {
+  //     this._getLocationAsync();
+  //   }
+  // }
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
