@@ -69,8 +69,9 @@ class Home extends Component {
   };
   //=========================================================
   //Forgot email route:
-  forgotEmail = () => {
+  goToForgotEmail = () => {
     console.log("Forgot Password! Sending user to forgotPassword component");
+    Actions.ForgotEmail();
   };
 
   //=========================================================
@@ -113,7 +114,10 @@ class Home extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               onChangeText={this.handleEmailChange}
               email={this.state.email}
@@ -136,10 +140,10 @@ class Home extends Component {
           >
             <Text style={Styles.inputText}>Password</Text>
             <TouchableOpacity
-              onPress={this.forgotEmail}
+              onPress={this.goToForgotEmail}
               style={{
                 color: "#1BCBC0",
-                top: -5,
+                // top: -5, // This small change allowed it to not be cut off on the iphone screen - Emir
                 left: "80%",
                 width: "15%",
                 fontSize: 14,
@@ -156,7 +160,9 @@ class Home extends Component {
                 fontSize: 18,
                 top: -25,
                 width: "75%",
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height of the input - Emir
+                height: 30
               }}
               onChangeText={this.handlePasswordChange}
               password={this.state.password}

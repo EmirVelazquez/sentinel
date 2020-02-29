@@ -17,24 +17,21 @@ class SignUp extends Component {
   };
 
   test() {
-
     // e.preventDefault();
-    var url = 'https://sentinel-api.herokuapp.com/api/user';
+    var url = "https://sentinel-api.herokuapp.com/api/user";
     fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         first_name: this.state.signUpFName,
         last_name: this.state.signUpLName,
         email: this.state.signUpEmail,
         password: this.state.signUpPassword
-
-      }),
+      })
     });
-
   }
 
   goToInformation = () => {
@@ -90,7 +87,6 @@ class SignUp extends Component {
 
   render() {
     return (
-      // <KeyboardAvoidingView behavior="position">
       <ScrollView>
         <View style={Styles.container}>
           <Text style={Styles.header}>Welcome!</Text>
@@ -121,7 +117,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="signUpFName"
               returnKeyType="next"
@@ -148,7 +147,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="signUpLName"
               returnKeyType="next"
@@ -176,7 +178,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="signUpEmail"
               autoCapitalize="none"
@@ -206,7 +211,10 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                color: "white"
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
               }}
               name="SignUpPassword"
               returnKeyType="go"
@@ -280,7 +288,6 @@ class SignUp extends Component {
           </View>
         </View>
       </ScrollView>
-      // </KeyboardAvoidingView>
     );
   }
 }
