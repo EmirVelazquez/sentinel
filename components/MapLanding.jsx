@@ -10,20 +10,20 @@ import Button from "apsl-react-native-button";
 class MapLanding extends Component {
   state = {
     users: [
-      {
-        name: "User1",
-        coordinate: {
-          long: -96.78,
-          lat: 32.7844
-        }
-      },
-      {
-        name: "User2",
-        coordinate: {
-          long: -96.7845,
-          lat: 32.8412
-        }
-      }
+      // {
+      //   name: "User1",
+      //   coordinate: {
+      //     long: -96.78,
+      //     lat: 32.7844
+      //   }
+      // },
+      // {
+      //   name: "User2",
+      //   coordinate: {
+      //     long: -96.7845,
+      //     lat: 32.8412
+      //   }
+      // }
     ],
     location: {},
     region: {
@@ -82,6 +82,10 @@ class MapLanding extends Component {
   UserPress = () => {
     console.log("A User's location was requested");
   };
+
+  CreateGroupModal = () => {
+    console.log("A User is creating a new group");
+  };
   //=========================================================
 
   // Conditional Rendering
@@ -96,7 +100,11 @@ class MapLanding extends Component {
           <View style={Styles.family}>
             {this.state.users.map((user, i) => {
               return (
-                <TouchableOpacity onPress={this.UserPress} style={Styles.users}>
+                <TouchableOpacity
+                  key={i}
+                  onPress={this.UserPress}
+                  style={Styles.users}
+                >
                   <View style={Styles.userImage} />
                   <Text name={this.state.users[i].name} style={Styles.userText}>
                     {this.state.users[i].name}
