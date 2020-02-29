@@ -222,6 +222,7 @@ class MapLanding extends Component {
   //=========================================================
 
   render() {
+    // This is making the directions to the waypoint
     let mapViewDirection = null;
     if (this.state.waypoint.coordinate.hasOwnProperty('latitude') && this.state.waypoint.coordinate.hasOwnProperty('longitude')) {
       mapViewDirection =
@@ -241,6 +242,7 @@ class MapLanding extends Component {
             <MapView style={Styles.mapStyle}
               provider={PROVIDER_GOOGLE}
               region={this.state.region}
+              // This onPress makes the waypoint on the map.
               onPress={(e) => {
                 console.log(e.nativeEvent.coordinate)
                 this.setState({
