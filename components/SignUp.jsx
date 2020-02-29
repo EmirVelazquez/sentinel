@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Image } from "react-native";
+import { View, Text, TextInput, Image, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import Styles from "../css/styles";
 import Separator from "./Separator";
