@@ -4,12 +4,11 @@ import { Text, View, Slider, Button, KeyboardAvoidingView } from "react-native";
 import Styles from "../css/styles";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Location from "expo-location";
-import * as Permissions from 'expo-permissions';
+import * as Permissions from "expo-permissions";
 
 
 
 class MapLanding extends Component {
-
   state = {
     users: [
       {
@@ -30,19 +29,14 @@ class MapLanding extends Component {
       }
     ],
     location: {},
-    region: {
-      latitude: 37.78825,
-      longitude: -122.4324,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    }
-
-  }
+    region: {}
+  };
 
   componentDidMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
+    if (Platform.OS === "android" && !Constants.isDevice) {
       this.setState({
-        errorMessage: 'This will not work on Sketch in an Android emulator. Try it on your device!',
+        errorMessage:
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
       });
     } else {
       this._getLocationAsync();
@@ -51,13 +45,15 @@ class MapLanding extends Component {
 
   _getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
+    if (status !== "granted") {
       this.setState({
-        errorMessage: 'Permission to access location was denied',
+        errorMessage: "Permission to access location was denied"
       });
     }
 
-    let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+    let location = await Location.getCurrentPositionAsync({
+      enableHighAccuracy: true
+    });
     this.setState({ location });
     this.setState({
       region: {
@@ -72,7 +68,6 @@ class MapLanding extends Component {
     console.log(this.state.location)
 
   };
-
 
   Emergency = event => {
     if (event == 0) {
@@ -108,8 +103,7 @@ class MapLanding extends Component {
             </MapView>
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
-              <View style={Styles.family}>
-              </View>
+              <View style={Styles.family}></View>
               <Slider
                 style={Styles.switch}
                 step={1}
