@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, KeyboardAvoidingView, AsyncStorage } from "react-native";
+import { Text, View, TextInput } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
@@ -19,8 +19,6 @@ class Home extends Component {
 
   // AsyncStorage function to store current user infomation
   //========================================================
-
-
 
   //========================================================
 
@@ -61,6 +59,14 @@ class Home extends Component {
     Actions.MapLanding();
     //=========================================================
   };
+  //=========================================================
+  //Forgot email route:
+  goToForgotEmail = () => {
+    console.log("Forgot Password! Sending user to forgotPassword component");
+    Actions.ForgotEmail();
+  };
+
+  //=========================================================
 
   //Routing
   //=========================================================
@@ -71,18 +77,19 @@ class Home extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="position">
-        <ScrollView>
-          <View style={Styles.container}>
-            <Logo />
+      // <KeyboardAvoidingView behavior="position">
+      <ScrollView>
+        <View style={Styles.container}>
+          <Logo />
 
-            <Text style={Styles.header}>Sentinel</Text>
-            <Text style={Styles.paragraph}>Please sign in to continue</Text>
+          <Text style={Styles.header}>Sentinel</Text>
+          <Text style={Styles.paragraph}>Please sign in to continue</Text>
 
-            <Separator />
-            <Separator />
+          <Separator />
+          <Separator />
 
-            <View style={{
+          <View
+            style={{
               height: 60,
               width: "115%",
               backgroundColor: "rgb(53,53,53)",
@@ -90,28 +97,29 @@ class Home extends Component {
               borderRadius: 5,
               alignSelf: "center",
               marginBottom: 10
-            }}>
-              <Text style={{
+            }}
+          >
+            <Text style={Styles.inputText}>Email</Text>
+            <TextInput
+              name="email"
+              style={{
                 marginLeft: 12,
-                fontSize: 12,
-                marginTop: 9,
-                marginBottom: 12,
-                color: "#8D8C8C"
-              }}>Email</Text>
-              <TextInput name="email"
-                style={{
-                  marginLeft: 12,
-                  marginBottom: 16,
-                  fontSize: 18,
-                  color: "white"
-                }}
-                onChangeText={this.handleEmailChange}
-                email={this.state.email}
-                keyboardType="email-address">
-              </TextInput>
-            </View>
+                marginBottom: 16,
+                fontSize: 18,
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
+                width: "94%"
+              }}
+              onChangeText={this.handleEmailChange}
+              email={this.state.email}
+              keyboardType="email-address"
+              onSubmitEditing={() => this.passwordInput.focus()}
+            ></TextInput>
+          </View>
 
-            <View style={{
+          <View
+            style={{
               height: 60,
               width: "115%",
               backgroundColor: "rgb(53,53,53)",
@@ -120,57 +128,93 @@ class Home extends Component {
               alignSelf: "center",
               marginBottom: 32,
               position: "relative"
-            }}>
-              <Text style={{
-                marginLeft: 12,
-                fontSize: 12,
-                marginTop: 9,
-                marginBottom: 12,
-                color: "#8D8C8C"
-              }}>Password</Text>
-              <Text style={{
-                color: "#1BCBC0",
-                position: "absolute",
-                top: 30,
-                right: 23,
-                fontSize: 14
-              }}>FORGOT</Text>
-              <TextInput name="password"
-                style={{
-                  marginLeft: 12,
-                  marginBottom: 16,
-                  fontSize: 18,
-                  color: "white"
-                }}
-                onChangeText={this.handlePasswordChange}
-                password={this.state.password}
-                secureTextEntry={this.state.hidePassword}>
-              </TextInput>
-            </View>
-
-            <Button
+            }}
+          >
+            <Text style={Styles.inputText}>Password</Text>
+            <TouchableOpacity
+              onPress={this.goToForgotEmail}
               style={{
-                height: 50,
-                width: "115%",
-                alignSelf: "center",
-                borderRadius: 50,
-                backgroundColor: "#1F4CC6",
-                marginBottom: 50
+                color: "#1BCBC0",
+                // top: -5, // This small change allowed it to not be cut off on the iphone screen - Emir
+                left: "80%",
+                width: "15%",
+                fontSize: 14,
+                paddingBottom: 10
               }}
-              onPress={this.handleFormSubmit}
             >
-              <Text style={Styles.buttonText}>Login</Text>
-            </Button>
-            <View>
-              <TouchableOpacity style={Styles.smButton} onPress={this.goToSignUp}>
-                <Text style={Styles.smButtonText}>
-                  Don't have an account? Sign Up
-              </Text>
-              </TouchableOpacity>
-            </View>
+              <Text style={{ color: "#1BCBC0" }}>FORGOT</Text>
+            </TouchableOpacity>
+            <TextInput
+              name="password"
+              style={{
+                marginLeft: 12,
+                marginBottom: 16,
+                fontSize: 18,
+                top: -25,
+                width: "75%",
+                color: "white",
+                // backgroundColor: "#000000", // Using this to test the height of the input - Emir
+                height: 30
+              }}
+              onChangeText={this.handlePasswordChange}
+              password={this.state.password}
+              secureTextEntry={this.state.hidePassword}
+              ref={input => (this.passwordInput = input)}
+            ></TextInput>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+
+          <Button
+            style={{
+              height: 50,
+              width: "115%",
+              alignSelf: "center",
+              borderRadius: 50,
+              backgroundColor: "#1F4CC6",
+              marginBottom: 50
+            }}
+            onPress={this.handleFormSubmit}
+          >
+            <Text style={Styles.buttonText}>Login</Text>
+          </Button>
+          <View style={Styles.smContainerView}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#121212",
+                color: "rgb(90,89,89)",
+                width: "10%",
+                left: "62%",
+                paddingTop: 10,
+                paddingRight: 60
+              }}
+              onPress={this.goToSignUp}
+            >
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: "#1BCBC0",
+                  textAlign: "center",
+                  width: 50,
+                  bottom: 1
+                }}
+              >
+                Sign Up
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 13,
+                left: "27%",
+                top: "-41%",
+                color: "#8D8C8C",
+                width: "33%"
+              }}
+            >
+              Don't have an account?
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+      // </KeyboardAvoidingView>
     );
   }
 }
