@@ -337,6 +337,7 @@ class MapLanding extends Component {
   //=========================================================
 
   render() {
+    // This is making the directions to the waypoint
     let mapViewDirection = null;
     if (
       this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
