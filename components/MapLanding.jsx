@@ -6,17 +6,43 @@ import { ScrollView } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import * as Permissions from 'expo-permissions';
 
+
+
 class MapLanding extends Component {
 
   state = {
+    users: [
+      {
+        name: "User1",
+        coordinate: {
+          long: -96.780,
+          lat: 32.7844
+
+        }
+      },
+      {
+        name: "User2",
+        coordinate: {
+          long: -96.7845,
+          lat: 32.8412
+
+        }
+      }
+    ],
     location: {},
-    region: {}
+    region: {
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }
+
   }
 
   componentDidMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+        errorMessage: 'This will not work on Sketch in an Android emulator. Try it on your device!',
       });
     } else {
       this._getLocationAsync();
@@ -33,8 +59,16 @@ class MapLanding extends Component {
 
     let location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
     this.setState({ location });
-    this.setState({ region: { latitude: this.state.location.coords.latitude, longitude: this.state.location.coords.longitude } })
-    console.log(this.state.region)
+    this.setState({
+      region: {
+        latitude: this.state.location.coords.latitude,
+        longitude: this.state.location.coords.longitude,
+        latitudeDelta: 0.08,
+        longitudeDelta: 0.45
+      }
+    })
+
+
     console.log(this.state.location)
 
   };
@@ -53,14 +87,43 @@ class MapLanding extends Component {
       <KeyboardAvoidingView behavior="position">
         <ScrollView>
           <View style={Styles.mapContainer}>
-<<<<<<< HEAD
             <MapView style={Styles.mapStyle}
-              provider={PROVIDER_GOOGLE}>
-              <Button style={Styles.Nav} title="Nav"></Button>
-=======
-            <MapView style={Styles.mapStyle}>
+              provider={PROVIDER_GOOGLE}
+              region={this.state.region}
+            >
               {/* <Button style={Styles.Nav} title="Nav"></Button> */}
->>>>>>> workBuild
+
+              {/* <MapView.Marker
+                coordinate={{
+                  latitude: 32.8412,
+                  longitude: -96.7845,
+                }}
+                title={"marker.title"}
+                description={"desss"}
+              /> */}
+
+              {this.state.users.map(user => {
+                return <MapView.Marker
+                  title={user.name}
+                  description="description"
+                  coordinate={{
+                    latitude: user.coordinate.lat,
+                    longitude: user.coordinates.long,
+                  }}
+                />
+              })}
+
+            // {/* {this.state.users.map((user, i) => {
+            //   <MapView.Marker
+            //     key={i}
+            //     coordinate={{
+            //       latitude: user.coordinate.lat,
+            //       longitude: user.coordinate.long
+            //     }}
+            //     title={user.name}
+            //     description={"stuff"}
+            //   />
+            // })} */}
             </MapView>
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}>Your Family:</Text>
