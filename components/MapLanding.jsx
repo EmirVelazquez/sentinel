@@ -1,30 +1,48 @@
 import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { Text, View, Slider, KeyboardAvoidingView } from "react-native";
+import MapViewDirections from "react-native-maps-directions";
+import { Text, View, Slider, KeyboardAvoidingView, Dimensions } from "react-native";
+import Button from "apsl-react-native-button";
 import Styles from "../css/styles";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import Button from "apsl-react-native-button";
+import { } from '@expo/vector-icons';
+import { GOOGLE_API_KEY } from "react-native-dotenv";
+
 
 class MapLanding extends Component {
   state = {
-    users: [
-      // {
-      //   name: "User1",
-      //   coordinate: {
-      //     long: -96.78,
-      //     lat: 32.7844
-      //   }
-      // },
-      // {
-      //   name: "User2",
-      //   coordinate: {
-      //     long: -96.7845,
-      //     lat: 32.8412
-      //   }
-      // }
+    user: {
+      name: "User",
+      coordinate: {},
+      pinColor: "#ff0000"
+    },
+    group: [
+      {
+        name: "GroupMem1",
+        coordinate: {
+          longitude: -96.780,
+          latitude: 32.7844
+        },
+        pinColor: "#ffff33"
+      },
+      {
+        name: "GroupMem2",
+        coordinate: {
+          longitude: -96.8419,
+          latitude: 32.8173
+        },
+        pinColor: "#1bcbc0"
+
+      }
     ],
+    waypoint: {
+      name: "waypoint",
+      coordinate: {},
+      pinColor: "#0000ff"
+    },
     location: {},
     region: {
       latitude: 32.7473,
@@ -146,39 +164,68 @@ class MapLanding extends Component {
         </View>
       );
     }
+
+    let location = await Location.getCurrentPositionAsync({
+      enableHighAccuracy: true
+    });
+    this.setState({ location });
+    this.setState({
+      user: {
+        coordinate: {
+          latitude: this.state.location.coords.latitude,
+          longitude: this.state.location.coords.longitude,
+        }
+      }
+    })
+    this.setState({
+      region: {
+        latitude: this.state.location.coords.latitude,
+        longitude: this.state.location.coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.35
+      }
+    })
+
+
+    console.log(this.state.location)
+
   };
 
-  mapRender = () => {
-    if (this.state.users[0]) {
-      return (
-        <MapView
-          style={Styles.mapStyle}
-          provider={PROVIDER_GOOGLE}
-          // region={this.state.region}
-        >
-          {/* <Button style={Styles.Nav} title="Nav"></Button> */}
 
-          {this.state.users.map((user, i) => {
-            return (
-              <MapView.Marker
-                title={user.name}
-                key={i}
-                description="description"
-                coordinate={{
-                  latitude: user.coordinate.lat,
-                  longitude: user.coordinate.long
-                }}
-              />
-            );
-          })}
-        </MapView>
-      );
+
+  // _getLocationAsync = async () => {
+  //   const location = await Location.watchPositionAsync(
+  //     {
+  //       enableHighAccuracy: true,
+  //       distanceInterval: 250,
+  //     },
+  //     newLocation => {
+  //       let coords = newLocation.coords;
+
+  //       this.setState({
+  //         location: {
+  //           latitude: coords.latitude,
+  //           longitude: coords.longitude,
+  //           latitudeDelta: 0.08,
+  //           longitudeDelta: 0.45
+  //         }
+  //       });
+  //     },
+  //     error => console.log(error)
+  //   );
+  //   return location;
+  // };
+
+
+  Emergency = event => {
+    if (event == 0) {
+      console.log("Changed to: " + event + " No Emergency");
     } else {
       return (
         <MapView
           style={Styles.mapStyleNotLogged}
           provider={PROVIDER_GOOGLE}
-          // region={this.state.region}
+        // region={this.state.region}
         >
           {/* <Button style={Styles.Nav} title="Nav"></Button> */}
 
@@ -202,15 +249,86 @@ class MapLanding extends Component {
   //=========================================================
 
   render() {
+    let mapViewDirection = null;
+    if (this.state.waypoint.coordinate.hasOwnProperty('latitude') && this.state.waypoint.coordinate.hasOwnProperty('longitude')) {
+      mapViewDirection =
+        <MapViewDirections
+          origin={this.state.user.coordinate}
+          destination={this.state.waypoint.coordinate}
+          apikey={GOOGLE_API_KEY}
+          strokeWidth={2}
+          strokeColor="red"
+        />
+    }
+
     return (
-      <View style={Styles.mapContainer}>
-        <this.mapRender />
-        <View style={Styles.textContainer}>
-          <this.IsLogged />
-        </View>
-      </View>
+      <KeyboardAvoidingView behavior="position">
+        <ScrollView>
+          <View style={Styles.mapContainer}>
+            <MapView style={Styles.mapStyle}
+              provider={PROVIDER_GOOGLE}
+              region={this.state.region}
+
+              onPress={(e) => {
+                console.log(e.nativeEvent.coordinate)
+                this.setState({
+                  waypoint: { coordinate: e.nativeEvent.coordinate }
+                })
+              }
+              }>
+
+              {/* THIS IS MAIN USER MARKER */}
+              <MapView.Marker
+                title={this.state.user.name}
+                key="Main user"
+                coordinate={this.state.user.coordinate}
+                pinColor={this.state.user.pinColor}
+              />
+              {/* THIS IS WAYPOINT MARKER */}
+              <MapView.Marker
+                title={this.state.waypoint.name}
+                key="waypoint"
+                coordinate={this.state.waypoint.coordinate}
+                pinColor={this.state.waypoint.pinColor}
+              />
+              {/* <Button style={Styles.Nav} title="Nav"></Button> */}
+
+              {/* THIS IS THE GROUP MEMBERS MARKER */}
+              {this.state.group.map((member, i) => {
+                return <MapView.Marker
+                  title={member.name}
+                  key={i}
+                  coordinate={member.coordinate}
+                  pinColor={member.pinColor}
+                />
+              })}
+
+              {mapViewDirection}
+
+
+
+            </MapView>
+            {/* THIS IS THE BUTTON FOR THE MAPVIEW */}
+            <Button style={{ position: "aboslute", backgroundColor: "white", height: 50, width: 50, borderRadius: "50%", bottom: 55, left: Dimensions.get("window").width - 65 }} />
+            <View style={Styles.textContainer}>
+              <Text style={Styles.mapUI}>Your Family:</Text>
+              <View style={Styles.family}></View>
+              <Slider
+                style={Styles.switch}
+                step={1}
+                thumbTintColor="red"
+                minimumTrackTintColor="red"
+                minimumValue={0}
+                maximumValue={1}
+                onSlidingComplete={this.Emergency}
+              ></Slider>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
 
 export default MapLanding;
+
