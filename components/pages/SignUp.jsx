@@ -26,7 +26,6 @@ class SignUp extends Component {
         pass: this.state.signUpPassword
       })
       .then(response => {
-        console.log(response);
         // call login here to get token
       })
       .catch(err => {
@@ -37,6 +36,17 @@ class SignUp extends Component {
   goToInformation = () => {
     Actions.Information();
   };
+
+  //store the email in async storage //
+  //=========================================================
+
+  storeEmail = async () => {
+    try {
+      await AsyncStorage.setItem('email', this.state.signUpEmail);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   //Individual onChange handlers for each part of state
   //=========================================================
@@ -76,7 +86,9 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     })
-    this.signUp()
+    this.signUp();
+    //passed the email to the next page
+    this.storeEmail();
 
 
     // User info gets sent to database and is verified, then we send them to the maplanding page

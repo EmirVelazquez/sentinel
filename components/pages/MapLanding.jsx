@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Text, View, Slider, TouchableOpacity, Dimensions } from "react-native";
+import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage } from "react-native";
 import Button from "apsl-react-native-button";
 import Styles from "./../../css/styles";
 import * as Location from "expo-location";
@@ -46,6 +46,27 @@ class MapLanding extends Component {
       longitudeDelta: 0.09
     }
   };
+
+  // function to get email from sign up or log in page
+  //========================================================
+  getEmail = async () => {
+    try {
+      const value = await AsyncStorage.getItem('email');
+      console.log("!!!!!!!!!!!!!!!!!!", value);
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+  // this calls the asyncStorage function
+  componentDidMount() {
+    this.getEmail();
+  }
+
+  //============================================================
 
   // componentDidMount() {
   //   if (Platform.OS === "android" && !Constants.isDevice) {
