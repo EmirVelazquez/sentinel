@@ -1,11 +1,11 @@
 import React from "react";
 import { Router, Scene, Stack } from "react-native-router-flux";
-import Home from "./components/Home";
-import SignUp from "./components/SignUp";
-import Information from "./components/Information";
-import MapLanding from "./components/MapLanding";
-import ForgotEmail from "./components/ForgotEmail";
-import ForgotEmailSubmit from "./components/ForgotEmailSubmit";
+import Home from "./components/pages/Home";
+import SignUp from "./components/pages/SignUp";
+import Information from "./components/pages/Information";
+import MapLanding from "./components/pages/MapLanding";
+import ForgotEmail from "./components/pages/ForgotEmail";
+import ForgotEmailSubmit from "./components/pages/ForgotEmailSubmit";
 
 const Routes = () => (
   <Router>
