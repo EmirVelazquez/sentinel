@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import Styles from "../css/styles";
+import Styles from "./../../css/styles";
 
 class ForgotPasswordSubmit extends Component {
   goToLogin = () => {
@@ -16,7 +16,7 @@ class ForgotPasswordSubmit extends Component {
         <Text style={Styles.headerCentered}>Forgot Password</Text>
 
         <Image
-          source={require("../assets/sentinelMail.png")}
+          source={require("../../assets/sentinelMail.png")}
           style={styles.image}
         />
         <Text style={Styles.paragraphCentered}>Reset Email Sent</Text>

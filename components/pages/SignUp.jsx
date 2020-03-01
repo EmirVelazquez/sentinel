@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Image } from "react-native";
 import { Actions } from "react-native-router-flux";
-import Styles from "../css/styles";
-import Separator from "./Separator";
+import Styles from "../../css/styles";
+import Separator from "../Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
 import axios from 'axios';
@@ -28,10 +28,10 @@ class SignUp extends Component {
       .then(response => {
         console.log(response);
         // call login here to get token
-    })
+      })
       .catch(err => {
         console.log(err);
-    })
+      })
   }
 
   goToInformation = () => {
@@ -119,6 +119,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="signUpFName"
@@ -146,6 +148,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="signUpLName"
@@ -174,6 +178,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="signUpEmail"
@@ -204,6 +210,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="SignUpPassword"
@@ -226,7 +234,7 @@ class SignUp extends Component {
               Account Completion:
             </Text>
             <Image
-              source={require("../assets/completeZero.png")}
+              source={require("./../../assets/completeZero.png")}
               style={{
                 width: "100%",
                 borderRadius: 50,
