@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TextInput } from "react-native";
+import { Text, View, TextInput, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
@@ -20,7 +20,40 @@ class Home extends Component {
 
   // AsyncStorage function to store current user infomation
   //========================================================
+  // Store JWT token in async storage and render map
+  storeToken = async (token) => {
+    try {
+      await AsyncStorage.setItem('jwt', token);
+      // Render map
+      Actions.MapLanding();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  // Log in function
+  logIn() {
+    const { email, password } = this.state;
+    axios.post('https://sentinel-api.herokuapp.com/login/submit',
+      {
+        email,
+        pass: password
+      })
+      .then(response => {
+        const token = response.data.token;
+        // Email / password combination found - create jwt and render map
+        if (token) {
+          this.storeToken(token);
+        }
+        // Email doesn't exist or password is incorrect
+        else {
+          // need to inform user / turn text red
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   //========================================================
 
   //Individual onChange handlers for each part of state
@@ -53,25 +86,11 @@ class Home extends Component {
       email: this.state.email,
       password: this.state.password
     });
-    const { email, password } = this.state;
-    axios.post('https://sentinel-api.herokuapp.com/login/submit',
-      {
-        email,
-        pass: password
-      })
-      .then(response => {
-        const token = response.data;
-        console.log(token);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
+    this.logIn();
 
     //=========================================================
     //Insert logic for Authentication of characters
 
-    Actions.MapLanding();
     //=========================================================
   };
   //=========================================================

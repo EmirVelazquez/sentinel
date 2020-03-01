@@ -5,12 +5,7 @@ import Styles from "../css/styles";
 import Separator from "./Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
-<<<<<<< HEAD
 import axios from 'axios';
-=======
-import { getPlatformOrientationLockAsync } from "expo/build/ScreenOrientation/ScreenOrientation";
-// import axios from "axios";
->>>>>>> 79b41d8c4f58fceaf1e7f74e68f766d6b37031bf
 
 class SignUp extends Component {
   // Retrieving input data
@@ -22,22 +17,21 @@ class SignUp extends Component {
     hidePassword: true
   };
 
-  test() {
-    var url = "https://sentinel-api.herokuapp.com/api/user";
-    // e.preventDefault();
-    return fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
+  signUp() {
+    axios.post('https://sentinel-api.herokuapp.com/api/user',
+      {
         first_name: this.state.signUpFName,
         last_name: this.state.signUpLName,
         email: this.state.signUpEmail,
         pass: this.state.signUpPassword
       })
-    });
+      .then(response => {
+        console.log(response);
+        // call login here to get token
+    })
+      .catch(err => {
+        console.log(err);
+    })
   }
 
   goToInformation = () => {
@@ -82,7 +76,7 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     })
-    this.test()
+    this.signUp()
 
 
     // User info gets sent to database and is verified, then we send them to the maplanding page
