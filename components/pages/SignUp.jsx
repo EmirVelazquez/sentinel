@@ -14,8 +14,18 @@ class SignUp extends Component {
     signUpLName: "",
     signUpEmail: "",
     signUpPassword: "",
-    hidePassword: true
+    hidePassword: true,
   };
+
+  storeToken = async (token) => {
+    try {
+      await AsyncStorage.setItem('jwt', token);
+      // Render map
+      Actions.MapLanding();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   signUp() {
     axios.post('https://sentinel-api.herokuapp.com/api/user',
@@ -26,7 +36,30 @@ class SignUp extends Component {
         pass: this.state.signUpPassword
       })
       .then(response => {
-        // call login here to get token
+        if (response.status === 200) {
+          // need to create jwt and render map
+          // const { email, pass } = this.state;
+          // axios.post('https://sentinel-api.herokuapp.com/login/submit',
+          //   {
+          //     email,
+          //     pass
+          //   })
+          //   .then(res => {
+          //     console.log(res)
+          //     const token = res.data.token;
+          //     if (token) {
+          //       this.storeToken(token);
+          //     }
+          //     else {
+          //       console.log(token);
+          //       Actions.Home();
+          //     }
+          //   });
+        }
+        else {
+          // There was an error at sign up
+          console.log('Failed: ' + response.status);
+        }
       })
       .catch(err => {
         console.log(err);

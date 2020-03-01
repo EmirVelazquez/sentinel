@@ -17,6 +17,7 @@
     "apsl-react-native-button": "^3.1.1",
     "axios": "^0.19.2",
     "expo": "~36.0.0",
+    "expo-jwt": "^1.2.0",
     "expo-location": "^8.0.0",
     "expo-permissions": "~8.0.0",
     "react": "~16.9.0",
