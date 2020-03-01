@@ -36,7 +36,7 @@ class ForgotEmail extends Component {
       <View style={Styles.container}>
         <Text style={Styles.header}>Forgot Password</Text>
         <Text style={Styles.paragraph}>
-          Forgot the keys to the house huh? Don't worry, we've all been there.
+          Forgot the keys to the house, huh? Don't worry, we've all been there.
           Enter your email below, we'll send you a reset link.
         </Text>
 
