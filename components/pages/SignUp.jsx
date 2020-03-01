@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, Image, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
-import Styles from "../css/styles";
-import Separator from "./Separator";
+import Styles from "../../css/styles";
+import Separator from "../Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
-import { getPlatformOrientationLockAsync } from "expo/build/ScreenOrientation/ScreenOrientation";
-// import axios from "axios";
+import axios from 'axios';
 
 class SignUp extends Component {
   // Retrieving input data
@@ -18,37 +17,21 @@ class SignUp extends Component {
     hidePassword: true
   };
 
-  CreateNewUser() {
-
-    // creating variable for the api call
-    var url = "https://sentinel-api.herokuapp.com/api/user";
-
-    // calling the url with fetch as a post method
-    return fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-
-        // passing state with new user informating to database
+  signUp() {
+    axios.post('https://sentinel-api.herokuapp.com/api/user',
+      {
         first_name: this.state.signUpFName,
         last_name: this.state.signUpLName,
         email: this.state.signUpEmail,
         pass: this.state.signUpPassword
       })
-    });
-    this._storeData();
-  }
-
-  // Async function to store new user email in asyncStorage
-  _storeData = async () => {
-    try {
-      await AsyncStorage.setItem('UserEmail', this.state.signUpEmail);
-    } catch (error) {
-      console.log(error);
-    }
+      .then(response => {
+        console.log(response);
+        // call login here to get token
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   goToInformation = () => {
@@ -93,7 +76,7 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     })
-    this.CreateNewUser()
+    this.signUp()
 
 
     // User info gets sent to database and is verified, then we send them to the maplanding page
@@ -136,6 +119,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="signUpFName"
@@ -163,6 +148,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="signUpLName"
@@ -191,6 +178,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="signUpEmail"
@@ -221,6 +210,8 @@ class SignUp extends Component {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
+                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
+                height: 30,
                 color: "white"
               }}
               name="SignUpPassword"
@@ -243,7 +234,7 @@ class SignUp extends Component {
               Account Completion:
             </Text>
             <Image
-              source={require("../assets/completeZero.png")}
+              source={require("./../../assets/completeZero.png")}
               style={{
                 width: "100%",
                 borderRadius: 50,

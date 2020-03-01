@@ -3,10 +3,9 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { Text, View, Slider, TouchableOpacity, Dimensions } from "react-native";
 import Button from "apsl-react-native-button";
-import Styles from "../css/styles";
+import Styles from "./../../css/styles";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import { } from "@expo/vector-icons";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
 
 class MapLanding extends Component {
