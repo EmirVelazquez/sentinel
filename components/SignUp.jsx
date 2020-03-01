@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  AsyncStorage
-} from "react-native";
+import { View, Text, TextInput, Image } from "react-native";
 import { Actions } from "react-native-router-flux";
-
 import Styles from "../css/styles";
 import Separator from "./Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
+import Button from "apsl-react-native-button";
+import { getPlatformOrientationLockAsync } from "expo/build/ScreenOrientation/ScreenOrientation";
+// import axios from "axios";
 
 class SignUp extends Component {
   // Retrieving input data
@@ -21,6 +17,24 @@ class SignUp extends Component {
     signUpPassword: "",
     hidePassword: true
   };
+
+  test() {
+    var url = "https://sentinel-api.herokuapp.com/api/user";
+    // e.preventDefault();
+    return fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        first_name: this.state.signUpFName,
+        last_name: this.state.signUpLName,
+        email: this.state.signUpEmail,
+        pass: this.state.signUpPassword
+      })
+    });
+  }
 
   goToInformation = () => {
     Actions.Information();
@@ -63,7 +77,10 @@ class SignUp extends Component {
     this.setState({
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
-    });
+    })
+    this.test()
+
+
     // User info gets sent to database and is verified, then we send them to the maplanding page
     Actions.MapLanding();
   };
@@ -74,64 +91,94 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={Styles.container}>
-        <ScrollView>
-          <KeyboardAvoidingView style={Styles.kbav} behavior="position">
-            <Text style={Styles.header}>Welcome!</Text>
-            <Text style={Styles.paragraph}>
-              Please help us with some details to create your account
-            </Text>
+      <ScrollView>
+        <View style={Styles.container}>
+          <Text style={Styles.header}>Welcome!</Text>
+          <Text style={Styles.paragraph}>
+            Please help us with some details to create your account
+          </Text>
 
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
 
+          <View
+            style={{
+              height: 60,
+              width: "115%",
+              backgroundColor: "rgb(53,53,53)",
+              color: "white",
+              borderRadius: 5,
+              alignSelf: "center",
+              marginBottom: 10
+            }}
+          >
+            <Text style={Styles.inputText}>First Name</Text>
             <TextInput
-              name="signUpFName"
-              placeholder="First Name"
               style={{
-                height: 45,
-                backgroundColor: "rgb(53,53,53)",
-                color: "white",
-                borderRadius: 5
+                marginLeft: 12,
+                marginBottom: 16,
+                fontSize: 18,
+                color: "white"
               }}
+              name="signUpFName"
               returnKeyType="next"
               onChangeText={this.handleSignUpFNameChange}
               signUpFName={this.state.signUpFName}
               onSubmitEditing={() => this.LNameInput.focus()}
             />
+          </View>
 
-            <Separator />
-
+          <View
+            style={{
+              height: 60,
+              width: "115%",
+              backgroundColor: "rgb(53,53,53)",
+              color: "white",
+              borderRadius: 5,
+              alignSelf: "center",
+              marginBottom: 10
+            }}
+          >
+            <Text style={Styles.inputText}>Last Name</Text>
             <TextInput
-              name="signUpLName"
-              placeholder="Last Name"
               style={{
-                height: 45,
-                backgroundColor: "rgb(53,53,53)",
-                color: "white",
-                borderRadius: 5
+                marginLeft: 12,
+                marginBottom: 16,
+                fontSize: 18,
+                color: "white"
               }}
+              name="signUpLName"
               returnKeyType="next"
               onChangeText={this.handleSignUpLNameChange}
               signUpLName={this.state.signUpLName}
               onSubmitEditing={() => this.emailInput.focus()}
               ref={input => (this.LNameInput = input)}
             />
+          </View>
 
-            <Separator />
-
+          <View
+            style={{
+              height: 60,
+              width: "115%",
+              backgroundColor: "rgb(53,53,53)",
+              color: "white",
+              borderRadius: 5,
+              alignSelf: "center",
+              marginBottom: 10
+            }}
+          >
+            <Text style={Styles.inputText}>Email</Text>
             <TextInput
-              name="signUpEmail"
-              placeholder="Email"
               style={{
-                height: 45,
-                backgroundColor: "rgb(53,53,53)",
-                color: "white",
-                borderRadius: 5
+                marginLeft: 12,
+                marginBottom: 16,
+                fontSize: 18,
+                color: "white"
               }}
+              name="signUpEmail"
               autoCapitalize="none"
               returnKeyType="next"
               onChangeText={this.handleSignupEmailChange}
@@ -140,66 +187,99 @@ class SignUp extends Component {
               onSubmitEditing={() => this.passwordInput.focus()}
               ref={input => (this.emailInput = input)}
             />
+          </View>
 
-            <Separator />
-
+          <View
+            style={{
+              height: 60,
+              width: "115%",
+              backgroundColor: "rgb(53,53,53)",
+              color: "white",
+              borderRadius: 5,
+              alignSelf: "center",
+              marginBottom: 22
+            }}
+          >
+            <Text style={Styles.inputText}>Password</Text>
             <TextInput
-              name="SignUpPassword"
-              placeholder="Password"
               style={{
-                height: 45,
-                backgroundColor: "rgb(53,53,53)",
-                color: "white",
-                borderRadius: 5
+                marginLeft: 12,
+                marginBottom: 16,
+                fontSize: 18,
+                color: "white"
               }}
+              name="SignUpPassword"
               returnKeyType="go"
               onChangeText={this.handleSignUpPasswordChange}
               signUpPassword={this.state.signUpPassword}
               secureTextEntry={this.state.hidePassword}
               ref={input => (this.passwordInput = input)}
             />
-
-            <Separator />
-            <Separator />
-
-            <TouchableOpacity
-              style={Styles.button}
-              onPress={this.handleFormSubmit}
+          </View>
+          <View style={{ width: "115%", alignSelf: "center" }}>
+            <Text
+              style={{
+                color: "#8D8C8C",
+                marginBottom: 11,
+                marginLeft: 12,
+                fontSize: 12
+              }}
             >
-              <Text style={Styles.buttonText}>Submit</Text>
-            </TouchableOpacity>
-
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-            <Separator />
-          </KeyboardAvoidingView>
-        </ScrollView>
-        <View style={{ position: "absolute", left: 0, right: 0, bottom: 10 }}>
-          <TouchableOpacity
-            style={Styles.smButton}
-            onPress={this.goToInformation}
-          >
-            <Text style={Styles.smButtonText}>
-              How will we use your information? Learn More
+              Account Completion:
             </Text>
-          </TouchableOpacity>
+            <Image
+              source={require("../assets/completeZero.png")}
+              style={{
+                width: "100%",
+                borderRadius: 50,
+                height: 8,
+                marginBottom: 31
+              }}
+            ></Image>
+          </View>
+          <Button
+            style={{
+              height: 50,
+              width: "115%",
+              alignSelf: "center",
+              borderRadius: 50,
+              backgroundColor: "#1F4CC6",
+              marginBottom: 50
+            }}
+            onPress={this.handleFormSubmit}
+          >
+            <Text style={Styles.buttonText}>Submit</Text>
+          </Button>
+
+          <View style={Styles.smContainerView}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#121212",
+                fontSize: 13,
+                color: "rgb(90,89,89)",
+                width: "17%",
+                left: "65%"
+              }}
+              onPress={this.goToInformation}
+            >
+              <Text style={{ fontSize: 13, color: "#1BCBC0", bottom: 0.5 }}>
+                Learn More
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 13,
+                left: "15%",
+                top: "-50%",
+                color: "#8D8C8C",
+                width: "49%"
+              }}
+            >
+              How will we use your information?
+            </Text>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
