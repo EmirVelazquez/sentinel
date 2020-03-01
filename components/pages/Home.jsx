@@ -6,10 +6,10 @@ import Button from "apsl-react-native-button";
 import axios from 'axios';
 import JWT from 'expo-jwt';
 
-import Logo from "./Logo";
+import Logo from "../Logo";
 
-import Styles from "../css/styles";
-import Separator from "./Separator";
+import Styles from "../../css/styles";
+import Separator from "../Separator";
 
 class Home extends Component {
   //Initializing state to capture input

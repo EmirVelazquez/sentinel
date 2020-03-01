@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@expo/android-manifest": "^0.2.5",
-    "@react-native-community/masked-view": "^0.1.6",
+    "@react-native-community/masked-view": "0.1.5",
     "@react-navigation/drawer": "^5.0.5",
     "@react-navigation/material-bottom-tabs": "^5.0.5",
     "@react-navigation/native": "^5.0.5",
