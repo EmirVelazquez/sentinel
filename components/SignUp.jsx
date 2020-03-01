@@ -18,9 +18,12 @@ class SignUp extends Component {
     hidePassword: true
   };
 
-  test() {
+  CreateNewUser() {
+
+    // creating variable for the api call
     var url = "https://sentinel-api.herokuapp.com/api/user";
-    // e.preventDefault();
+
+    // calling the url with fetch as a post method
     return fetch(url, {
       method: "POST",
       headers: {
@@ -28,12 +31,24 @@ class SignUp extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+
+        // passing state with new user informating to database
         first_name: this.state.signUpFName,
         last_name: this.state.signUpLName,
         email: this.state.signUpEmail,
         pass: this.state.signUpPassword
       })
     });
+    this._storeData();
+  }
+
+  // Async function to store new user email in asyncStorage
+  _storeData = async () => {
+    try {
+      await AsyncStorage.setItem('UserEmail', this.state.signUpEmail);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   goToInformation = () => {
@@ -78,7 +93,7 @@ class SignUp extends Component {
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
     })
-    this.test()
+    this.CreateNewUser()
 
 
     // User info gets sent to database and is verified, then we send them to the maplanding page
