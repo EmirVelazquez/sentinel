@@ -4,6 +4,7 @@ import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
 import axios from 'axios';
+import JWT from 'expo-jwt';
 
 import Logo from "./Logo";
 
@@ -15,7 +16,8 @@ class Home extends Component {
   state = {
     email: "",
     password: "",
-    hidePassword: true
+    hidePassword: true,
+    loggedIn: false
   };
 
   // AsyncStorage function to store current user infomation
@@ -29,6 +31,23 @@ class Home extends Component {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  // Pull token from asyncstorage and decode - gets id and email
+  getToken = _ => {
+    AsyncStorage.getItem('jwt', (err, token) => {
+      if (!err) {
+        const key = 'secretkey';
+        if (JWT.decode(token, key)) {
+          this.setState({
+            loggedIn: true
+          });
+          if (this.state.loggedIn) {
+            Actions.MapLanding();
+          }
+        }
+      }
+    })
   }
 
   // Log in function
@@ -108,6 +127,10 @@ class Home extends Component {
     Actions.SignUp();
   };
   //=========================================================
+
+  componentDidMount = _ => {
+    this.getToken();
+  }
 
   render() {
     return (
