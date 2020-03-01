@@ -3,6 +3,7 @@ import { Text, View, TextInput } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
+import axios from 'axios';
 
 import Logo from "./Logo";
 
@@ -48,22 +49,28 @@ class Home extends Component {
 
   // State can be passed to the backend for auth -Justin
   handleFormSubmit = event => {
-    fetch('https://sentinel-api.herokuapp.com/login/submit',
-      {
-        method: 'POST',
-        body: this.state
-      })
-      .then(res => {
-        console.log(res.status);
-      });
-    // console.log(this.state);
     this.setState({
       email: this.state.email,
       password: this.state.password
     });
+    const { email, password } = this.state;
+    axios.post('https://sentinel-api.herokuapp.com/login/submit',
+      {
+        email,
+        pass: password
+      })
+      .then(response => {
+        const token = response.data;
+        console.log(token);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
 
     //=========================================================
     //Insert logic for Authentication of characters
+
     Actions.MapLanding();
     //=========================================================
   };

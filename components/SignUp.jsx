@@ -5,6 +5,7 @@ import Styles from "../css/styles";
 import Separator from "./Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
+import axios from 'axios';
 
 class SignUp extends Component {
   // Retrieving input data
