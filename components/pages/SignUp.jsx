@@ -6,16 +6,21 @@ import Separator from "../Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
 import axios from 'axios';
+import ValidationComponent from 'react-native-form-validator';
 
-class SignUp extends Component {
-  // Retrieving input data
-  state = {
-    signUpFName: "",
-    signUpLName: "",
-    signUpEmail: "",
-    signUpPassword: "",
-    hidePassword: true,
-  };
+class SignUp extends ValidationComponent {
+
+  constructor(props) {
+    super(props);
+    // Retrieving input data
+    state = {
+      signUpFName: "",
+      signUpLName: "",
+      signUpEmail: "",
+      signUpPassword: "",
+      hidePassword: true,
+    }
+  }
 
   // Store JWT
   storeToken = async (token) => {
@@ -104,15 +109,42 @@ class SignUp extends Component {
   };
   //=========================================================
 
-  // State can be passed to the backend for auth -Justin
-  handleFormSubmit = event => {
-    this.setState({
-      signUpEmail: this.state.signUpEmail,
-      signUpPassword: this.state.signUpPassword
-    })
-    this.signUp();
-    //passed the email to the next page
-    this.storeEmail();
+  // Form submit
+  handleFormSubmit = _ => {
+
+    // Logic for Authentication of characters
+    //=========================================================
+    // validate isn't working for blank fields on this page for some reason
+    // it worked fine on home.jsx, this is the workaround:
+    if (this.state.signUpFName === undefined || this.state.signUpLName === undefined || this.state.signUpEmail === undefined || this.state.signUpPassword === undefined) {
+      console.log('All fields are required.')
+      // notify to fill in all fields
+    }
+    else {
+      this.validate({
+        signUpFName: { minlength: 2, maxlength: 16, required: true },
+        signUpLName: { minlength: 2, maxlength: 16, required: true },
+        signUpEmail: { email: true, required: true },
+        signUpPassword: { minlength: 3, maxlength: 24, required: true },
+      });
+      if (this.isFormValid()) {
+        // Add info to db, get token and store in asyncstorage
+        this.signUp();
+        // Stores email in asyncstorage
+        this.storeEmail();
+      }
+      else {
+        console.log('Entries not valid:');
+        // form error styling below
+        const fieldArray = ['signUpFName', 'signUpLName', 'signUpEmail', 'signUpPassword'];
+        fieldArray.map((field, i) => {
+          if (this.isFieldInError(field)) {
+            // displaying all invalid fields
+            console.log(field);
+          }
+        });
+      }
+    }
   };
 
   managePasswordVisability = () => {

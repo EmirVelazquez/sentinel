@@ -5,13 +5,14 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
 import axios from 'axios';
 import JWT from 'expo-jwt';
+import ValidationComponent from 'react-native-form-validator';
 
 import Logo from "../Logo";
 
 import Styles from "../../css/styles";
 import Separator from "../Separator";
 
-class Home extends Component {
+class Home extends ValidationComponent {
   //Initializing state to capture input
   state = {
     email: "",
@@ -99,18 +100,27 @@ class Home extends Component {
   };
   //=========================================================
 
-  // State can be passed to the backend for auth -Justin
-  handleFormSubmit = event => {
-    this.setState({
-      email: this.state.email,
-      password: this.state.password
+  // Form submit
+  handleFormSubmit = _ => {
+    this.validate({
+      email: { email: true, required: true },
+      password: { minlength: 3, maxlength: 24, required: true },
     });
-    this.logIn();
-
-    //=========================================================
-    //Insert logic for Authentication of characters
-
-    //=========================================================
+    if (this.isFormValid()) {
+      // Get token and send to map
+      this.logIn();
+    }
+    else {
+      console.log('Entries not valid:');
+      // form error styling below
+      const fieldArray = ['email', 'password'];
+      fieldArray.map((field, i) => {
+        if (this.isFieldInError(field)) {
+          // displaying all invalid fields
+          console.log(field);
+        }
+      });
+    }
   };
   //=========================================================
   //Forgot email route:
