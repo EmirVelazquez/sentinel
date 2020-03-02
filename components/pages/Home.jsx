@@ -25,7 +25,7 @@ class Home extends Component {
   // Store JWT token in async storage and render map
   storeToken = async (token) => {
     try {
-      await AsyncStorage.setItem('jwt', token);
+      await AsyncStorage.multiSet([['jwt', token], ['email', this.state.email]]);
       // Render map
       Actions.MapLanding();
     } catch (error) {
@@ -47,7 +47,7 @@ class Home extends Component {
           }
         }
       }
-    })
+    });
   }
 
   // Log in function

@@ -17,8 +17,10 @@ class SignUp extends Component {
     hidePassword: true,
   };
 
+  // Store JWT
   storeToken = async (token) => {
     try {
+      console.log('Storing jwt');
       await AsyncStorage.setItem('jwt', token);
       // Render map
       Actions.MapLanding();
@@ -37,33 +39,22 @@ class SignUp extends Component {
       })
       .then(response => {
         if (response.status === 200) {
-          // need to create jwt and render map
-          // const { email, pass } = this.state;
-          // axios.post('https://sentinel-api.herokuapp.com/login/submit',
-          //   {
-          //     email,
-          //     pass
-          //   })
-          //   .then(res => {
-          //     console.log(res)
-          //     const token = res.data.token;
-          //     if (token) {
-          //       this.storeToken(token);
-          //     }
-          //     else {
-          //       console.log(token);
-          //       Actions.Home();
-          //     }
-          //   });
+          const email = this.state.signUpEmail;
+          const pass = this.state.signUpPassword;
+          // Send log in info, receive token
+          axios.post('https://sentinel-api.herokuapp.com/login/submit',
+            {
+              email,
+              pass
+            })
+            .then(res => {
+              const token = res.data.token;
+              if (token) {
+                this.storeToken(token);
+              }
+            });
         }
-        else {
-          // There was an error at sign up
-          console.log('Failed: ' + response.status);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
+      });
   }
 
   goToInformation = () => {
@@ -74,6 +65,7 @@ class SignUp extends Component {
   //=========================================================
 
   storeEmail = async () => {
+    console.log('Storing email');
     try {
       await AsyncStorage.setItem('email', this.state.signUpEmail);
     } catch (error) {
@@ -114,7 +106,6 @@ class SignUp extends Component {
 
   // State can be passed to the backend for auth -Justin
   handleFormSubmit = event => {
-    console.log(this.state);
     this.setState({
       signUpEmail: this.state.signUpEmail,
       signUpPassword: this.state.signUpPassword
@@ -122,10 +113,6 @@ class SignUp extends Component {
     this.signUp();
     //passed the email to the next page
     this.storeEmail();
-
-
-    // User info gets sent to database and is verified, then we send them to the maplanding page
-    Actions.MapLanding();
   };
 
   managePasswordVisability = () => {
