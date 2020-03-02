@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-import Styles from "../css/styles";
-import Separator from "./Separator";
+import Styles from "./../../css/styles";
+import Separator from "../Separator";
 import { Actions } from "react-native-router-flux";
 
 class Information extends Component {

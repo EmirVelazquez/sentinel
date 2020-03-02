@@ -1,25 +1,79 @@
 import React, { Component } from "react";
-import { Text, View, TextInput } from "react-native";
+import { Text, View, TextInput, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
+import axios from 'axios';
+import JWT from 'expo-jwt';
+import ValidationComponent from 'react-native-form-validator';
 
-import Logo from "./Logo";
+import Logo from "../Logo";
 
-import Styles from "../css/styles";
-import Separator from "./Separator";
+import Styles from "../../css/styles";
+import Separator from "../Separator";
 
-class Home extends Component {
+class Home extends ValidationComponent {
   //Initializing state to capture input
   state = {
     email: "",
     password: "",
-    hidePassword: true
+    hidePassword: true,
+    loggedIn: false
   };
 
   // AsyncStorage function to store current user infomation
   //========================================================
+  // Store JWT token in async storage and render map
+  storeToken = async (token) => {
+    try {
+      await AsyncStorage.multiSet([['jwt', token], ['email', this.state.email]]);
+      // Render map
+      Actions.MapLanding();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  // Pull token from asyncstorage and decode - gets id and email
+  getToken = _ => {
+    AsyncStorage.getItem('jwt', (err, token) => {
+      if (!err) {
+        const key = 'secretkey';
+        if (JWT.decode(token, key)) {
+          this.setState({
+            loggedIn: true
+          });
+          if (this.state.loggedIn) {
+            Actions.MapLanding();
+          }
+        }
+      }
+    });
+  }
+
+  // Log in function
+  logIn() {
+    const { email, password } = this.state;
+    axios.post('https://sentinel-api.herokuapp.com/login/submit',
+      {
+        email,
+        pass: password
+      })
+      .then(response => {
+        const token = response.data.token;
+        // Email / password combination found - create jwt and render map
+        if (token) {
+          this.storeToken(token);
+        }
+        // Email doesn't exist or password is incorrect
+        else {
+          // need to inform user / turn text red
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   //========================================================
 
   //Individual onChange handlers for each part of state
@@ -46,18 +100,27 @@ class Home extends Component {
   };
   //=========================================================
 
-  // State can be passed to the backend for auth -Justin
-  handleFormSubmit = event => {
-    console.log(this.state);
-    this.setState({
-      email: this.state.email,
-      password: this.state.password
+  // Form submit
+  handleFormSubmit = _ => {
+    this.validate({
+      email: { email: true, required: true },
+      password: { minlength: 3, maxlength: 24, required: true },
     });
-
-    //=========================================================
-    //Insert logic for Authentication of characters
-    Actions.MapLanding();
-    //=========================================================
+    if (this.isFormValid()) {
+      // Get token and send to map
+      this.logIn();
+    }
+    else {
+      console.log('Entries not valid:');
+      // form error styling below
+      const fieldArray = ['email', 'password'];
+      fieldArray.map((field, i) => {
+        if (this.isFieldInError(field)) {
+          // displaying all invalid fields
+          console.log(field);
+        }
+      });
+    }
   };
   //=========================================================
   //Forgot email route:
@@ -75,9 +138,12 @@ class Home extends Component {
   };
   //=========================================================
 
+  componentDidMount = _ => {
+    this.getToken();
+  }
+
   render() {
     return (
-      // <KeyboardAvoidingView behavior="position">
       <ScrollView>
         <View style={Styles.container}>
           <Logo />
@@ -214,7 +280,6 @@ class Home extends Component {
           </View>
         </View>
       </ScrollView>
-      // </KeyboardAvoidingView>
     );
   }
 }

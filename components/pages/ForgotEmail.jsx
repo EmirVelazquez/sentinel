@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, TextInput } from "react-native";
 import { Actions } from "react-native-router-flux";
-import Styles from "../css/styles";
-import Separator from "./Separator";
+import Styles from "./../../css/styles";
+import Separator from "../Separator";
 import Button from "apsl-react-native-button";
 
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 class ForgotEmail extends Component {
   state = {
