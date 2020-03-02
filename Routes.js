@@ -6,6 +6,7 @@ import Information from "./components/pages/Information";
 import MapLanding from "./components/pages/MapLanding";
 import ForgotEmail from "./components/pages/ForgotEmail";
 import ForgotEmailSubmit from "./components/pages/ForgotEmailSubmit";
+import NewMember from "./components/NewMember";
 
 const Routes = () => (
   <Router>
@@ -16,6 +17,7 @@ const Routes = () => (
       <Scene key="MapLanding" component={MapLanding} hideNavBar />
       <Scene key="ForgotEmail" component={ForgotEmail} hideNavBar />
       <Scene key="ForgotEmailSubmit" component={ForgotEmailSubmit} hideNavBar />
+      {/* <Scene key="NewMember" component={NewMember} hideNavBar /> */}
     </Stack>
   </Router>
 );
