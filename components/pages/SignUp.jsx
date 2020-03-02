@@ -22,7 +22,6 @@ class SignUp extends ValidationComponent {
     }
   }
 
-
   // Store JWT
   storeToken = async (token) => {
     try {
@@ -110,9 +109,13 @@ class SignUp extends ValidationComponent {
   };
   //=========================================================
 
-  // State can be passed to the backend for auth -Justin
+  // Form submit
   handleFormSubmit = _ => {
 
+    // Logic for Authentication of characters
+    //=========================================================
+    // validate isn't working for blank fields on this page for some reason
+    // it worked fine on home.jsx, this is the workaround:
     if (this.state.signUpFName === undefined || this.state.signUpLName === undefined || this.state.signUpEmail === undefined || this.state.signUpPassword === undefined) {
       console.log('All fields are required.')
       // notify to fill in all fields
@@ -123,7 +126,7 @@ class SignUp extends ValidationComponent {
         signUpLName: { minlength: 2, maxlength: 16, required: true },
         signUpEmail: { email: true, required: true },
         signUpPassword: { minlength: 3, maxlength: 24, required: true },
-      })
+      });
       if (this.isFormValid()) {
         // Add info to db, get token and store in asyncstorage
         this.signUp();
