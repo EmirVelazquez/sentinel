@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, Fragment } from "react-native";
+import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView } from "react-native";
 import Styles from "./../../css/styles";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
@@ -43,6 +43,24 @@ class MapLanding extends Component {
           latitude: 32.8252
         },
         pinColor: "#7F1DE1"
+      },
+      {
+        first_name: "Luke",
+        last_name: "SkyWalker",
+        coordinate: {
+          longitude: -96.7912,
+          latitude: 32.8552
+        },
+        pinColor: "#E9058E"
+      },
+      {
+        first_name: "Rick",
+        last_name: "Astley",
+        coordinate: {
+          longitude: -96.7712,
+          latitude: 32.8152
+        },
+        pinColor: "#D74D00"
       }
     ],
     waypoint: {
@@ -193,13 +211,37 @@ class MapLanding extends Component {
             }}
           >
             {/* THIS IS MAIN USER MARKER */}
-            <MapView.Marker
+            {/* <MapView.Marker
               title={this.state.user.name}
               key="Main user"
               coordinate={this.state.user.coordinate}
               pinColor={this.state.user.pinColor}
-            />
+            /> */}
           </MapView>
+          <View style={{ // This is the Navbutton container
+            position: "absolute",
+            zIndex: 2,
+            bottom: Dimensions.get("window").height - 75,
+            right: Dimensions.get("window").width - 65
+          }}>
+            <TouchableOpacity style={{
+              backgroundColor: "#121212",
+              opacity: 0.8,
+              borderRadius: 4,
+              height: 48, width: 54,
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
+              <Image // Hamburger Icon
+                source={require("../../assets/openNav.png")}
+                style={{
+                  width: 22,
+                  height: 16.2,
+                  marginLeft: "auto",
+                  marginRight: "auto"
+                }} />
+            </TouchableOpacity>
+          </View>
           <View style={Styles.noUsersContainer}>
             <TouchableOpacity
               style={{
@@ -209,7 +251,8 @@ class MapLanding extends Component {
                 alignSelf: "center",
                 borderRadius: 50,
                 backgroundColor: "#1F4CC6",
-                top: 30,
+                marginTop: 20,
+                marginBottom: 20,
                 paddingLeft: 50,
                 paddingRight: 50
               }}
@@ -237,23 +280,23 @@ class MapLanding extends Component {
             }}
           >
             {/* THIS IS MAIN USER MARKER */}
-            <MapView.Marker
+            {/* <MapView.Marker
               title={this.state.user.name}
               key="Main user"
               coordinate={this.state.user.coordinate}
               pinColor={this.state.user.pinColor}
-            />
+            /> */}
 
             {/* THIS IS WAYPOINT MARKER */}
-            <MapView.Marker
+            {/* <MapView.Marker
               title={this.state.waypoint.name}
               key="waypoint"
               coordinate={this.state.waypoint.coordinate}
               pinColor={this.state.waypoint.pinColor}
-            />
+            /> */}
 
             {/* THIS IS THE GROUP MEMBERS MARKER */}
-            {this.state.group.map((member, i) => {
+            {/* {this.state.group.map((member, i) => {
               return (
                 <MapView.Marker
                   title={member.name}
@@ -262,11 +305,36 @@ class MapLanding extends Component {
                   pinColor={member.pinColor}
                 />
               );
-            })}
+            })} */}
 
             {/* {mapViewDirection} */}
           </MapView>
-          <View // Container to hold buttons
+
+          <View style={{ // This is the Navbutton container
+            position: "absolute",
+            zIndex: 2,
+            bottom: Dimensions.get("window").height - 75,
+            right: Dimensions.get("window").width - 65
+          }}>
+            <TouchableOpacity style={{
+              backgroundColor: "#121212",
+              opacity: 0.8,
+              borderRadius: 4,
+              height: 48, width: 54,
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
+              <Image // Hamburger Icon
+                source={require("../../assets/openNav.png")}
+                style={{
+                  width: 22,
+                  height: 16.2,
+                  marginLeft: "auto",
+                  marginRight: "auto"
+                }} />
+            </TouchableOpacity>
+          </View>
+          <View // Container to hold buttons for adding waypoints & new group members
             style={{
               position: "absolute",
               top: Dimensions.get("window").height - 360,
@@ -306,7 +374,11 @@ class MapLanding extends Component {
             <View style={Styles.textContainer}>
               <Text style={Styles.mapUI}> Group Members</Text>
             </View>
-            <View style={Styles.family}>
+            <ScrollView
+              style={Styles.family}
+              horizontal={true}
+              snapToAlignment={"center"}
+              decelerationRate={0}>
               {this.state.group.map((member, i) => {
                 return (
                   <TouchableOpacity
@@ -333,16 +405,16 @@ class MapLanding extends Component {
                   </TouchableOpacity>
                 );
               })}
-              <Slider
-                style={Styles.switch}
-                step={1}
-                thumbTintColor="red"
-                minimumTrackTintColor="red"
-                minimumValue={0}
-                maximumValue={1}
-                onSlidingComplete={this.Emergency}
-              ></Slider>
-            </View>
+            </ScrollView>
+            <Slider
+              style={Styles.switch}
+              step={1}
+              thumbTintColor="red"
+              minimumTrackTintColor="red"
+              minimumValue={0}
+              maximumValue={1}
+              onSlidingComplete={this.Emergency}
+            ></Slider>
           </View>
         </>
         // Closing the fragment </>
