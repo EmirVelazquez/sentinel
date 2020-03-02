@@ -102,15 +102,18 @@ const Styles = {
   modalContainer: {
     paddingLeft: 50,
     paddingRight: 50,
-    paddingTop: 10,
-    flex: 1,
-    // backgroundColor: "#121212",
-    backgroundColor: "red",
-    width: Dimensions.get("window").width - 100,
-    height: Dimensions.get("window").height - 500,
+    top: 200,
+    width: Dimensions.get("window").width - 50,
+    alignSelf: "center",
+    backgroundColor: "#121212",
+    // opacity: 1.5
+    borderRadius: 30
+  },
 
-    alignSelf: "center"
-    // backgroundColor: "#121212"
+  modalContainerBackground: {
+    // opacity: 0.5,
+    backgroundColor: "#00000080",
+    height: Dimensions.get("window").height
   },
 
   noUsers: {
