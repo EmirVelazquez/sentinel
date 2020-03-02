@@ -22,11 +22,9 @@ const Styles = {
 
   family: {
     width: Dimensions.get("window").width,
-    flex: 0.4,
-    flexDirection: "row",
-    justifyContent: "center",
-    top: 20
-    // backgroundColor: "white"
+    alignSelf: "center",
+    paddingLeft: "2.5%",
+    paddingRight: "2.5%"
   },
 
   footer: {
@@ -169,7 +167,7 @@ const Styles = {
   users: {
     width: 60,
     height: 60,
-    marginRight: 27
+    marginRight: 22
   },
   userText: {
     textAlign: "center",
