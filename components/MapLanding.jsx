@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import Slider from "react-native-elements";
 import MapViewDirections from "react-native-maps-directions";
-import { Text, View, Slider, TouchableOpacity, Dimensions } from "react-native";
+import { Text, View, TouchableOpacity, Dimensions } from "react-native";
 import Button from "apsl-react-native-button";
 import Styles from "../css/styles";
+
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import {} from "@expo/vector-icons";
@@ -17,22 +19,22 @@ class MapLanding extends Component {
       pinColor: "#ff0000"
     },
     group: [
-      // {
-      //   name: "GroupMem1",
-      //   coordinate: {
-      //     longitude: -96.78,
-      //     latitude: 32.7844
-      //   },
-      //   pinColor: "#ffff33"
-      // },
-      // {
-      //   name: "GroupMem2",
-      //   coordinate: {
-      //     longitude: -96.8419,
-      //     latitude: 32.8173
-      //   },
-      //   pinColor: "#1bcbc0"
-      // }
+      {
+        name: "GroupMem1",
+        coordinate: {
+          longitude: -96.78,
+          latitude: 32.7844
+        },
+        pinColor: "#ffff33"
+      },
+      {
+        name: "GroupMem2",
+        coordinate: {
+          longitude: -96.8419,
+          latitude: 32.8173
+        },
+        pinColor: "#1bcbc0"
+      }
     ],
     waypoint: {
       name: "waypoint",
@@ -48,47 +50,47 @@ class MapLanding extends Component {
     }
   };
 
-  // componentDidMount() {
-  //   if (Platform.OS === "android" && !Constants.isDevice) {
-  //     this.setState({
-  //       errorMessage:
-  //         "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-  //     });
-  //   } else {
-  //     this._getLocationAsync();
-  //   }
-  // }
+  componentDidMount() {
+    if (Platform.OS === "android" && !Constants.isDevice) {
+      this.setState({
+        errorMessage:
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+      });
+    } else {
+      this._getLocationAsync();
+    }
+  }
 
-  // _getLocationAsync = async () => {
-  //   let { status } = await Permissions.askAsync(Permissions.LOCATION);
-  //   if (status !== "granted") {
-  //     this.setState({
-  //       errorMessage: "Permission to access location was denied"
-  //     });
-  //   }
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== "granted") {
+      this.setState({
+        errorMessage: "Permission to access location was denied"
+      });
+    }
 
-  //   let location = await Location.getCurrentPositionAsync({
-  //     enableHighAccuracy: true
-  //   });
-  //   this.setState({ location });
-  //   this.setState({
-  //     user: {
-  //       coordinate: {
-  //         latitude: this.state.location.coords.latitude,
-  //         longitude: this.state.location.coords.longitude
-  //       }
-  //     }
-  //   });
-  //   this.setState({
-  //     region: {
-  //       latitude: this.state.location.coords.latitude,
-  //       longitude: this.state.location.coords.longitude,
-  //       latitudeDelta: 0.01,
-  //       longitudeDelta: 0.35
-  //     }
-  //   });
-  //   console.log(this.state.location);
-  // };
+    let location = await Location.getCurrentPositionAsync({
+      enableHighAccuracy: true
+    });
+    this.setState({ location });
+    this.setState({
+      user: {
+        coordinate: {
+          latitude: this.state.location.coords.latitude,
+          longitude: this.state.location.coords.longitude
+        }
+      }
+    });
+    this.setState({
+      region: {
+        latitude: this.state.location.coords.latitude,
+        longitude: this.state.location.coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.35
+      }
+    });
+    console.log(this.state.location);
+  };
 
   // onPress events
   //=========================================================
@@ -184,23 +186,23 @@ class MapLanding extends Component {
           }}
         >
           {/* THIS IS MAIN USER MARKER */}
-          {/* <MapView.Marker
+          <MapView.Marker
             title={this.state.user.name}
             key="Main user"
             coordinate={this.state.user.coordinate}
             pinColor={this.state.user.pinColor}
-          /> */}
+          />
           {/* THIS IS WAYPOINT MARKER */}
-          {/* <MapView.Marker
+          <MapView.Marker
             title={this.state.waypoint.name}
             key="waypoint"
             coordinate={this.state.waypoint.coordinate}
             pinColor={this.state.waypoint.pinColor}
-          /> */}
-          {/* <Button style={Styles.Nav} title="Nav"></Button> */}
+          />
+          <Button style={Styles.Nav} title="Nav"></Button>
 
           {/* THIS IS THE GROUP MEMBERS MARKER */}
-          {/* {this.state.group.map((member, i) => {
+          {this.state.group.map((member, i) => {
             return (
               <MapView.Marker
                 title={member.name}
@@ -209,7 +211,7 @@ class MapLanding extends Component {
                 pinColor={member.pinColor}
               />
             );
-          })} */}
+          })}
 
           {/* {mapViewDirection} */}
         </MapView>
@@ -228,23 +230,23 @@ class MapLanding extends Component {
           }}
         >
           {/* THIS IS MAIN USER MARKER */}
-          {/* <MapView.Marker
+          <MapView.Marker
             title={this.state.user.name}
             key="Main user"
             coordinate={this.state.user.coordinate}
             pinColor={this.state.user.pinColor}
-          /> */}
+          />
           {/* THIS IS WAYPOINT MARKER */}
-          {/* <MapView.Marker
+          <MapView.Marker
             title={this.state.waypoint.name}
             key="waypoint"
             coordinate={this.state.waypoint.coordinate}
             pinColor={this.state.waypoint.pinColor}
-          /> */}
-          {/* <Button style={Styles.Nav} title="Nav"></Button> */}
+          />
+          <Button style={Styles.Nav} title="Nav"></Button>
 
           {/* THIS IS THE GROUP MEMBERS MARKER */}
-          {/* {this.state.group.map((member, i) => {
+          {this.state.group.map((member, i) => {
             return (
               <MapView.Marker
                 title={member.name}
@@ -253,9 +255,9 @@ class MapLanding extends Component {
                 pinColor={member.pinColor}
               />
             );
-          })} */}
+          })}
 
-          {/* {mapViewDirection} */}
+          {mapViewDirection}
         </MapView>
       );
     }
@@ -282,28 +284,28 @@ class MapLanding extends Component {
   };
   //=========================================================
 
-  // _getLocationAsync = async () => {
-  //   const location = await Location.watchPositionAsync(
-  //     {
-  //       enableHighAccuracy: true,
-  //       distanceInterval: 250,
-  //     },
-  //     newLocation => {
-  //       let coords = newLocation.coords;
+  _getLocationAsync = async () => {
+    const location = await Location.watchPositionAsync(
+      {
+        enableHighAccuracy: true,
+        distanceInterval: 250
+      },
+      newLocation => {
+        let coords = newLocation.coords;
 
-  //       this.setState({
-  //         location: {
-  //           latitude: coords.latitude,
-  //           longitude: coords.longitude,
-  //           latitudeDelta: 0.08,
-  //           longitudeDelta: 0.45
-  //         }
-  //       });
-  //     },
-  //     error => console.log(error)
-  //   );
-  //   return location;
-  // };
+        this.setState({
+          location: {
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            latitudeDelta: 0.08,
+            longitudeDelta: 0.45
+          }
+        });
+      },
+      error => console.log(error)
+    );
+    return location;
+  };
 
   Emergency = event => {
     if (event == 0) {
