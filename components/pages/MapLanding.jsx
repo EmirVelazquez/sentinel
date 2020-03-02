@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage } from "react-native";
+import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image } from "react-native";
 import Button from "apsl-react-native-button";
 import Styles from "./../../css/styles";
 import * as Location from "expo-location";
@@ -16,22 +16,22 @@ class MapLanding extends Component {
       pinColor: "#ff0000"
     },
     group: [
-      // {
-      //   name: "GroupMem1",
-      //   coordinate: {
-      //     longitude: -96.78,
-      //     latitude: 32.7844
-      //   },
-      //   pinColor: "#ffff33"
-      // },
-      // {
-      //   name: "GroupMem2",
-      //   coordinate: {
-      //     longitude: -96.8419,
-      //     latitude: 32.8173
-      //   },
-      //   pinColor: "#1bcbc0"
-      // }
+      {
+        name: "GroupMem1",
+        coordinate: {
+          longitude: -96.78,
+          latitude: 32.7844
+        },
+        pinColor: "#ffff33"
+      },
+      {
+        name: "GroupMem2",
+        coordinate: {
+          longitude: -96.8419,
+          latitude: 32.8173
+        },
+        pinColor: "#1bcbc0"
+      }
     ],
     waypoint: {
       name: "waypoint",
@@ -127,6 +127,14 @@ class MapLanding extends Component {
   CreateGroupModal = () => {
     console.log("A User is creating a new group");
   };
+  // Method for user to add a waypoint
+  addWayPoint = () => {
+    console.log("User Wants to add a Waypoint"); // Currently logging press until Cole Adds functionality - Emir
+  }
+  // Method for user to add group member
+  addGroupMember = () => {
+    console.log("User Wants to add a group member"); // Currently logging after press
+  }
   //=========================================================
 
   // Conditional Rendering
@@ -168,7 +176,7 @@ class MapLanding extends Component {
     } else {
       return (
         <View style={Styles.noUsersContainer}>
-          <Button
+          <TouchableOpacity
             style={{
               position: "absolute",
               height: 50,
@@ -183,7 +191,7 @@ class MapLanding extends Component {
             onPress={this.CreateGroupModal}
           >
             <Text style={Styles.buttonText}>Create Group</Text>
-          </Button>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -280,26 +288,52 @@ class MapLanding extends Component {
       );
     }
   };
-
+  // Method to render Waypoint Button, and Add Group Members Button
   buttonRender = () => {
     if (this.state.group[0]) {
       return (
-        <Button
+        <View // Container to hold buttons
           style={{
             position: "absolute",
-            backgroundColor: "white",
-            height: 50,
-            width: 50,
-            borderRadius: 50,
-            top: Dimensions.get("window").height * 0.54,
+            top: Dimensions.get("window").height - 450,
             left: Dimensions.get("window").width - 65
-          }}
-        />
+          }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "white",
+              height: 50,
+              width: 50,
+              borderRadius: 50,
+              marginBottom: 12,
+              shadowColor: "#000000",
+              shadowOpacity: 0.5,
+              elevation: 6,
+              shadowRadius: 5,
+              shadowOffset: { width: 1, height: 5 },
+              justifyContent: "center"
+            }}
+            onPress={this.addWayPoint}>
+            <Image source={require("../../assets/addWaypoint.png")} style={{ width: 16, height: 24, marginLeft: "auto", marginRight: "auto", marginTop: "15%" }} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "white",
+              height: 50,
+              width: 50,
+              borderRadius: 50,
+              justifyContent: "center"
+            }}>
+            <Image source={require("../../assets/addMember.png")} style={{ width: 24, height: 18, marginLeft: "auto", marginRight: "auto", marginTop: "2%" }} />
+          </TouchableOpacity>
+        </View>
+
+
       );
     } else {
       return <View style={{ backgroundColor: "transparent" }} />;
     }
   };
+
   //=========================================================
 
   // _getLocationAsync = async () => {
