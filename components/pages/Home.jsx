@@ -144,7 +144,6 @@ class Home extends ValidationComponent {
 
   render() {
     return (
-      // <KeyboardAvoidingView behavior="position">
       <ScrollView>
         <View style={Styles.container}>
           <Logo />
@@ -281,7 +280,6 @@ class Home extends ValidationComponent {
           </View>
         </View>
       </ScrollView>
-      // </KeyboardAvoidingView>
     );
   }
 }

@@ -78,25 +78,27 @@ const Styles = {
     width: Dimensions.get("window").width
   },
 
-  mapStyle: {
+  userHasGroup: {
     width: Dimensions.get("window").width,
-    height: "60%"
-    // marginTop: 30
+    height: "60%",
+    zIndex: 1,
+    marginTop: 20
   },
 
-  mapStyleNotLogged: {
+  userHasNoGroup: {
     width: Dimensions.get("window").width,
-    height: "85%"
-    // marginTop: 30
+    height: "85%",
+    marginTop: 20
   },
 
   mapUI: {
     paddingTop: "2.5%",
     paddingLeft: "2.5%",
     paddingRight: "2.5%",
-    paddingBottom: "2.5%",
+    paddingBottom: "5%",
     color: "#ffffff",
     fontSize: 17
+    // backgroundColor: "grey"
   },
 
   noUsers: {
@@ -106,7 +108,8 @@ const Styles = {
   },
 
   noUserContainer: {
-    width: Dimensions.get("window").width
+    width: Dimensions.get("window").width,
+    backgroundColor: "red"
   },
 
   paragraph: {
@@ -159,31 +162,19 @@ const Styles = {
     position: "absolute",
     left: "7%",
     right: 0,
-    top: Dimensions.get("window").height - 740,
+    top: Dimensions.get("window").height - 550,
     borderRadius: 50,
-    height: "20%"
-    // backgroundColor: "rgb(31,76,198)"
+    height: "20%",
   },
   users: {
-    // backgroundColor: "red",
-    width: 79,
-    height: 85
-  },
-  userImage: {
-    top: 5,
-    width: "80%",
-    height: "75%",
-    borderRadius: 50,
-    alignSelf: "center",
-    borderColor: "pink",
-    borderWidth: 5
+    width: 60,
+    height: 60,
+    marginRight: 27
   },
   userText: {
     textAlign: "center",
-    color: "black",
-    height: "19%",
-    top: 5,
-    color: "white"
+    color: "#8D8C8C",
+    marginTop: 10
   }
 };
 export default Styles;
