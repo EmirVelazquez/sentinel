@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { View, Text, TextInput, Image, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import Styles from "../../css/styles";

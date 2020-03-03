@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, TextInput, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -11,6 +11,7 @@ import Logo from "../Logo";
 
 import Styles from "../../css/styles";
 import Separator from "../Separator";
+import LogoSecond from "../LogoSecond";
 
 class Home extends ValidationComponent {
   //Initializing state to capture input
@@ -18,7 +19,11 @@ class Home extends ValidationComponent {
     email: "",
     password: "",
     hidePassword: true,
-    loggedIn: false
+    loggedIn: false,
+    count: 0,
+    emailInput: true,
+    passwordInput: true
+
   };
 
   // AsyncStorage function to store current user infomation
@@ -105,6 +110,9 @@ class Home extends ValidationComponent {
 
   // Form submit
   handleFormSubmit = _ => {
+    // State count used for logo conditional rendering
+    this.setState({ count: this.state.count + 1 });
+    // Validating the form entries
     this.validate({
       email: { email: true, required: true },
       password: { minlength: 3, maxlength: 24, required: true },
@@ -115,12 +123,14 @@ class Home extends ValidationComponent {
     }
     else {
       console.log('Entries not valid:');
-      // form error styling below
       const fieldArray = ['email', 'password'];
+      // Looping through fields to see which is invalid
       fieldArray.map((field, i) => {
         if (this.isFieldInError(field)) {
-          // displaying all invalid fields
+          // VALIDATION STYLING GOES HERE
           console.log(field);
+          this.setState({ [field + 'Input']: false })
+          console.log(this.state);
         }
       });
     }
@@ -137,6 +147,7 @@ class Home extends ValidationComponent {
   //Routing
   //=========================================================
   goToSignUp = () => {
+    console.log('go to sign up');
     Actions.SignUp();
   };
   //=========================================================
@@ -149,7 +160,9 @@ class Home extends ValidationComponent {
     return (
       <ScrollView>
         <View style={Styles.container}>
-          <Logo />
+
+          {this.state.count ? (<LogoSecond />) : (<Logo />)}
+
 
           <Text style={Styles.header}>Sentinel</Text>
           <Text style={Styles.paragraph}>Please sign in to continue</Text>
