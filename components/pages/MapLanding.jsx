@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
-
+import MenuDrawer from "react-native-side-drawer";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
@@ -27,10 +27,15 @@ class MapLanding extends Component {
     newMemberLastName: "",
     newMemberEmail: "",
     modalVisible: false,
-
+    drawerOpen: false,
     user: {
+<<<<<<< HEAD
       name: "User",
       email: "",
+=======
+      first_name: "Niki",
+      last_name: "Lauda",
+>>>>>>> 36f5d35f3632aae7fe1587af3ea59b7879988a45
       coordinate: {},
       pinColor: "#ff0000",
       groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
@@ -281,8 +286,46 @@ class MapLanding extends Component {
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+  };
+
+  closeModal = (visible) => {
+    this.setState({ modalVisible: !visible });
   }
 
+  //=========================================================
+  // Side Drawer Methods
+  //=========================================================
+  toggleOpen = () => {
+    this.setState({ drawerOpen: !this.state.drawerOpen });
+  }
+
+  sideDrawerContents = () => {
+    return (
+      <View style={{ flex: 1, height: Dimensions.get("window").height, backgroundColor: "#000000", padding: "10%" }}>
+        <View style={{ width: "100%" }}>
+          <Image source={require("../../assets/iconLogo.png")} style={{ width: 60, height: 60, left: "70%" }} />
+        </View>
+        <Text style={{ color: "#FFFFFF", fontSize: 18 }}>Hello,</Text>
+        <Text style={{ color: "#FFFFFF", marginBottom: "20%", fontSize: 18 }}>{this.state.user.first_name} {this.state.user.last_name}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/inboxInv.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Invites</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/memberIcon.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Manage Group</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/settingsCog.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Settings</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/logOut.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16, color: "#1BCBC0" }}>Log Out</Text>
+        </View>
+      </View>
+    )
+  };
   //=========================================================
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
@@ -301,6 +344,7 @@ class MapLanding extends Component {
                 waypoint: { coordinate: e.nativeEvent.coordinate }
               });
             }}
+            customMapStyle={mapTheme}
           >
             {/* THIS IS MAIN USER MARKER */}
             {/* <MapView.Marker
@@ -329,9 +373,10 @@ class MapLanding extends Component {
                 alignItems: "center",
                 justifyContent: "center"
               }}
+              onPress={this.toggleOpen}
             >
-              <Image // Hamburger Icon
-                source={require("../../assets/openNav.png")}
+              <Image // Render Nav icon based on side drawer open state
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -377,6 +422,7 @@ class MapLanding extends Component {
                 waypoint: { coordinate: e.nativeEvent.coordinate }
               });
             }}
+            customMapStyle={mapTheme}
           >
             {/* THIS IS MAIN USER MARKER */}
             {/* <MapView.Marker
@@ -428,9 +474,10 @@ class MapLanding extends Component {
                 alignItems: "center",
                 justifyContent: "center"
               }}
+              onPress={this.toggleOpen}
             >
-              <Image // Hamburger Icon
-                source={require("../../assets/openNav.png")}
+              <Image // Render Nav icon based on side drawer open state
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -471,7 +518,7 @@ class MapLanding extends Component {
                   height: 24,
                   marginLeft: "auto",
                   marginRight: "auto",
-                  marginTop: "15%"
+                  marginTop: "5%"
                 }}
               />
             </TouchableOpacity>
@@ -540,8 +587,8 @@ class MapLanding extends Component {
             <Slider
               style={Styles.switch}
               step={1}
-              thumbTintColor="red"
-              minimumTrackTintColor="red"
+              thumbTintColor="#DC2237"
+              minimumTrackTintColor="#DC2237"
               minimumValue={0}
               maximumValue={1}
               onSlidingComplete={this.Emergency}
@@ -576,122 +623,364 @@ class MapLanding extends Component {
 
     return (
       <View style={Styles.mapContainer}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.modalVisible}
-          presentationStyle="overFullScreen"
-          onRequestClose={() => {
-            this.setModalVisible(!this.state.modalVisible);
-            console.log("Modal Closed");
-          }}
-        >
-          <View style={Styles.modalContainerBackground}>
-            <View style={Styles.modalContainer}>
-              <Text style={Styles.header}>New Member</Text>
-              <View
-                style={{
-                  height: 60,
-                  width: "115%",
-                  backgroundColor: "rgb(53,53,53)",
-                  color: "white",
-                  borderRadius: 5,
-                  alignSelf: "center",
-                  marginBottom: 10,
-                  marginTop: 10
-                }}
-              >
-                <Text style={Styles.inputText}>First Name</Text>
-                <TextInput
-                  name="newMemberFirstName"
+        <MenuDrawer // The side drawer has to hold every thing
+          open={this.state.drawerOpen} // Value toggling open and close of drawer (boolean)
+          drawerContent={this.sideDrawerContents()} // Displays JSX returned in the method
+          drawerPercentage={60} // Percentage of screensize the drawer will cover (0-100)
+          animationTime={250} // Value depicting the time (in ms) the menu will slide open & close
+          overlay={false} // When false the menu will push the background screen to the side
+          opacity={0.4}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            presentationStyle="overFullScreen"
+            onRequestClose={() => {
+              this.setModalVisible(!this.state.modalVisible);
+              console.log("Modal Closed");
+            }}
+          >
+            <TouchableOpacity style={Styles.modalContainerBackground} onPress={this.closeModal}>
+              <View style={Styles.modalContainer}>
+                <Text style={Styles.header}>New Member</Text>
+                <View
                   style={{
-                    marginLeft: 12,
-                    marginBottom: 16,
-                    fontSize: 18,
+                    height: 60,
+                    width: "115%",
+                    backgroundColor: "rgb(53,53,53)",
                     color: "white",
-                    height: 30,
-                    width: "94%"
+                    borderRadius: 6,
+                    alignSelf: "center",
+                    marginBottom: 10,
+                    marginTop: 10
                   }}
-                  onChangeText={this.handleNewMemberFirstNameChange}
-                  newMemberFirstName={this.state.newMemberFirstName}
-                  onSubmitEditing={() => this.newMemberLastName.focus()}
-                ></TextInput>
-              </View>
-              <View
-                style={{
-                  height: 60,
-                  width: "115%",
-                  backgroundColor: "rgb(53,53,53)",
-                  color: "white",
-                  borderRadius: 5,
-                  alignSelf: "center",
-                  marginBottom: 10
-                }}
-              >
-                <Text style={Styles.inputText}>Last Name</Text>
-                <TextInput
-                  name="newMemberLastName"
+                >
+                  <Text style={Styles.inputText}>First Name</Text>
+                  <TextInput
+                    name="newMemberFirstName"
+                    style={{
+                      marginLeft: 12,
+                      marginBottom: 16,
+                      fontSize: 18,
+                      color: "white",
+                      height: 30,
+                      width: "94%"
+                    }}
+                    onChangeText={this.handleNewMemberFirstNameChange}
+                    newMemberFirstName={this.state.newMemberFirstName}
+                    onSubmitEditing={() => this.newMemberLastName.focus()}
+                  ></TextInput>
+                </View>
+                <View
                   style={{
-                    marginLeft: 12,
-                    marginBottom: 16,
-                    fontSize: 18,
+                    height: 60,
+                    width: "115%",
+                    backgroundColor: "rgb(53,53,53)",
                     color: "white",
-                    height: 30,
-                    width: "94%"
+                    borderRadius: 5,
+                    alignSelf: "center",
+                    marginBottom: 10
                   }}
-                  onChangeText={this.handleNewMemberLastNameChange}
-                  newMemberLastName={this.state.newMemberLastName}
-                  onSubmitEditing={() => this.newMemberEmail.focus()}
-                ></TextInput>
-              </View>
-              <View
-                style={{
-                  height: 60,
-                  width: "115%",
-                  backgroundColor: "rgb(53,53,53)",
-                  color: "white",
-                  borderRadius: 5,
-                  alignSelf: "center",
-                  marginBottom: 10
-                }}
-              >
-                <Text style={Styles.inputText}>Email</Text>
-                <TextInput
-                  name="newMemberEmail"
+                >
+                  <Text style={Styles.inputText}>Last Name</Text>
+                  <TextInput
+                    name="newMemberLastName"
+                    style={{
+                      marginLeft: 12,
+                      marginBottom: 16,
+                      fontSize: 18,
+                      color: "white",
+                      height: 30,
+                      width: "94%"
+                    }}
+                    onChangeText={this.handleNewMemberLastNameChange}
+                    newMemberLastName={this.state.newMemberLastName}
+                    onSubmitEditing={() => this.newMemberEmail.focus()}
+                  ></TextInput>
+                </View>
+                <View
                   style={{
-                    marginLeft: 12,
-                    marginBottom: 16,
-                    fontSize: 18,
+                    height: 60,
+                    width: "115%",
+                    backgroundColor: "rgb(53,53,53)",
                     color: "white",
-                    height: 30,
-                    width: "94%"
+                    borderRadius: 5,
+                    alignSelf: "center",
+                    marginBottom: 10
                   }}
-                  onChangeText={this.handleNewMemberEmailChange}
-                  newMemberEmail={this.state.newMemberEmail}
-                  keyboardType="email-address"
-                ></TextInput>
+                >
+                  <Text style={Styles.inputText}>Email</Text>
+                  <TextInput
+                    name="newMemberEmail"
+                    style={{
+                      marginLeft: 12,
+                      marginBottom: 16,
+                      fontSize: 18,
+                      color: "white",
+                      height: 30,
+                      width: "94%"
+                    }}
+                    onChangeText={this.handleNewMemberEmailChange}
+                    newMemberEmail={this.state.newMemberEmail}
+                    keyboardType="email-address"
+                  ></TextInput>
+                </View>
+                <Button
+                  style={{
+                    height: 50,
+                    width: "115%",
+                    alignSelf: "center",
+                    borderRadius: 50,
+                    backgroundColor: "#1F4CC6",
+                    marginBottom: 50
+                  }}
+                  onPress={this.handleFormSubmit}
+                >
+                  <Text style={Styles.buttonText}>Submit</Text>
+                </Button>
               </View>
-              <Button
-                style={{
-                  height: 50,
-                  width: "115%",
-                  alignSelf: "center",
-                  borderRadius: 50,
-                  backgroundColor: "#1F4CC6",
-                  marginBottom: 50
-                }}
-                onPress={this.handleFormSubmit}
-              >
-                <Text style={Styles.buttonText}>Submit</Text>
-              </Button>
-            </View>
-          </View>
-        </Modal>
-        {/* This calls the method to render the layout based on group state */}
-        <this.updateLandingPageMap />
+            </TouchableOpacity>
+          </Modal>
+          {/* This calls the method to render the layout based on group state */}
+          <this.updateLandingPageMap />
+        </MenuDrawer>
       </View>
     );
   }
 }
+
+const mapTheme = [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#8ec3b9"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1a3646"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#4b6878"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#64779e"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#4b6878"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#334e87"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.natural",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#283d6a"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#6f9ba5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#3C7680"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#304a7d"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#98a5be"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#2c6675"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#255763"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#b0d5ce"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#98a5be"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#283d6a"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#3a4762"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#0e1626"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#4e6d70"
+      }
+    ]
+  }
+]
 
 export default MapLanding;
