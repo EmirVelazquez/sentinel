@@ -1,21 +1,38 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Image } from "react-native";
+import { View, Text, TextInput, Image, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import Styles from "../../css/styles";
 import Separator from "../Separator";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import Button from "apsl-react-native-button";
 import axios from 'axios';
+import ValidationComponent from 'react-native-form-validator';
 
-class SignUp extends Component {
-  // Retrieving input data
-  state = {
-    signUpFName: "",
-    signUpLName: "",
-    signUpEmail: "",
-    signUpPassword: "",
-    hidePassword: true
-  };
+class SignUp extends ValidationComponent {
+
+  constructor(props) {
+    super(props);
+    // Retrieving input data
+    state = {
+      signUpFName: "",
+      signUpLName: "",
+      signUpEmail: "",
+      signUpPassword: "",
+      hidePassword: true,
+    }
+  }
+
+  // Store JWT
+  storeToken = async (token) => {
+    try {
+      console.log('Storing jwt');
+      await AsyncStorage.setItem('jwt', token);
+      // Render map
+      Actions.MapLanding();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   signUp() {
     axios.post('https://sentinel-api.herokuapp.com/api/user',
@@ -26,17 +43,40 @@ class SignUp extends Component {
         pass: this.state.signUpPassword
       })
       .then(response => {
-        console.log(response);
-        // call login here to get token
-      })
-      .catch(err => {
-        console.log(err);
-      })
+        if (response.status === 200) {
+          const email = this.state.signUpEmail;
+          const pass = this.state.signUpPassword;
+          // Send log in info, receive token
+          axios.post('https://sentinel-api.herokuapp.com/login/submit',
+            {
+              email,
+              pass
+            })
+            .then(res => {
+              const token = res.data.token;
+              if (token) {
+                this.storeToken(token);
+              }
+            });
+        }
+      });
   }
 
   goToInformation = () => {
     Actions.Information();
   };
+
+  //store the email in async storage //
+  //=========================================================
+
+  storeEmail = async () => {
+    console.log('Storing email');
+    try {
+      await AsyncStorage.setItem('email', this.state.signUpEmail);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   //Individual onChange handlers for each part of state
   //=========================================================
@@ -69,18 +109,42 @@ class SignUp extends Component {
   };
   //=========================================================
 
-  // State can be passed to the backend for auth -Justin
-  handleFormSubmit = event => {
-    console.log(this.state);
-    this.setState({
-      signUpEmail: this.state.signUpEmail,
-      signUpPassword: this.state.signUpPassword
-    })
-    this.signUp()
+  // Form submit
+  handleFormSubmit = _ => {
 
-
-    // User info gets sent to database and is verified, then we send them to the maplanding page
-    Actions.MapLanding();
+    // Logic for Authentication of characters
+    //=========================================================
+    // validate isn't working for blank fields on this page for some reason
+    // it worked fine on home.jsx, this is the workaround:
+    if (this.state.signUpFName === undefined || this.state.signUpLName === undefined || this.state.signUpEmail === undefined || this.state.signUpPassword === undefined) {
+      console.log('All fields are required.')
+      // notify to fill in all fields
+    }
+    else {
+      this.validate({
+        signUpFName: { minlength: 2, maxlength: 16, required: true },
+        signUpLName: { minlength: 2, maxlength: 16, required: true },
+        signUpEmail: { email: true, required: true },
+        signUpPassword: { minlength: 3, maxlength: 24, required: true },
+      });
+      if (this.isFormValid()) {
+        // Add info to db, get token and store in asyncstorage
+        this.signUp();
+        // Stores email in asyncstorage
+        this.storeEmail();
+      }
+      else {
+        console.log('Entries not valid:');
+        // form error styling below
+        const fieldArray = ['signUpFName', 'signUpLName', 'signUpEmail', 'signUpPassword'];
+        fieldArray.map((field, i) => {
+          if (this.isFieldInError(field)) {
+            // displaying all invalid fields
+            console.log(field);
+          }
+        });
+      }
+    }
   };
 
   managePasswordVisability = () => {
