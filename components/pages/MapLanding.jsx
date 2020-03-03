@@ -104,6 +104,12 @@ class MapLanding extends Component {
       .then(res => {
         //this is calling the current loged in user
         console.log(res.data);
+        if (res.data.GroupId) {
+          axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
+            .then(res => {
+              console.log("this is all the members in the group", res.data);
+            })
+        }
       })
   }
 
@@ -183,12 +189,8 @@ class MapLanding extends Component {
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
-<<<<<<< HEAD
-      const value = await AsyncStorage.getItem('email');
-=======
+
       const value = await AsyncStorage.getItem("email");
-      console.log("!!!!!!!!!!!!!!!!!!", value);
->>>>>>> e1af1655c406687f9bee91c90744b9b94e78671c
       if (value !== null) {
         // We have data!!
         // console.log(value);
