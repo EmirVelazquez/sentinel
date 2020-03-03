@@ -99,6 +99,23 @@ const Styles = {
     // backgroundColor: "grey"
   },
 
+  modalContainer: {
+    paddingLeft: 50,
+    paddingRight: 50,
+    top: 200,
+    width: Dimensions.get("window").width - 50,
+    alignSelf: "center",
+    backgroundColor: "#121212",
+    // opacity: 1.5
+    borderRadius: 30
+  },
+
+  modalContainerBackground: {
+    // opacity: 0.5,
+    backgroundColor: "#00000080",
+    height: Dimensions.get("window").height
+  },
+
   noUsers: {
     width: Dimensions.get("window").width,
     color: "white",
@@ -160,9 +177,10 @@ const Styles = {
     position: "absolute",
     left: "7%",
     right: 0,
-    top: Dimensions.get("window").height - 550,
+    // top: Dimensions.get("window").height - 550,
+    bottom: 0,
     borderRadius: 50,
-    height: "20%",
+    height: "20%"
   },
   users: {
     width: 60,

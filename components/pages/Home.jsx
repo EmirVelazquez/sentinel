@@ -37,7 +37,7 @@ class Home extends ValidationComponent {
   // Pull token from asyncstorage and decode - gets id and email
   getToken = _ => {
     AsyncStorage.getItem('jwt', (err, token) => {
-      if (!err) {
+      if (!err && token != null) {
         const key = 'secretkey';
         if (JWT.decode(token, key)) {
           this.setState({
@@ -47,6 +47,9 @@ class Home extends ValidationComponent {
             Actions.MapLanding();
           }
         }
+      }
+      else {
+        console.log("No token found");
       }
     });
   }

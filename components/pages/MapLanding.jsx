@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  Slider,
+  TouchableOpacity,
+  Dimensions,
+  AsyncStorage,
+  Image,
+  ScrollView,
+  Modal,
+  TextInput
+} from "react-native";
 import Styles from "./../../css/styles";
+import Button from "apsl-react-native-button";
+
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
@@ -10,11 +23,16 @@ import axios from "axios";
 
 class MapLanding extends Component {
   state = {
+    newMemberFirstName: "",
+    newMemberLastName: "",
+    newMemberEmail: "",
+    modalVisible: false,
+
     user: {
       name: "User",
       coordinate: {},
       pinColor: "#ff0000",
-      groupName: "SMU Class", // Using this to test when the user has a created a group - Emir
+      groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
       // groupName: "", // Using this to test when the user has not created a group - Emir
     },
     group: [
@@ -140,7 +158,7 @@ class MapLanding extends Component {
     const location = await Location.watchPositionAsync(
       {
         enableHighAccuracy: true,
-        distanceInterval: 250,
+        distanceInterval: 250
       },
       newLocation => {
         let coords = newLocation.coords;
@@ -160,12 +178,17 @@ class MapLanding extends Component {
   };
 
   //=========================================================
-  // Methods Being Used For Client Side Requests 
+  // Methods Being Used For Client Side Requests
   //=========================================================
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
+<<<<<<< HEAD
       const value = await AsyncStorage.getItem('email');
+=======
+      const value = await AsyncStorage.getItem("email");
+      console.log("!!!!!!!!!!!!!!!!!!", value);
+>>>>>>> e1af1655c406687f9bee91c90744b9b94e78671c
       if (value !== null) {
         // We have data!!
         // console.log(value);
@@ -185,18 +208,21 @@ class MapLanding extends Component {
   };
   // Method for user to create a new group, will render a modal
   CreateGroupModal = () => {
-    console.log("User Wants to Create a New Group");
-    console.log("==>Modal Pops");
+    console.log("User Wants to Create a New Group... Opening Modal");
+    this.setModalVisible(!this.state.modalVisible);
+    console.log("Modal Opened");
   };
   // Method for user to add a waypoint
   addWayPoint = () => {
     console.log("User Wants to add a Waypoint"); // Currently logging press until Cole Adds functionality - Emir
-  }
+  };
   // Method for user to add group member
   addGroupMember = () => {
-    console.log("User Wants to add a group member"); // Currently logging after press
-  }
-  // Method For Sliider When User Creates An Emergency Alert for Group
+    console.log("User Wants to add a group member... Opening Modal"); // Currently logging after press
+    this.setModalVisible(!this.state.modalVisible);
+    console.log("Modal Opened");
+  };
+  // Method For Slider When User Creates An Emergency Alert for Group
   Emergency = event => {
     if (event === 0) {
       console.log(event + "= No Emergency");
@@ -204,6 +230,38 @@ class MapLanding extends Component {
       console.log(event + "= User has created an Emergency Alert.");
     }
   };
+
+  //=========================================================
+  //Modal Functions
+  //=========================================================
+  handleNewMemberFirstNameChange = event => {
+    this.setState({
+      newMemberFirstName: event.toLowerCase()
+    });
+    console.log("New Member First Name Change: " + event);
+  };
+  handleNewMemberLastNameChange = event => {
+    this.setState({
+      newMemberLastName: event.toLowerCase()
+    });
+    console.log("New Member Last Name Change: " + event);
+  };
+  handleNewMemberEmailChange = event => {
+    this.setState({
+      newMemberEmail: event.toLowerCase()
+    });
+    console.log("New Member Email Change: " + event);
+  };
+
+  handleFormSubmit = () => {
+    // Add validation Logic
+    this.setModalVisible(!this.state.modalVisible);
+    console.log("Modal Closed");
+  };
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
 
   //=========================================================
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
@@ -232,20 +290,26 @@ class MapLanding extends Component {
               pinColor={this.state.user.pinColor}
             /> */}
           </MapView>
-          <View style={{ // This is the Navbutton container
-            position: "absolute",
-            zIndex: 2,
-            bottom: Dimensions.get("window").height - 75,
-            right: Dimensions.get("window").width - 65
-          }}>
-            <TouchableOpacity style={{
-              backgroundColor: "#121212",
-              opacity: 0.8,
-              borderRadius: 4,
-              height: 48, width: 54,
-              alignItems: "center",
-              justifyContent: "center"
-            }}>
+          <View
+            style={{
+              // This is the Navbutton container
+              position: "absolute",
+              zIndex: 2,
+              bottom: Dimensions.get("window").height - 75,
+              right: Dimensions.get("window").width - 65
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#121212",
+                opacity: 0.8,
+                borderRadius: 4,
+                height: 48,
+                width: 54,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
               <Image // Hamburger Icon
                 source={require("../../assets/openNav.png")}
                 style={{
@@ -253,7 +317,8 @@ class MapLanding extends Component {
                   height: 16.2,
                   marginLeft: "auto",
                   marginRight: "auto"
-                }} />
+                }}
+              />
             </TouchableOpacity>
           </View>
           <View style={Styles.noUsersContainer}>
@@ -324,20 +389,26 @@ class MapLanding extends Component {
             {/* {mapViewDirection} */}
           </MapView>
 
-          <View style={{ // This is the Navbutton container
-            position: "absolute",
-            zIndex: 2,
-            bottom: Dimensions.get("window").height - 75,
-            right: Dimensions.get("window").width - 65
-          }}>
-            <TouchableOpacity style={{
-              backgroundColor: "#121212",
-              opacity: 0.8,
-              borderRadius: 4,
-              height: 48, width: 54,
-              alignItems: "center",
-              justifyContent: "center"
-            }}>
+          <View
+            style={{
+              // This is the Navbutton container
+              position: "absolute",
+              zIndex: 2,
+              bottom: Dimensions.get("window").height - 75,
+              right: Dimensions.get("window").width - 65
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#121212",
+                opacity: 0.8,
+                borderRadius: 4,
+                height: 48,
+                width: 54,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
               <Image // Hamburger Icon
                 source={require("../../assets/openNav.png")}
                 style={{
@@ -345,16 +416,18 @@ class MapLanding extends Component {
                   height: 16.2,
                   marginLeft: "auto",
                   marginRight: "auto"
-                }} />
+                }}
+              />
             </TouchableOpacity>
           </View>
           <View // Container to hold buttons for adding waypoints & new group members
             style={{
               position: "absolute",
-              top: Dimensions.get("window").height - 360,
+              top: Dimensions.get("window").height * ".50",
               left: Dimensions.get("window").width - 65,
               zIndex: 2
-            }}>
+            }}
+          >
             <TouchableOpacity
               style={{
                 backgroundColor: "white",
@@ -369,8 +442,18 @@ class MapLanding extends Component {
                 shadowOffset: { width: 1, height: 5 },
                 justifyContent: "center"
               }}
-              onPress={this.addWayPoint}>
-              <Image source={require("../../assets/addWaypoint.png")} style={{ width: 16, height: 24, marginLeft: "auto", marginRight: "auto", marginTop: "15%" }} />
+              onPress={this.addWayPoint}
+            >
+              <Image
+                source={require("../../assets/addWaypoint.png")}
+                style={{
+                  width: 16,
+                  height: 24,
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: "15%"
+                }}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -380,8 +463,18 @@ class MapLanding extends Component {
                 borderRadius: 50,
                 justifyContent: "center"
               }}
-              onPress={this.addGroupMember}>
-              <Image source={require("../../assets/addMember.png")} style={{ width: 24, height: 18, marginLeft: "auto", marginRight: "auto", marginTop: "2%" }} />
+              onPress={this.addGroupMember}
+            >
+              <Image
+                source={require("../../assets/addMember.png")}
+                style={{
+                  width: 24,
+                  height: 18,
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginTop: "2%"
+                }}
+              />
             </TouchableOpacity>
           </View>
           <View style={{ backgroundColor: "transparent" }}>
@@ -392,7 +485,8 @@ class MapLanding extends Component {
               style={Styles.family}
               horizontal={true}
               snapToAlignment={"center"}
-              decelerationRate={0}>
+              decelerationRate={0}
+            >
               {this.state.group.map((member, i) => {
                 return (
                   <TouchableOpacity
@@ -400,22 +494,25 @@ class MapLanding extends Component {
                     onPress={this.UserPress}
                     style={Styles.users}
                   >
-                    <View style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: 50,
-                      alignSelf: "center",
-                      borderColor: `${member.pinColor}`, // Taking the color from the state - Emir
-                      borderWidth: 2,
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}>
+                    <View
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 50,
+                        alignSelf: "center",
+                        borderColor: `${member.pinColor}`, // Taking the color from the state - Emir
+                        borderWidth: 2,
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
                       {/* Taking the full name initials and setting inside circle - Emir */}
-                      <Text style={{ color: "#FFFFFF" }}>{member.first_name.charAt(0)}{member.last_name.charAt(0)}</Text>
+                      <Text style={{ color: "#FFFFFF" }}>
+                        {member.first_name.charAt(0)}
+                        {member.last_name.charAt(0)}
+                      </Text>
                     </View>
-                    <Text style={Styles.userText}>
-                      {member.first_name}
-                    </Text>
+                    <Text style={Styles.userText}>{member.first_name}</Text>
                   </TouchableOpacity>
                 );
               })}
@@ -459,6 +556,117 @@ class MapLanding extends Component {
 
     return (
       <View style={Styles.mapContainer}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={this.state.modalVisible}
+          presentationStyle="overFullScreen"
+          onRequestClose={() => {
+            this.setModalVisible(!this.state.modalVisible);
+            console.log("Modal Closed");
+          }}
+        >
+          <View style={Styles.modalContainerBackground}>
+            <View style={Styles.modalContainer}>
+              <Text style={Styles.header}>New Member</Text>
+              <View
+                style={{
+                  height: 60,
+                  width: "115%",
+                  backgroundColor: "rgb(53,53,53)",
+                  color: "white",
+                  borderRadius: 5,
+                  alignSelf: "center",
+                  marginBottom: 10,
+                  marginTop: 10
+                }}
+              >
+                <Text style={Styles.inputText}>First Name</Text>
+                <TextInput
+                  name="newMemberFirstName"
+                  style={{
+                    marginLeft: 12,
+                    marginBottom: 16,
+                    fontSize: 18,
+                    color: "white",
+                    height: 30,
+                    width: "94%"
+                  }}
+                  onChangeText={this.handleNewMemberFirstNameChange}
+                  newMemberFirstName={this.state.newMemberFirstName}
+                  onSubmitEditing={() => this.newMemberLastName.focus()}
+                ></TextInput>
+              </View>
+              <View
+                style={{
+                  height: 60,
+                  width: "115%",
+                  backgroundColor: "rgb(53,53,53)",
+                  color: "white",
+                  borderRadius: 5,
+                  alignSelf: "center",
+                  marginBottom: 10
+                }}
+              >
+                <Text style={Styles.inputText}>Last Name</Text>
+                <TextInput
+                  name="newMemberLastName"
+                  style={{
+                    marginLeft: 12,
+                    marginBottom: 16,
+                    fontSize: 18,
+                    color: "white",
+                    height: 30,
+                    width: "94%"
+                  }}
+                  onChangeText={this.handleNewMemberLastNameChange}
+                  newMemberLastName={this.state.newMemberLastName}
+                  onSubmitEditing={() => this.newMemberEmail.focus()}
+                ></TextInput>
+              </View>
+              <View
+                style={{
+                  height: 60,
+                  width: "115%",
+                  backgroundColor: "rgb(53,53,53)",
+                  color: "white",
+                  borderRadius: 5,
+                  alignSelf: "center",
+                  marginBottom: 10
+                }}
+              >
+                <Text style={Styles.inputText}>Email</Text>
+                <TextInput
+                  name="newMemberEmail"
+                  style={{
+                    marginLeft: 12,
+                    marginBottom: 16,
+                    fontSize: 18,
+                    color: "white",
+                    height: 30,
+                    width: "94%"
+                  }}
+                  onChangeText={this.handleNewMemberEmailChange}
+                  newMemberEmail={this.state.newMemberEmail}
+                  keyboardType="email-address"
+                ></TextInput>
+              </View>
+              <Button
+                style={{
+                  height: 50,
+                  width: "115%",
+                  alignSelf: "center",
+                  borderRadius: 50,
+                  backgroundColor: "#1F4CC6",
+                  marginBottom: 50
+                }}
+                onPress={this.handleFormSubmit}
+              >
+                <Text style={Styles.buttonText}>Submit</Text>
+              </Button>
+            </View>
+          </View>
+        </Modal>
         {/* This calls the method to render the layout based on group state */}
         <this.updateLandingPageMap />
       </View>
