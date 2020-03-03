@@ -19,6 +19,7 @@ import Button from "apsl-react-native-button";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
+import axios from "axios";
 
 class MapLanding extends Component {
   state = {
@@ -94,6 +95,25 @@ class MapLanding extends Component {
       longitudeDelta: 0.09
     }
   };
+  //============================================================
+  //this get the current user info from data base
+  //========================================================
+  currentUser = (value) => {
+    console.log(value);
+    axios.get("https://sentinel-api.herokuapp.com/api/user/" + value)
+      .then(res => {
+        //this is calling the current loged in user
+        console.log(res.data);
+        if (res.data.GroupId) {
+          axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
+            .then(res => {
+              console.log("this is all the members in the group", res.data);
+            })
+        }
+      })
+  }
+
+  //============================================================
 
   //============================================================
   // Google Maps Section (Use this section Cole...Please - Emir)
@@ -169,11 +189,12 @@ class MapLanding extends Component {
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
+
       const value = await AsyncStorage.getItem("email");
-      console.log("!!!!!!!!!!!!!!!!!!", value);
       if (value !== null) {
         // We have data!!
-        console.log(value);
+        // console.log(value);
+        this.currentUser(value);
       }
     } catch (error) {
       // Error retrieving data
