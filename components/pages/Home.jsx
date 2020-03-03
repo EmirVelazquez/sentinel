@@ -48,6 +48,10 @@ class Home extends ValidationComponent {
           }
         }
       }
+      else {
+        console.log(err);
+        Actions.Home();
+      }
     });
   }
 
