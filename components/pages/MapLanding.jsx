@@ -29,7 +29,8 @@ class MapLanding extends Component {
     modalVisible: false,
     drawerOpen: false,
     user: {
-      name: "User",
+      first_name: "Niki",
+      last_name: "Lauda",
       coordinate: {},
       pinColor: "#ff0000",
       groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
@@ -265,6 +266,10 @@ class MapLanding extends Component {
     this.setState({ modalVisible: visible });
   };
 
+  closeModal = (visible) => {
+    this.setState({ modalVisible: !visible });
+  }
+
   //=========================================================
   // Side Drawer Methods
   //=========================================================
@@ -274,16 +279,28 @@ class MapLanding extends Component {
 
   sideDrawerContents = () => {
     return (
-      <View style={{ flex: 1, height: Dimensions.get("window").height, backgroundColor: "#272727", padding: "10%" }}>
-        <Image source={require("../../assets/iconLogo.png")} style={{ width: 60, height: 60 }} />
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
-        <Text style={{ backgroundColor: "#000000", color: "#FFFFFF", marginBottom: "2%", fontSize: 18 }}>Testing</Text>
+      <View style={{ flex: 1, height: Dimensions.get("window").height, backgroundColor: "#000000", padding: "10%" }}>
+        <View style={{ width: "100%" }}>
+          <Image source={require("../../assets/iconLogo.png")} style={{ width: 60, height: 60, left: "70%" }} />
+        </View>
+        <Text style={{ color: "#FFFFFF", fontSize: 18 }}>Hello,</Text>
+        <Text style={{ color: "#FFFFFF", marginBottom: "20%", fontSize: 18 }}>{this.state.user.first_name} {this.state.user.last_name}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/inboxInv.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Invites</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/memberIcon.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Manage Group</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/settingsCog.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Settings</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Image source={require("../../assets/logOut.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
+          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16, color: "#1BCBC0" }}>Log Out</Text>
+        </View>
       </View>
     )
   };
@@ -479,7 +496,7 @@ class MapLanding extends Component {
                   height: 24,
                   marginLeft: "auto",
                   marginRight: "auto",
-                  marginTop: "15%"
+                  marginTop: "5%"
                 }}
               />
             </TouchableOpacity>
@@ -587,12 +604,12 @@ class MapLanding extends Component {
         <MenuDrawer // The side drawer has to hold every thing
           open={this.state.drawerOpen} // Value toggling open and close of drawer (boolean)
           drawerContent={this.sideDrawerContents()} // Displays JSX returned in the method
-          drawerPercentage={40} // Percentage of screensize the drawer will cover (0-100)
+          drawerPercentage={60} // Percentage of screensize the drawer will cover (0-100)
           animationTime={250} // Value depicting the time (in ms) the menu will slide open & close
           overlay={false} // When false the menu will push the background screen to the side
           opacity={0.4}>
           <Modal
-            animationType="fade"
+            animationType="slide"
             transparent={true}
             visible={this.state.modalVisible}
             presentationStyle="overFullScreen"
@@ -601,7 +618,7 @@ class MapLanding extends Component {
               console.log("Modal Closed");
             }}
           >
-            <View style={Styles.modalContainerBackground}>
+            <TouchableOpacity style={Styles.modalContainerBackground} onPress={this.closeModal}>
               <View style={Styles.modalContainer}>
                 <Text style={Styles.header}>New Member</Text>
                 <View
@@ -700,7 +717,7 @@ class MapLanding extends Component {
                   <Text style={Styles.buttonText}>Submit</Text>
                 </Button>
               </View>
-            </View>
+            </TouchableOpacity>
           </Modal>
           {/* This calls the method to render the layout based on group state */}
           <this.updateLandingPageMap />

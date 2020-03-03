@@ -82,13 +82,13 @@ const Styles = {
     width: Dimensions.get("window").width,
     height: "60%",
     zIndex: 1,
-    marginTop: 20
+    // marginTop: 20
   },
 
   userHasNoGroup: {
     width: Dimensions.get("window").width,
     height: "85%",
-    marginTop: 20
+    // marginTop: 20
   },
 
   mapUI: {
