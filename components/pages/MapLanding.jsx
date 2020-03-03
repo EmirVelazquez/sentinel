@@ -30,6 +30,7 @@ class MapLanding extends Component {
 
     user: {
       name: "User",
+      email: "",
       coordinate: {},
       pinColor: "#ff0000",
       groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
@@ -103,8 +104,10 @@ class MapLanding extends Component {
     axios.get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
         //this is calling the current loged in user
-        console.log(res.data);
+        console.log("this is the current user Data", res.data);
         if (res.data.GroupId) {
+
+          // if the user has a groupId this will pull all the memebers innt the group
           axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
             .then(res => {
               console.log("this is all the members in the group", res.data);
@@ -114,6 +117,21 @@ class MapLanding extends Component {
   }
 
   //============================================================
+  // function to create a new group
+  // creatGroup = () => {
+  //   axios.post("https://sentinel-api.herokuapp.com/api/group"{
+  //     name: this.state.user.groupName
+  //   })
+  //     .then(res => {
+  //       if (res.status === 200) {
+  //         axios.put("https://sentinel-api.herokuapp.com/"{
+  //           email: ,
+  //           GroupId: res.data.id
+  //         })
+  //       }
+  //     })
+  // }
+
 
   //============================================================
   // Google Maps Section (Use this section Cole...Please - Emir)
