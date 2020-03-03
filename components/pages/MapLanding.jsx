@@ -409,8 +409,8 @@ class MapLanding extends Component {
             <Slider
               style={Styles.switch}
               step={1}
-              thumbTintColor="red"
-              minimumTrackTintColor="red"
+              thumbTintColor="#DC2237"
+              minimumTrackTintColor="#DC2237"
               minimumValue={0}
               maximumValue={1}
               onSlidingComplete={this.Emergency}
