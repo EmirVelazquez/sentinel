@@ -108,7 +108,7 @@ const Styles = {
     alignSelf: "center",
     backgroundColor: "#121212",
     borderRadius: 4,
-    shadowColor: "#292929",
+    shadowColor: "#121212",
     shadowOpacity: 1,
     elevation: 6,
     shadowRadius: 10,
