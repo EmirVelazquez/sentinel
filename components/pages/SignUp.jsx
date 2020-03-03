@@ -274,7 +274,6 @@ class SignUp extends ValidationComponent {
                 marginLeft: 12,
                 marginBottom: 16,
                 fontSize: 18,
-                // backgroundColor: "#000000", // Using this to test the height for the next two - Emir
                 height: 30,
                 color: "white"
               }}
