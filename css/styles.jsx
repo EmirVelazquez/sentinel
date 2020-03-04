@@ -70,6 +70,14 @@ const Styles = {
     width: "50%" // This change may also help to not cover the Forgot button on the home page - Emir
   },
 
+  inputTextInvalid: {
+    marginLeft: 12,
+    fontSize: 12,
+    marginTop: 9,
+    color: "#DC143C",
+    width: "50%" // This change may also help to not cover the Forgot button on the home page - Emir
+  },
+
   mapContainer: {
     flex: 1,
     zIndex: 0,
