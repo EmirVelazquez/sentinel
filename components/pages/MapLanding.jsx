@@ -53,8 +53,7 @@ class MapLanding extends ValidationComponent {
       email: "",
       coordinate: {},
       pinColor: "#ff0000",
-      // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
-      groupName: "" // Using this to test when the user has not created a group - Emir
+      groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
     group: [
       // {
@@ -444,7 +443,7 @@ class MapLanding extends ValidationComponent {
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
   updateLandingPageMap = () => {
-    if (this.state.user.groupName === "") {
+    if (this.state.user.groupNumber === "") {
       return (
         // This is how we make a react native fragment <>
         <>
