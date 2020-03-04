@@ -53,8 +53,7 @@ class MapLanding extends ValidationComponent {
       email: "",
       coordinate: {},
       pinColor: "#ff0000",
-      // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
-      groupName: "" // Using this to test when the user has not created a group - Emir
+      groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
     group: [
       {
@@ -127,7 +126,7 @@ class MapLanding extends ValidationComponent {
       .get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
         //this is calling the current logged in user
-        //console.log(res.data);
+        // console.log(res.data);
         //console.log(res.data.first_name)
 
 
@@ -136,10 +135,11 @@ class MapLanding extends ValidationComponent {
             ...prevState.user,
             first_name: res.data.first_name,
             last_name: res.data.last_name,
-            email: res.data.email
+            email: res.data.email,
+            groupNumber: res.data.GroupId
           }
         }), () => {
-          //console.log(this.state.user)
+          console.log(this.state.user)
         });
 
 
@@ -150,7 +150,7 @@ class MapLanding extends ValidationComponent {
               res.data.GroupId
             )
             .then(res => {
-              //console.log("this is all the members in the group", res.data);
+              console.log("this is all the members in the group", res.data);
             })
         }
       });
@@ -422,7 +422,7 @@ class MapLanding extends ValidationComponent {
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
   updateLandingPageMap = () => {
-    if (this.state.user.groupName === "") {
+    if (this.state.user.groupNumber === "") {
       return (
         // This is how we make a react native fragment <>
         <>
