@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import {
@@ -19,13 +19,20 @@ import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
 import axios from "axios";
+import ValidationComponent from 'react-native-form-validator';
 
-class MapLanding extends Component {
+class MapLanding extends ValidationComponent {
   state = {
     newMemberFirstName: "",
     newMemberLastName: "",
     newMemberEmail: "",
     newGroup: "",
+    // Form validation
+    newMemberFirstNameInput: true,
+    newMemberLastNameInput: true,
+    newMemberEmailInput: true,
+    newGroupInput: true,
+    // End form validation
     modalVisible: false,
     modalVisible: false,
     drawerOpen: false,
@@ -265,27 +272,63 @@ class MapLanding extends Component {
     });
     console.log("New Group Change: " + event);
   };
-
+  // New member modal submit
   handleFormSubmit = () => {
-    // Add validation Logic
-    this.setModalVisible(!this.state.modalVisible);
-    console.log("Modal Closed");
-  };
-
+    // Validating the form entries
+    this.validate({
+      newMemberFirstName: { minlength: 2, maxlength: 24, required: true },
+      newMemberLastName: { minlength: 2, maxlength: 24, required: true },
+      newMemberEmail: { email: true, required: true }
+    });
+    // Form entries are valid
+    if (this.isFormValid()) {
+      this.setModalVisible(!this.state.modalVisible);
+      console.log("Modal Closed");
+    }
+    // Form validation response
+    else {
+      const fieldArray = ['newMemberFirstName', 'newMemberLastName', 'newMemberEmailInput'];
+      // Looping through fields to see which is invalid
+      fieldArray.map((field, i) => {
+        // If error, change text
+        if (this.isFieldInError(field)) {
+          this.setState({ [field + 'Input']: false });
+        }
+        // No error, original text
+        else {
+          if (!this.isFieldInError(field)) {
+            this.setState({ [field + 'Input']: true });
+          }
+        }
+      });
+    }
+  }
+  // New group modal submit
   handleGroupFormSubmit = () => {
-    // Add validation Logic
-    this.setModalVisible(!this.state.modalVisible);
-    this.setState({ user: { groupName: this.state.newGroup } });
-    console.log("Modal Closed");
-  };
-
+    // Validating the form entry
+    this.validate({
+      newGroup: { minlength: 1, maxlength: 24, required: true },
+    });
+    // Form entry is valid
+    if (this.isFormValid()) {
+      this.setState({
+        newGroupInput: true,
+        user: { groupName: this.state.newGroup }
+      });
+      this.setModalVisible(!this.state.modalVisible);
+      console.log("Modal Closed");
+    }
+    // Form entry is invalid
+    else {
+      this.setState({ newGroupInput: false });
+    }
+  }
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   };
-
   closeModal = (visible) => {
     this.setState({ modalVisible: !visible });
-  }
+  };
 
   //=========================================================
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
@@ -296,7 +339,6 @@ class MapLanding extends Component {
         // This is how we make a react native fragment <>
         <>
           {/* ================================================================================================== */}
-
           <Modal
             animationType="fade"
             transparent={true}
@@ -322,7 +364,7 @@ class MapLanding extends Component {
                     marginTop: 10
                   }}
                 >
-                  <Text style={Styles.inputText}>Group Name</Text>
+                  {this.state.newGroupInput ? (<Text style={Styles.inputText}>Group Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Group Name</Text>)}
                   <TextInput
                     name="newGroup"
                     style={{
@@ -430,6 +472,7 @@ class MapLanding extends Component {
         // Closing the fragment </>
       );
     } else {
+      // New member modal
       return (
         // This is how we make a react native fragment <>
         <>
@@ -458,7 +501,7 @@ class MapLanding extends Component {
                     marginTop: 10
                   }}
                 >
-                  <Text style={Styles.inputText}>First Name</Text>
+                  {this.state.newMemberFirstNameInput ? (<Text style={Styles.inputText}>First Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid First Name</Text>)}
                   <TextInput
                     name="newMemberFirstName"
                     style={{
@@ -485,7 +528,7 @@ class MapLanding extends Component {
                     marginBottom: 10
                   }}
                 >
-                  <Text style={Styles.inputText}>Last Name</Text>
+                  {this.state.newMemberLastNameInput ? (<Text style={Styles.inputText}>Last Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Last Name</Text>)}
                   <TextInput
                     name="newMemberLastName"
                     style={{
@@ -512,7 +555,7 @@ class MapLanding extends Component {
                     marginBottom: 10
                   }}
                 >
-                  <Text style={Styles.inputText}>Email</Text>
+                  {this.state.newMemberEmailInput ? (<Text style={Styles.inputText}>Email</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Email</Text>)}
                   <TextInput
                     name="newMemberEmail"
                     style={{
