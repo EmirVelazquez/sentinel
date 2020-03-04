@@ -75,7 +75,7 @@ class Home extends ValidationComponent {
         }
         // Email doesn't exist or password is incorrect
         else {
-          // need to inform user / turn text red
+          // need to inform user 
         }
       })
       .catch(err => {
@@ -121,16 +121,21 @@ class Home extends ValidationComponent {
       // Get token and send to map
       this.logIn();
     }
+    // Form validation
     else {
       console.log('Entries not valid:');
       const fieldArray = ['email', 'password'];
       // Looping through fields to see which is invalid
       fieldArray.map((field, i) => {
+        // If error 
         if (this.isFieldInError(field)) {
-          // VALIDATION STYLING GOES HERE
-          console.log(field);
           this.setState({ [field + 'Input']: false })
-          console.log(this.state);
+        }
+        else {
+          // No error
+          if (!this.isFieldInError(field)) {
+            this.setState({ [field + 'Input']: true })
+          }
         }
       });
     }
@@ -181,7 +186,8 @@ class Home extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            <Text style={Styles.inputText}>Email</Text>
+
+            {this.state.emailInput ? (<Text style={Styles.inputText}>Email</Text>) : (<Text style={Styles.inputTextInvalid}>Email Incorrect</Text>)}
             <TextInput
               name="email"
               style={{
@@ -212,7 +218,8 @@ class Home extends ValidationComponent {
               position: "relative"
             }}
           >
-            <Text style={Styles.inputText}>Password</Text>
+
+            {this.state.passwordInput ? (<Text style={Styles.inputText}>Password</Text>) : (<Text style={Styles.inputTextInvalid}>Password Incorrect</Text>)}
             <TouchableOpacity
               onPress={this.goToForgotEmail}
               style={{
