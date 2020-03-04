@@ -70,7 +70,17 @@ const Styles = {
     width: "50%" // This change may also help to not cover the Forgot button on the home page - Emir
   },
 
+  inputTextInvalid: {
+    marginLeft: 12,
+    fontSize: 12,
+    marginTop: 9,
+    color: "#DC143C",
+    width: "50%" // This change may also help to not cover the Forgot button on the home page - Emir
+  },
+
   mapContainer: {
+    flex: 1,
+    zIndex: 0,
     backgroundColor: "#121212",
     height: Dimensions.get("window").height,
     width: Dimensions.get("window").width
@@ -80,13 +90,13 @@ const Styles = {
     width: Dimensions.get("window").width,
     height: "60%",
     zIndex: 1,
-    marginTop: 20
+    // marginTop: 20
   },
 
   userHasNoGroup: {
     width: Dimensions.get("window").width,
     height: "85%",
-    marginTop: 20
+    // marginTop: 20
   },
 
   mapUI: {
@@ -96,7 +106,6 @@ const Styles = {
     paddingBottom: "5%",
     color: "#ffffff",
     fontSize: 17
-    // backgroundColor: "grey"
   },
 
   modalContainer: {
@@ -106,12 +115,15 @@ const Styles = {
     width: Dimensions.get("window").width - 50,
     alignSelf: "center",
     backgroundColor: "#121212",
-    // opacity: 1.5
-    borderRadius: 30
+    borderRadius: 4,
+    shadowColor: "#121212",
+    shadowOpacity: 1,
+    elevation: 6,
+    shadowRadius: 10,
+    shadowOffset: { width: 1, height: 5 },
   },
 
   modalContainerBackground: {
-    // opacity: 0.5,
     backgroundColor: "#00000080",
     height: Dimensions.get("window").height
   },
@@ -177,7 +189,6 @@ const Styles = {
     position: "absolute",
     left: "7%",
     right: 0,
-    // top: Dimensions.get("window").height - 550,
     bottom: 0,
     borderRadius: 50,
     height: "20%"
