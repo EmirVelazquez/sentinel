@@ -23,29 +23,18 @@ import ValidationComponent from 'react-native-form-validator';
 
 class MapLanding extends ValidationComponent {
   state = {
-    //Member Data
     newMemberFirstName: "",
     newMemberLastName: "",
     newMemberEmail: "",
-
-    //Group name Data
     newGroup: "",
-
     // Form validation
     newMemberFirstNameInput: true,
     newMemberLastNameInput: true,
     newMemberEmailInput: true,
     newGroupInput: true,
     // End form validation
-
-          //Modal data
     modalVisible: false,
     modalVisible: false,
-
-    //slider data
-    slideValue: 0,
-
-    //drawer data
     drawerOpen: false,
     user: {
       first_name: "Niki",
@@ -55,6 +44,7 @@ class MapLanding extends ValidationComponent {
       pinColor: "#ff0000",
       // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
       groupName: "" // Using this to test when the user has not created a group - Emir
+
     },
     group: [
       {
@@ -119,31 +109,22 @@ class MapLanding extends ValidationComponent {
   //============================================================
   //this get the current user info from data base
   //========================================================
-  currentUser = value => {
+  currentUser = (value) => {
     console.log(value);
-    axios
-      .get("https://sentinel-api.herokuapp.com/api/user/" + value)
+    axios.get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
         //this is calling the current loged in user
         console.log("this is the current user Data", res.data);
         if (res.data.GroupId) {
-<<<<<<< HEAD
 
           // if the user has a groupId this will pull all the memebers innt the group
           axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
-=======
-          axios
-            .get(
-              "https://sentinel-api.herokuapp.com/api/user/group/" +
-                res.data.GroupId
-            )
->>>>>>> 7e07a21ce6159e5e42e66bccaf4c3b073f5d92f5
             .then(res => {
               console.log("this is all the members in the group", res.data);
-            });
+            })
         }
-      });
-  };
+      })
+  }
 
   //============================================================
   // function to create a new group
@@ -238,6 +219,7 @@ class MapLanding extends ValidationComponent {
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
+
       const value = await AsyncStorage.getItem("email");
       if (value !== null) {
         // We have data!!
@@ -277,12 +259,10 @@ class MapLanding extends ValidationComponent {
   };
   // Method For Slider When User Creates An Emergency Alert for Group
   Emergency = event => {
-    if (event < 50) {
-      this.setState({ slideValue: event });
-      console.log(this.state.slideValue + "= No Emergency");
+    if (event === 0) {
+      console.log(event + "= No Emergency");
     } else {
       console.log(event + "= User has created an Emergency Alert.");
-      this.setState({ slideValue: event });
     }
   };
 
@@ -346,15 +326,6 @@ class MapLanding extends ValidationComponent {
   }
   // New group modal submit
   handleGroupFormSubmit = () => {
-<<<<<<< HEAD
-    // Add validation Logic
-    this.setModalVisible(!this.state.modalVisible);
-    this.setState({ user: { groupName: this.state.newGroup } });
-    this.createGroup();
-    console.log("Modal Closed");
-  };
-
-=======
     // Validating the form entry
     this.validate({
       newGroup: { minlength: 1, maxlength: 24, required: true },
@@ -373,20 +344,12 @@ class MapLanding extends ValidationComponent {
       this.setState({ newGroupInput: false });
     }
   }
->>>>>>> 1c406523758a53df0c7a58128620bfa3a347dcff
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
-
-  }
-
-  closeModal = visible => {
+  };
+  closeModal = (visible) => {
     this.setState({ modalVisible: !visible });
   };
-
-  slideReset = () => {
-    if (this.state.slideValue < 50) this.setState({ slideValue: 0 });
-  };
-
 
   //=========================================================
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
@@ -396,7 +359,6 @@ class MapLanding extends ValidationComponent {
       return (
         // This is how we make a react native fragment <>
         <>
-          {/* New Group Modal */}
           {/* ================================================================================================== */}
           <Modal
             animationType="fade"
@@ -410,30 +372,6 @@ class MapLanding extends ValidationComponent {
           >
             <View style={Styles.modalContainerBackground}>
               <View style={Styles.modalContainer}>
-                <TouchableOpacity
-                  style={{
-                    height: 20,
-                    width: 20,
-                    top: 10,
-                    left: "105%"
-                    // backgroundColor: "red"
-                  }}
-                  onPress={this.closeModal}
-                >
-                  <Image
-                    source={require("../../assets/closeNav.png")}
-                    style={{
-                      height: 20,
-                      width: 20
-
-                      // height: 20,
-                      // width: 20,
-                      // top: 10,
-                      // left: "105%",
-                      // backgroundColor: "white"
-                    }}
-                  />
-                </TouchableOpacity>
                 <Text style={Styles.header}>New Group</Text>
                 <View
                   style={{
@@ -480,7 +418,6 @@ class MapLanding extends ValidationComponent {
             </View>
           </Modal>
           {/* ================================================================================================== */}
-
           <MapView
             style={Styles.userHasNoGroup}
             provider={PROVIDER_GOOGLE}
@@ -523,11 +460,7 @@ class MapLanding extends ValidationComponent {
               onPress={this.toggleOpen}
             >
               <Image // Render Nav icon based on side drawer open state
-                source={
-                  this.state.drawerOpen
-                    ? require("../../assets/closeNav.png")
-                    : require("../../assets/openNav.png")
-                }
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -560,35 +493,10 @@ class MapLanding extends ValidationComponent {
         // Closing the fragment </>
       );
     } else {
-      const width = Dimensions.get("window").width;
-      const sliderStyle = {
-        // asjust the color of the background
-        sliderDummy: {
-          backgroundColor: "#3F3F3F",
-          // backgroundColor: "red",
-          width: "90%",
-          height: 50,
-          borderRadius: 50,
-          position: "absolute",
-          opacity: 0.5
-        },
-        //adjust the color of the background slider
-        //variable width
-        sliderReal: {
-          backgroundColor: "#DC2237",
-          width:
-            ((Dimensions.get("window").width * 0.9) / 50) *
-            this.state.slideValue,
-          height: 50,
-          borderRadius: 50
-        }
-      };
-
+      // New member modal
       return (
         // This is how we make a react native fragment <>
         <>
-          {/* modal */}
-          {/* ========================================================== */}
           <Modal
             animationType="fade"
             transparent={true}
@@ -601,30 +509,6 @@ class MapLanding extends ValidationComponent {
           >
             <View style={Styles.modalContainerBackground}>
               <View style={Styles.modalContainer}>
-                <TouchableOpacity
-                  style={{
-                    height: 20,
-                    width: 20,
-                    top: 10,
-                    left: "105%"
-                    // backgroundColor: "red"
-                  }}
-                  onPress={this.closeModal}
-                >
-                  <Image
-                    source={require("../../assets/closeNav.png")}
-                    style={{
-                      height: 20,
-                      width: 20
-
-                      // height: 20,
-                      // width: 20,
-                      // top: 10,
-                      // left: "105%",
-                      // backgroundColor: "white"
-                    }}
-                  />
-                </TouchableOpacity>
                 <Text style={Styles.header}>New Member</Text>
                 <View
                   style={{
@@ -724,8 +608,6 @@ class MapLanding extends ValidationComponent {
               </View>
             </View>
           </Modal>
-          {/* ========================================================== */}
-
           <MapView
             style={Styles.userHasGroup}
             provider={PROVIDER_GOOGLE}
@@ -791,11 +673,7 @@ class MapLanding extends ValidationComponent {
               onPress={this.toggleOpen}
             >
               <Image // Render Nav icon based on side drawer open state
-                source={
-                  this.state.drawerOpen
-                    ? require("../../assets/closeNav.png")
-                    : require("../../assets/openNav.png")
-                }
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -902,42 +780,14 @@ class MapLanding extends ValidationComponent {
                 );
               })}
             </ScrollView>
-            <View
-              style={{
-                flexDirection: "row",
-                position: "absolute",
-                bottom: -9,
-                width: Dimensions.get("window").width,
-                left: "5%"
-              }}
-            >
-              <View style={sliderStyle.sliderDummy}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: "#FFFFFF",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    top: "30%"
-                  }}
-                >
-                  Slide for Emergency
-                </Text>
-              </View>
-              <View style={sliderStyle.sliderReal}></View>
-            </View>
             <Slider
               style={Styles.switch}
               step={1}
               thumbTintColor="#DC2237"
               minimumTrackTintColor="#DC2237"
               minimumValue={0}
-              maximumValue={50}
-              value={this.state.slideValue}
-              onValueChange={this.Emergency}
-              onSlidingComplete={this.slideReset}
-              maximumTrackTintColor="transparent"
-              minimumTrackTintColor="transparent"
+              maximumValue={1}
+              onSlidingComplete={this.Emergency}
             ></Slider>
           </View>
         </>
@@ -978,236 +828,236 @@ class MapLanding extends ValidationComponent {
 
 const mapTheme = [
   {
-    elementType: "geometry",
-    stylers: [
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    elementType: "labels.text.fill",
-    stylers: [
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#8ec3b9"
+        "color": "#8ec3b9"
       }
     ]
   },
   {
-    elementType: "labels.text.stroke",
-    stylers: [
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1a3646"
+        "color": "#1a3646"
       }
     ]
   },
   {
-    featureType: "administrative.country",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#4b6878"
+        "color": "#4b6878"
       }
     ]
   },
   {
-    featureType: "administrative.land_parcel",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#64779e"
+        "color": "#64779e"
       }
     ]
   },
   {
-    featureType: "administrative.province",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#4b6878"
+        "color": "#4b6878"
       }
     ]
   },
   {
-    featureType: "landscape.man_made",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#334e87"
+        "color": "#334e87"
       }
     ]
   },
   {
-    featureType: "landscape.natural",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "landscape.natural",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#023e58"
+        "color": "#023e58"
       }
     ]
   },
   {
-    featureType: "poi",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#283d6a"
+        "color": "#283d6a"
       }
     ]
   },
   {
-    featureType: "poi",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#6f9ba5"
+        "color": "#6f9ba5"
       }
     ]
   },
   {
-    featureType: "poi",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    featureType: "poi.park",
-    elementType: "geometry.fill",
-    stylers: [
+    "featureType": "poi.park",
+    "elementType": "geometry.fill",
+    "stylers": [
       {
-        color: "#023e58"
+        "color": "#023e58"
       }
     ]
   },
   {
-    featureType: "poi.park",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#3C7680"
+        "color": "#3C7680"
       }
     ]
   },
   {
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#304a7d"
+        "color": "#304a7d"
       }
     ]
   },
   {
-    featureType: "road",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#98a5be"
+        "color": "#98a5be"
       }
     ]
   },
   {
-    featureType: "road",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "road",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#2c6675"
+        "color": "#2c6675"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#255763"
+        "color": "#255763"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#b0d5ce"
+        "color": "#b0d5ce"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#023e58"
+        "color": "#023e58"
       }
     ]
   },
   {
-    featureType: "transit",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "transit",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#98a5be"
+        "color": "#98a5be"
       }
     ]
   },
   {
-    featureType: "transit",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "transit",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    featureType: "transit.line",
-    elementType: "geometry.fill",
-    stylers: [
+    "featureType": "transit.line",
+    "elementType": "geometry.fill",
+    "stylers": [
       {
-        color: "#283d6a"
+        "color": "#283d6a"
       }
     ]
   },
   {
-    featureType: "transit.station",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#3a4762"
+        "color": "#3a4762"
       }
     ]
   },
   {
-    featureType: "water",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#0e1626"
+        "color": "#0e1626"
       }
     ]
   },
   {
-    featureType: "water",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#4e6d70"
+        "color": "#4e6d70"
       }
     ]
   }
-];
+]
 
 export default MapLanding;
