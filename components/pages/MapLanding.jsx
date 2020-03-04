@@ -206,6 +206,8 @@ class MapLanding extends ValidationComponent {
 
   };
 
+
+
   // _updateLocationAsync = async () => {
   //   const location = await Location.watchPositionAsync(
   //     {
@@ -273,9 +275,7 @@ class MapLanding extends ValidationComponent {
   };
   // Method for user to add a waypoint
   currentUserLocation = () => {
-    console.log("User Wants to add a Waypoint");
-    // Currently logging press until Cole Adds functionality - Emir
-    //DOES NOT WORK ERROR THIS.STATE.USER NULL
+    console.log("Current User Location")
     console.log(this.state.user)
     this.setState({
       region: {
@@ -284,7 +284,7 @@ class MapLanding extends ValidationComponent {
         latitudeDelta: 0.001,
         longitudeDelta: 0.09
       },
-      // NEED TO MOVE THIS TO CLEAR WAYPOINT BUTTON SEPERATE BUTTON
+      // NEED TO MOVE THIS TO CLEAR WAYPOINT BUTTON SEPERATE BUTTON USING SET STATE
       waypoint: {
         coordinate: {}
       }
