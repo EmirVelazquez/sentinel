@@ -50,6 +50,7 @@ class MapLanding extends ValidationComponent {
     user: {
       first_name: "Niki",
       last_name: "Lauda",
+      id: "",
       email: "",
       coordinate: {},
       pinColor: "#ff0000",
@@ -121,12 +122,13 @@ class MapLanding extends ValidationComponent {
   //========================================================
   currentUser = value => {
     console.log("this is the email state", this.state.user.email);
-    console.log(this.state.user.groupName)
+    console.log(this.state.newGroup)
     axios
       .get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
         //this is calling the current loged in user
-        console.log(res.data);
+        this.setState({ user: { id: res.data.id } });
+        console.log(res.data.id);
         if (res.data.GroupId) {
           axios
             .get(
@@ -143,19 +145,19 @@ class MapLanding extends ValidationComponent {
   //============================================================
   // / function to create a new group
   createGroup = () => {
+    console.log("this is the states group name", this.state.groupName)
     axios.post("https://sentinel-api.herokuapp.com/api/group", {
       name: this.state.user.groupName
     })
       .then(res => {
         // this.getEmail(value);
-        if (res.status === 200) {
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!", res.data)
-          axios.put("https://sentinel-api.herokuapp.com/group", {
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!", res.data)
+        axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
 
-            email: this.state.user.email,
-            GroupId: res.data.id
-          })
-        }
+          email: this.state.user.email,
+          GroupId: res.data.id
+        })
+
       })
   }
 
@@ -379,7 +381,7 @@ class MapLanding extends ValidationComponent {
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
   updateLandingPageMap = () => {
-    if (this.state.user.groupName === "") {
+    if (!this.state.user.groupName) {
       return (
         // This is how we make a react native fragment <>
         <>
