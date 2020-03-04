@@ -15,10 +15,10 @@ import {
 } from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
-
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
+import axios from "axios";
 
 class MapLanding extends Component {
   state = {
@@ -28,14 +28,15 @@ class MapLanding extends Component {
     newGroup: "",
     modalVisible: false,
     modalVisible: false,
-
+    drawerOpen: false,
     user: {
-      name: "User",
+      first_name: "Niki",
+      last_name: "Lauda",
       coordinate: {},
       pinColor: "#ff0000",
-      groupName: ""
       // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
-      // groupName: "", // Using this to test when the user has not created a group - Emir
+      groupName: "", // Using this to test when the user has not created a group - Emir
+
     },
     group: [
       {
@@ -97,6 +98,25 @@ class MapLanding extends Component {
       longitudeDelta: 0.09
     }
   };
+  //============================================================
+  //this get the current user info from data base
+  //========================================================
+  currentUser = (value) => {
+    console.log(value);
+    axios.get("https://sentinel-api.herokuapp.com/api/user/" + value)
+      .then(res => {
+        //this is calling the current loged in user
+        console.log(res.data);
+        if (res.data.GroupId) {
+          axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
+            .then(res => {
+              console.log("this is all the members in the group", res.data);
+            })
+        }
+      })
+  }
+
+  //============================================================
 
   //============================================================
   // Google Maps Section (Use this section Cole...Please - Emir)
@@ -172,11 +192,12 @@ class MapLanding extends Component {
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
+
       const value = await AsyncStorage.getItem("email");
-      console.log("!!!!!!!!!!!!!!!!!!", value);
       if (value !== null) {
         // We have data!!
-        console.log(value);
+        // console.log(value);
+        this.currentUser(value);
       }
     } catch (error) {
       // Error retrieving data
@@ -260,6 +281,10 @@ class MapLanding extends Component {
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+  };
+
+  closeModal = (visible) => {
+    this.setState({ modalVisible: !visible });
   }
 
   //=========================================================
@@ -340,6 +365,7 @@ class MapLanding extends Component {
                 waypoint: { coordinate: e.nativeEvent.coordinate }
               });
             }}
+            customMapStyle={mapTheme}
           >
             {/* THIS IS MAIN USER MARKER */}
             {/* <MapView.Marker
@@ -368,9 +394,10 @@ class MapLanding extends Component {
                 alignItems: "center",
                 justifyContent: "center"
               }}
+              onPress={this.toggleOpen}
             >
-              <Image // Hamburger Icon
-                source={require("../../assets/openNav.png")}
+              <Image // Render Nav icon based on side drawer open state
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -527,6 +554,7 @@ class MapLanding extends Component {
                 waypoint: { coordinate: e.nativeEvent.coordinate }
               });
             }}
+            customMapStyle={mapTheme}
           >
             {/* THIS IS MAIN USER MARKER */}
             {/* <MapView.Marker
@@ -578,9 +606,10 @@ class MapLanding extends Component {
                 alignItems: "center",
                 justifyContent: "center"
               }}
+              onPress={this.toggleOpen}
             >
-              <Image // Hamburger Icon
-                source={require("../../assets/openNav.png")}
+              <Image // Render Nav icon based on side drawer open state
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -621,7 +650,7 @@ class MapLanding extends Component {
                   height: 24,
                   marginLeft: "auto",
                   marginRight: "auto",
-                  marginTop: "15%"
+                  marginTop: "5%"
                 }}
               />
             </TouchableOpacity>
@@ -690,8 +719,8 @@ class MapLanding extends Component {
             <Slider
               style={Styles.switch}
               step={1}
-              thumbTintColor="red"
-              minimumTrackTintColor="red"
+              thumbTintColor="#DC2237"
+              minimumTrackTintColor="#DC2237"
               minimumValue={0}
               maximumValue={1}
               onSlidingComplete={this.Emergency}
@@ -732,5 +761,239 @@ class MapLanding extends Component {
     );
   }
 }
+
+const mapTheme = [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#8ec3b9"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1a3646"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#4b6878"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#64779e"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#4b6878"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#334e87"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.natural",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#283d6a"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#6f9ba5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#3C7680"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#304a7d"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#98a5be"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#2c6675"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#255763"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#b0d5ce"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#023e58"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#98a5be"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#1d2c4d"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#283d6a"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#3a4762"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#0e1626"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#4e6d70"
+      }
+    ]
+  }
+]
 
 export default MapLanding;
