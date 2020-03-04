@@ -32,6 +32,7 @@ class MapLanding extends Component {
     user: {
       first_name: "Niki",
       last_name: "Lauda",
+      email: "",
       coordinate: {},
       pinColor: "#ff0000",
       // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
@@ -120,19 +121,21 @@ class MapLanding extends Component {
 
   //============================================================
   // function to create a new group
-  // creatGroup = () => {
-  //   axios.post("https://sentinel-api.herokuapp.com/api/group"{
-  //     name: this.state.user.groupName
-  //   })
-  //     .then(res => {
-  //       if (res.status === 200) {
-  //         axios.put("https://sentinel-api.herokuapp.com/"{
-  //           email: ,
-  //           GroupId: res.data.id
-  //         })
-  //       }
-  //     })
-  // }
+  createGroup = () => {
+    axios.post("https://sentinel-api.herokuapp.com/api/group", {
+      name: this.state.user.groupName
+    })
+      .then(res => {
+        console.log(res.data);
+        if (res.status === 200) {
+          axios.put("https://sentinel-api.herokuapp.com/user/group", {
+
+            email: this.state.user.email,
+            GroupId: res.data.id
+          })
+        }
+      })
+  }
 
 
   //============================================================
@@ -214,6 +217,7 @@ class MapLanding extends Component {
       if (value !== null) {
         // We have data!!
         // console.log(value);
+        this.setState({ user: { email: value } });
         this.currentUser(value);
       }
     } catch (error) {
@@ -293,6 +297,7 @@ class MapLanding extends Component {
     // Add validation Logic
     this.setModalVisible(!this.state.modalVisible);
     this.setState({ user: { groupName: this.state.newGroup } });
+    this.createGroup();
     console.log("Modal Closed");
   };
 
