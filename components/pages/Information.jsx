@@ -17,7 +17,7 @@ class Information extends Component {
       <View style={Styles.container}>
         <Text style={Styles.header}>Information</Text>
         <Text style={Styles.paragraph}>
-          How Sentinel User Infromation from our Users
+          How Sentinel Uses Information from our Users
         </Text>
 
         <Separator />
