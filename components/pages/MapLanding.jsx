@@ -1,7 +1,18 @@
 import React from "react";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView, Modal, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  Slider,
+  TouchableOpacity,
+  Dimensions,
+  AsyncStorage,
+  Image,
+  ScrollView,
+  Modal,
+  TextInput
+} from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
 import * as Location from "expo-location";
@@ -9,88 +20,78 @@ import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
 import axios from "axios";
 import ValidationComponent from 'react-native-form-validator';
-import SideMenu from "react-native-side-menu";
 
 class MapLanding extends ValidationComponent {
   state = {
-    //Member Data
     newMemberFirstName: "",
     newMemberLastName: "",
     newMemberEmail: "",
-
-    //Group name Data
     newGroup: "",
-
     // Form validation
     newMemberFirstNameInput: true,
     newMemberLastNameInput: true,
     newMemberEmailInput: true,
     newGroupInput: true,
     // End form validation
-
-    //Modal data
     modalVisible: false,
     modalVisible: false,
-
-    //slider data
-    slideValue: 0,
-
-    // User states
+    drawerOpen: false,
     user: {
-      first_name: "",
-      last_name: "",
-      email: "",
+      first_name: "Niki",
+      last_name: "Lauda",
       coordinate: {},
       pinColor: "#ff0000",
-      groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
-    },
-    group: "",
-    // {
-    //   first_name: "Ricky",
-    //   last_name: "Bobby",
-    //   coordinate: {
-    //     longitude: -96.78,
-    //     latitude: 32.7844
-    //   },
-    //   pinColor: "#1F4CC6"
-    // },
-    // {
-    //   first_name: "Forrest",
-    //   last_name: "Gump",
-    //   coordinate: {
-    //     longitude: -96.8419,
-    //     latitude: 32.8173
-    //   },
-    //   pinColor: "#8D8C8C"
-    // },
-    // {
-    //   first_name: "Michael",
-    //   last_name: "Scott",
-    //   coordinate: {
-    //     longitude: -96.7812,
-    //     latitude: 32.8252
-    //   },
-    //   pinColor: "#7F1DE1"
-    // },
-    // {
-    //   first_name: "Luke",
-    //   last_name: "SkyWalker",
-    //   coordinate: {
-    //     longitude: -96.7912,
-    //     latitude: 32.8552
-    //   },
-    //   pinColor: "#E9058E"
-    // },
-    // {
-    //   first_name: "Rick",
-    //   last_name: "Astley",
-    //   coordinate: {
-    //     longitude: -96.7712,
-    //     latitude: 32.8152
-    //   },
-    //   pinColor: "#D74D00"
-    // }
+      // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
+      groupName: "", // Using this to test when the user has not created a group - Emir
 
+    },
+    group: [
+      {
+        first_name: "Ricky",
+        last_name: "Bobby",
+        coordinate: {
+          longitude: -96.78,
+          latitude: 32.7844
+        },
+        pinColor: "#1F4CC6"
+      },
+      {
+        first_name: "Forrest",
+        last_name: "Gump",
+        coordinate: {
+          longitude: -96.8419,
+          latitude: 32.8173
+        },
+        pinColor: "#8D8C8C"
+      },
+      {
+        first_name: "Michael",
+        last_name: "Scott",
+        coordinate: {
+          longitude: -96.7812,
+          latitude: 32.8252
+        },
+        pinColor: "#7F1DE1"
+      },
+      {
+        first_name: "Luke",
+        last_name: "SkyWalker",
+        coordinate: {
+          longitude: -96.7912,
+          latitude: 32.8552
+        },
+        pinColor: "#E9058E"
+      },
+      {
+        first_name: "Rick",
+        last_name: "Astley",
+        coordinate: {
+          longitude: -96.7712,
+          latitude: 32.8152
+        },
+        pinColor: "#D74D00"
+      }
+    ],
     waypoint: {
       name: "waypoint",
       coordinate: {},
@@ -104,57 +105,25 @@ class MapLanding extends ValidationComponent {
       longitudeDelta: 0.09
     }
   };
-
   //============================================================
   //this get the current user info from data base
   //========================================================
-  currentUser = value => {
+  currentUser = (value) => {
     console.log(value);
-    axios
-      .get("https://sentinel-api.herokuapp.com/api/user/" + value)
+    axios.get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
-        //this is calling the current logged in user
-        //console.log(res.data);
-        // console.log("PARSED COORDINATE")
-        // console.log(JSON.parse(res.data.coordinate))
-
-        this.setState(prevState => ({
-          user: {
-            ...prevState.user,
-            first_name: res.data.first_name,
-            last_name: res.data.last_name,
-            email: res.data.email,
-            groupNumber: res.data.GroupId,
-            coordinate: JSON.parse(res.data.coordinate)
-          }
-        }), () => {
-          console.log("line 143 with parsed coordinate")
-          console.log(this.state.user)
-        });
-
-
+        //this is calling the current loged in user
+        console.log(res.data);
         if (res.data.GroupId) {
-          axios
-            .get(
-              "https://sentinel-api.herokuapp.com/api/user/group/" +
-              res.data.GroupId
-            )
+          axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
             .then(res => {
-
-
-              console.log("line 156")
               console.log("this is all the members in the group", res.data);
-              var filteredGroup = res.data.filter((member) => {
-                return member.email !== this.state.user.email
-              })
-              console.log("THIS IS FILTERED GROUP")
-              console.log(filteredGroup)
-              this.setState({ group: filteredGroup })
-
             })
         }
-      });
-  };
+      })
+  }
+
+  //============================================================
 
   //============================================================
   // Google Maps Section (Use this section Cole...Please - Emir)
@@ -166,77 +135,63 @@ class MapLanding extends ValidationComponent {
           "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
       });
     } else {
-      // this is used to get the current location
       this._getLocationAsync();
-      // this calls the asyncStorage function
-      this.getEmail();
     }
   }
 
-  //getting the current location of the user
   _getLocationAsync = async () => {
-    //push notification for permission to have location, will not work on emulator
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
-      console.log("Permission to access location was denied")
+      this.setState({
+        errorMessage: "Permission to access location was denied"
+      });
     }
 
-    // setting variable to the current location object
     let location = await Location.getCurrentPositionAsync({
       enableHighAccuracy: true
     });
-
-
-    this.setState(prevState => ({
-      location,
+    this.setState({ location });
+    this.setState({
       user: {
-        ...prevState.user,
         coordinate: {
-          longitude: location.coords.longitude,
-          latitude: location.coords.latitude
+          latitude: this.state.location.coords.latitude,
+          longitude: this.state.location.coords.longitude
         }
-      },
+      }
+    });
+    this.setState({
       region: {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
+        latitude: this.state.location.coords.latitude,
+        longitude: this.state.location.coords.longitude,
         latitudeDelta: 0.01,
         longitudeDelta: 0.35
       }
-    }), () => console.log(this.state.user));
-
-    //UPDATING USER LOCATION
-    axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
-      email: this.state.user.email,
-      coordinate: JSON.stringify({ latitude: location.coords.latitude, longitude: location.coords.longitude }),
-      lat: location.coords.latitude,
-      long: location.coords.longitude
-    }).then(res => console.log(res.data))
-      .catch(err => console.log(err))
-
+    });
+    console.log(this.state.location);
   };
 
-  // _updateLocationAsync = async () => {
-  //   const location = await Location.watchPositionAsync(
-  //     {
-  //       enableHighAccuracy: true,
-  //       distanceInterval: 250,
-  //     },
-  //     newLocation => {
-  //       let coords = newLocation.coords;
+  _getLocationAsync = async () => {
+    const location = await Location.watchPositionAsync(
+      {
+        enableHighAccuracy: true,
+        distanceInterval: 250
+      },
+      newLocation => {
+        let coords = newLocation.coords;
 
-  //       this.setState({
-  //         location: {
-  //           latitude: coords.latitude,
-  //           longitude: coords.longitude,
-  //           latitudeDelta: 0.08,
-  //           longitudeDelta: 0.45
-  //         }
-  //       });
-  //     },
-  //     error => console.log(error)
-  //   );
-  //   return location;
-  // };
+        this.setState({
+          location: {
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            latitudeDelta: 0.08,
+            longitudeDelta: 0.45
+          }
+        });
+      },
+      error => console.log(error)
+    );
+    return location;
+  };
 
   //=========================================================
   // Methods Being Used For Client Side Requests
@@ -244,6 +199,7 @@ class MapLanding extends ValidationComponent {
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
+
       const value = await AsyncStorage.getItem("email");
       if (value !== null) {
         // We have data!!
@@ -254,20 +210,13 @@ class MapLanding extends ValidationComponent {
       // Error retrieving data
     }
   };
+  // this calls the asyncStorage function
+  componentDidMount() {
+    this.getEmail();
+  }
   // Method for User to Request Group Member's Position on Map
-  UserPress = (member) => {
+  UserPress = () => {
     console.log("A User's location was requested");
-    //setting the state to the group member that is pressed
-    this.setState({
-      region: {
-        latitude: member.lat,
-        longitude: member.long,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.09
-      }
-    });
-
-
   };
   // Method for user to create a new group, will render a modal
   CreateGroupModal = () => {
@@ -276,30 +225,9 @@ class MapLanding extends ValidationComponent {
     console.log("Modal Opened");
   };
   // Method for user to add a waypoint
-  currentUserLocation = () => {
-    console.log("Current User Location")
-    console.log(this.state.user)
-    this.setState({
-      region: {
-        latitude: this.state.user.coordinate.latitude,
-        longitude: this.state.user.coordinate.longitude,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.09
-      }
-    })
+  addWayPoint = () => {
+    console.log("User Wants to add a Waypoint"); // Currently logging press until Cole Adds functionality - Emir
   };
-
-  removeWaypoint = () => {
-    this.setState({ waypoint: { coordinate: {} } })
-    this.setState({
-      region: {
-        latitude: this.state.waypoint.coordinate.latitude,
-        longitude: this.state.waypoint.coordinate.longitude,
-        latitudeDelta: .1,
-        longitudeDelta: 1
-      }
-    })
-  }
   // Method for user to add group member
   addGroupMember = () => {
     console.log("User Wants to add a group member... Opening Modal"); // Currently logging after press
@@ -310,12 +238,10 @@ class MapLanding extends ValidationComponent {
   };
   // Method For Slider When User Creates An Emergency Alert for Group
   Emergency = event => {
-    if (event < 50) {
-      this.setState({ slideValue: event });
-      console.log(this.state.slideValue + "= No Emergency");
+    if (event === 0) {
+      console.log(event + "= No Emergency");
     } else {
       console.log(event + "= User has created an Emergency Alert.");
-      this.setState({ slideValue: event });
     }
   };
 
@@ -345,9 +271,10 @@ class MapLanding extends ValidationComponent {
       newGroup: event.toLowerCase()
     });
     console.log("New Group Change: " + event);
-  }
+  };
   // New member modal submit
   handleFormSubmit = () => {
+    console.log('new member button click');
     // Validating the form entries
     this.validate({
       newMemberFirstName: { minlength: 2, maxlength: 24, required: true },
@@ -385,15 +312,9 @@ class MapLanding extends ValidationComponent {
     });
     // Form entry is valid
     if (this.isFormValid()) {
-      this.setState(prevState => ({
+      this.setState({
         newGroupInput: true,
-        user: {
-          ...prevState.user,
-          groupName: this.state.newGroup
-        }
-      }), () => {
-        console.log("line 416")
-        console.log(this.state.user)
+        user: { groupName: this.state.newGroup }
       });
       this.setModalVisible(!this.state.modalVisible);
       console.log("Modal Closed");
@@ -405,37 +326,19 @@ class MapLanding extends ValidationComponent {
   }
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
-
-  }
-
-  closeModal = visible => {
+  };
+  closeModal = (visible) => {
     this.setState({ modalVisible: !visible });
   };
-
-  slideReset = () => {
-    if (this.state.slideValue < 50) this.setState({ slideValue: 0 });
-  };
-
-  //=========================================================
-  // Side Drawer Methods
-  //=========================================================
-  toggleOpen = () => {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
-
-  updateMenuState(isOpen) {
-    this.setState({ isOpen, });
-  }
 
   //=========================================================
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
   updateLandingPageMap = () => {
-    if (this.state.user.groupNumber === "") {
+    if (this.state.user.groupName === "") {
       return (
         // This is how we make a react native fragment <>
         <>
-          {/* New Group Modal */}
           {/* ================================================================================================== */}
           <Modal
             animationType="fade"
@@ -449,23 +352,6 @@ class MapLanding extends ValidationComponent {
           >
             <View style={Styles.modalContainerBackground}>
               <View style={Styles.modalContainer}>
-                <TouchableOpacity
-                  style={{
-                    height: 20,
-                    width: 20,
-                    top: 10,
-                    left: "105%"
-                  }}
-                  onPress={this.closeModal}
-                >
-                  <Image
-                    source={require("../../assets/closeNav.png")}
-                    style={{
-                      height: 20,
-                      width: 20
-                    }}
-                  />
-                </TouchableOpacity>
                 <Text style={Styles.header}>New Group</Text>
                 <View
                   style={{
@@ -512,7 +398,6 @@ class MapLanding extends ValidationComponent {
             </View>
           </Modal>
           {/* ================================================================================================== */}
-
           <MapView
             style={Styles.userHasNoGroup}
             provider={PROVIDER_GOOGLE}
@@ -523,15 +408,15 @@ class MapLanding extends ValidationComponent {
                 waypoint: { coordinate: e.nativeEvent.coordinate }
               });
             }}
-            customMapStyle={darkModeMap}
+            customMapStyle={mapTheme}
           >
             {/* THIS IS MAIN USER MARKER */}
-            <MapView.Marker
+            {/* <MapView.Marker
               title={this.state.user.name}
               key="Main user"
               coordinate={this.state.user.coordinate}
               pinColor={this.state.user.pinColor}
-            />
+            /> */}
           </MapView>
           <View
             style={{
@@ -555,11 +440,7 @@ class MapLanding extends ValidationComponent {
               onPress={this.toggleOpen}
             >
               <Image // Render Nav icon based on side drawer open state
-                source={
-                  this.state.isOpen
-                    ? require("../../assets/closeNav.png")
-                    : require("../../assets/openNav.png")
-                }
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -592,102 +473,10 @@ class MapLanding extends ValidationComponent {
         // Closing the fragment </>
       );
     } else {
-      // This is making the directions to the waypoint
-      let mapViewDirection = null;
-      if (
-        this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
-        this.state.waypoint.coordinate.hasOwnProperty("longitude")
-      ) {
-        mapViewDirection = (
-          <MapViewDirections
-            origin={this.state.user.coordinate}
-            destination={this.state.waypoint.coordinate}
-            apikey={GOOGLE_API_KEY}
-            strokeWidth={2}
-            strokeColor="red"
-          />
-        );
-      }
-
-      //-----------------------------------------------------------------------------------
-      //this is conditional for group markers
-      let memberMarkers = null;
-      let memberCircles = null;
-      if (this.state.group.length > 0) {
-        memberMarkers = (this.state.group.map((member, i) => {
-          return (
-            <MapView.Marker
-              title={member.first_name}
-              key={i}
-              coordinate={JSON.parse(member.coordinate)}
-              pinColor={member.pinColor}
-            />
-          )
-        })
-        )
-        memberCircles = (
-          this.state.group.map((member, i) => {
-            return (
-              <TouchableOpacity
-                key={i}
-                onPress={() => this.UserPress(member)}
-                style={Styles.users}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 50,
-                    alignSelf: "center",
-                    borderColor: `${member.pinColor}`, // Taking the color from the state - Emir
-                    borderWidth: 2,
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  {/* Taking the full name initials and setting inside circle - Emir */}
-                  <Text style={{ color: "#FFFFFF", textTransform: "capitalize" }}>
-                    {member.first_name.charAt(0)}
-                    {member.last_name.charAt(0)}
-                  </Text>
-                </View>
-                <Text style={Styles.userText}>{member.first_name}</Text>
-              </TouchableOpacity>
-            );
-          })
-        )
-
-      }
-      const width = Dimensions.get("window").width;
-      const sliderStyle = {
-        // asjust the color of the background
-        sliderDummy: {
-          backgroundColor: "#3F3F3F",
-          // backgroundColor: "red",
-          width: "90%",
-          height: 50,
-          borderRadius: 50,
-          position: "absolute",
-          opacity: 0.5
-        },
-        //adjust the color of the background slider
-        //variable width
-        sliderReal: {
-          backgroundColor: "#DC2237",
-          width:
-            ((Dimensions.get("window").width * 0.9) / 50) *
-            this.state.slideValue,
-          height: 50,
-          borderRadius: 50
-        }
-      };
-
+      // New member modal
       return (
-
         // This is how we make a react native fragment <>
         <>
-          {/* modal */}
-          {/* ========================================================== */}
           <Modal
             animationType="fade"
             transparent={true}
@@ -700,30 +489,6 @@ class MapLanding extends ValidationComponent {
           >
             <View style={Styles.modalContainerBackground}>
               <View style={Styles.modalContainer}>
-                <TouchableOpacity
-                  style={{
-                    height: 20,
-                    width: 20,
-                    top: 10,
-                    left: "105%"
-                    // backgroundColor: "red"
-                  }}
-                  onPress={this.closeModal}
-                >
-                  <Image
-                    source={require("../../assets/closeNav.png")}
-                    style={{
-                      height: 20,
-                      width: 20
-
-                      // height: 20,
-                      // width: 20,
-                      // top: 10,
-                      // left: "105%",
-                      // backgroundColor: "white"
-                    }}
-                  />
-                </TouchableOpacity>
                 <Text style={Styles.header}>New Member</Text>
                 <View
                   style={{
@@ -823,8 +588,6 @@ class MapLanding extends ValidationComponent {
               </View>
             </View>
           </Modal>
-          {/* ========================================================== */}
-
           <MapView
             style={Styles.userHasGroup}
             provider={PROVIDER_GOOGLE}
@@ -835,27 +598,37 @@ class MapLanding extends ValidationComponent {
                 waypoint: { coordinate: e.nativeEvent.coordinate }
               });
             }}
-            customMapStyle={darkModeMap}
+            customMapStyle={mapTheme}
           >
             {/* THIS IS MAIN USER MARKER */}
-            <MapView.Marker
-              title={this.state.user.first_name}
+            {/* <MapView.Marker
+              title={this.state.user.name}
               key="Main user"
               coordinate={this.state.user.coordinate}
               pinColor={this.state.user.pinColor}
-            />
+            /> */}
 
             {/* THIS IS WAYPOINT MARKER */}
-            <MapView.Marker
+            {/* <MapView.Marker
               title={this.state.waypoint.name}
               key="waypoint"
               coordinate={this.state.waypoint.coordinate}
               pinColor={this.state.waypoint.pinColor}
-            />
+            /> */}
 
             {/* THIS IS THE GROUP MEMBERS MARKER */}
-            {memberMarkers}
-            {mapViewDirection}
+            {/* {this.state.group.map((member, i) => {
+              return (
+                <MapView.Marker
+                  title={member.name}
+                  key={i}
+                  coordinate={member.coordinate}
+                  pinColor={member.pinColor}
+                />
+              );
+            })} */}
+
+            {/* {mapViewDirection} */}
           </MapView>
 
           <View
@@ -880,11 +653,7 @@ class MapLanding extends ValidationComponent {
               onPress={this.toggleOpen}
             >
               <Image // Render Nav icon based on side drawer open state
-                source={
-                  this.state.isOpen
-                    ? require("../../assets/closeNav.png")
-                    : require("../../assets/openNav.png")
-                }
+                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
                 style={{
                   width: 22,
                   height: 16.2,
@@ -916,7 +685,7 @@ class MapLanding extends ValidationComponent {
                 shadowOffset: { width: 1, height: 5 },
                 justifyContent: "center"
               }}
-              onPress={this.removeWaypoint}
+              onPress={this.addWayPoint}
             >
               <Image
                 source={require("../../assets/addWaypoint.png")}
@@ -961,70 +730,44 @@ class MapLanding extends ValidationComponent {
               snapToAlignment={"center"}
               decelerationRate={0}
             >
-              <TouchableOpacity
-                key="main user"
-                onPress={this.currentUserLocation}
-                style={Styles.users}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 50,
-                    alignSelf: "center",
-                    borderColor: `${this.state.user.pinColor}`, // Taking the color from the state - Emir
-                    borderWidth: 2,
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  {/* Taking the full name initials and setting inside circle - Emir */}
-                  <Text style={{ color: "#FFFFFF", textTransform: "capitalize" }}>
-                    {this.state.user.first_name.charAt(0)}
-                    {this.state.user.last_name.charAt(0)}
-                  </Text>
-                </View>
-                <Text style={Styles.userText}>{this.state.user.first_name}</Text>
-              </TouchableOpacity>
-              {memberCircles}
-
+              {this.state.group.map((member, i) => {
+                return (
+                  <TouchableOpacity
+                    key={i}
+                    onPress={this.UserPress}
+                    style={Styles.users}
+                  >
+                    <View
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: 50,
+                        alignSelf: "center",
+                        borderColor: `${member.pinColor}`, // Taking the color from the state - Emir
+                        borderWidth: 2,
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      {/* Taking the full name initials and setting inside circle - Emir */}
+                      <Text style={{ color: "#FFFFFF" }}>
+                        {member.first_name.charAt(0)}
+                        {member.last_name.charAt(0)}
+                      </Text>
+                    </View>
+                    <Text style={Styles.userText}>{member.first_name}</Text>
+                  </TouchableOpacity>
+                );
+              })}
             </ScrollView>
-            <View
-              style={{
-                flexDirection: "row",
-                position: "absolute",
-                bottom: -9,
-                width: Dimensions.get("window").width,
-                left: "5%"
-              }}
-            >
-              <View style={sliderStyle.sliderDummy}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: "#FFFFFF",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    top: "30%"
-                  }}
-                >
-                  Slide for Emergency
-                </Text>
-              </View>
-              <View style={sliderStyle.sliderReal}></View>
-            </View>
             <Slider
               style={Styles.switch}
               step={1}
               thumbTintColor="#DC2237"
               minimumTrackTintColor="#DC2237"
               minimumValue={0}
-              maximumValue={50}
-              value={this.state.slideValue}
-              onValueChange={this.Emergency}
-              onSlidingComplete={this.slideReset}
-              maximumTrackTintColor="transparent"
-              minimumTrackTintColor="transparent"
+              maximumValue={1}
+              onSlidingComplete={this.Emergency}
             ></Slider>
           </View>
         </>
@@ -1037,282 +780,264 @@ class MapLanding extends ValidationComponent {
   // RENDER METHOD for mounting component
   //=========================================================
   render() {
-    // This is the menu on the side drawer
-    const drawerItems = <>
-      <View style={{ flex: 1, height: Dimensions.get("window").height, backgroundColor: "#000000", padding: "10%" }}>
-        <View style={{ width: "100%" }}>
-          <Image source={require("../../assets/iconLogo.png")} style={{ width: 60, height: 60, left: "70%" }} />
-        </View>
-        <Text style={{ color: "#FFFFFF", fontSize: 18 }}>Hello,</Text>
-        <Text style={{ color: "#FFFFFF", marginBottom: "20%", fontSize: 18, textTransform: "capitalize" }}>{this.state.user.first_name} {this.state.user.last_name}</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/inboxInv.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Invites</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/memberIcon.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Manage Group</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/settingsCog.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Settings</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/logOut.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16, color: "#1BCBC0" }}>Log Out</Text>
-        </View>
-      </View>
-    </>
+    // This is making the directions to the waypoint
+    let mapViewDirection = null;
+    if (
+      this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
+      this.state.waypoint.coordinate.hasOwnProperty("longitude")
+    ) {
+      mapViewDirection = (
+        <MapViewDirections
+          origin={this.state.user.coordinate}
+          destination={this.state.waypoint.coordinate}
+          apikey={GOOGLE_API_KEY}
+          strokeWidth={2}
+          strokeColor="red"
+        />
+      );
+    }
 
     return (
-      <SideMenu // Render the side drawer on MapLanding always
-        menu={drawerItems}
-        isOpen={this.state.isOpen}
-        onChange={(isOpen) => this.updateMenuState(isOpen)}
-        menuPosition={"left"}
-        disableGestures={true}
-      >
-        <View style={Styles.mapContainer}>
-          {/* This calls the method to render the layout based on group state */}
-          <this.updateLandingPageMap />
-        </View>
-      </SideMenu>
+      <View style={Styles.mapContainer}>
+        {/* This calls the method to render the layout based on group state */}
+        <this.updateLandingPageMap />
+      </View>
     );
   }
 }
 
-const darkModeMap = [
+const mapTheme = [
   {
-    elementType: "geometry",
-    stylers: [
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    elementType: "labels.text.fill",
-    stylers: [
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#8ec3b9"
+        "color": "#8ec3b9"
       }
     ]
   },
   {
-    elementType: "labels.text.stroke",
-    stylers: [
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1a3646"
+        "color": "#1a3646"
       }
     ]
   },
   {
-    featureType: "administrative.country",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#4b6878"
+        "color": "#4b6878"
       }
     ]
   },
   {
-    featureType: "administrative.land_parcel",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#64779e"
+        "color": "#64779e"
       }
     ]
   },
   {
-    featureType: "administrative.province",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#4b6878"
+        "color": "#4b6878"
       }
     ]
   },
   {
-    featureType: "landscape.man_made",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#334e87"
+        "color": "#334e87"
       }
     ]
   },
   {
-    featureType: "landscape.natural",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "landscape.natural",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#023e58"
+        "color": "#023e58"
       }
     ]
   },
   {
-    featureType: "poi",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#283d6a"
+        "color": "#283d6a"
       }
     ]
   },
   {
-    featureType: "poi",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#6f9ba5"
+        "color": "#6f9ba5"
       }
     ]
   },
   {
-    featureType: "poi",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    featureType: "poi.park",
-    elementType: "geometry.fill",
-    stylers: [
+    "featureType": "poi.park",
+    "elementType": "geometry.fill",
+    "stylers": [
       {
-        color: "#023e58"
+        "color": "#023e58"
       }
     ]
   },
   {
-    featureType: "poi.park",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#3C7680"
+        "color": "#3C7680"
       }
     ]
   },
   {
-    featureType: "road",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#304a7d"
+        "color": "#304a7d"
       }
     ]
   },
   {
-    featureType: "road",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "road",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#98a5be"
+        "color": "#98a5be"
       }
     ]
   },
   {
-    featureType: "road",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "road",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#2c6675"
+        "color": "#2c6675"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
       {
-        color: "#255763"
+        "color": "#255763"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#b0d5ce"
+        "color": "#b0d5ce"
       }
     ]
   },
   {
-    featureType: "road.highway",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#023e58"
+        "color": "#023e58"
       }
     ]
   },
   {
-    featureType: "transit",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "transit",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#98a5be"
+        "color": "#98a5be"
       }
     ]
   },
   {
-    featureType: "transit",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "transit",
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#1d2c4d"
+        "color": "#1d2c4d"
       }
     ]
   },
   {
-    featureType: "transit.line",
-    elementType: "geometry.fill",
-    stylers: [
+    "featureType": "transit.line",
+    "elementType": "geometry.fill",
+    "stylers": [
       {
-        color: "#283d6a"
+        "color": "#283d6a"
       }
     ]
   },
   {
-    featureType: "transit.station",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#3a4762"
+        "color": "#3a4762"
       }
     ]
   },
   {
-    featureType: "water",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#0e1626"
+        "color": "#0e1626"
       }
     ]
   },
   {
-    featureType: "water",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#4e6d70"
+        "color": "#4e6d70"
       }
     ]
   }
-];
+]
 
 export default MapLanding;
