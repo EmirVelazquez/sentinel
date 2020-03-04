@@ -29,7 +29,9 @@ class MapLanding extends Component {
     modalVisible: false,
 
     user: {
-      name: "User",
+      first_name: "",
+      last_name: "",
+      email: "",
       coordinate: {},
       pinColor: "#ff0000",
       groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
@@ -95,19 +97,37 @@ class MapLanding extends Component {
       longitudeDelta: 0.09
     }
   };
+
+
   //============================================================
   //this get the current user info from data base
   //========================================================
   currentUser = (value) => {
     console.log(value);
+
     axios.get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
-        //this is calling the current loged in user
-        console.log(res.data);
+        //this is calling the current logged in user
+        //console.log(res.data);
+        //console.log(res.data.first_name)
+
+
+        // this.setState(prevState => ({
+        //   user: {
+        //     ...prevState.user,
+        //     first_name: res.data.first_name,
+        //     last_name: res.data.last_name,
+        //     email: res.data.email
+        //   }
+        // }), () => {
+        //   //console.log(this.state.user)
+        // });
+
+
         if (res.data.GroupId) {
           axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
             .then(res => {
-              console.log("this is all the members in the group", res.data);
+              //console.log("this is all the members in the group", res.data);
             })
         }
       })
@@ -125,63 +145,80 @@ class MapLanding extends Component {
           "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
       });
     } else {
+      // this is used to get the current location
       this._getLocationAsync();
+      // this calls the asyncStorage function
+      this.getEmail();
+      console.log(this.state.user)
     }
   }
 
+  //getting the current location of the user
   _getLocationAsync = async () => {
+    //push notification for permission to have location, will not work on emulator
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
-      this.setState({
-        errorMessage: "Permission to access location was denied"
-      });
+      console.log("Permission to access location was denied")
     }
 
+    // setting variable to the current location object
     let location = await Location.getCurrentPositionAsync({
       enableHighAccuracy: true
     });
-    this.setState({ location });
-    this.setState({
+
+
+    this.setState(prevState => ({
+      location,
       user: {
+        ...prevState.user,
         coordinate: {
-          latitude: this.state.location.coords.latitude,
-          longitude: this.state.location.coords.longitude
+          longitude: location.coords.longitude,
+          latitude: location.coords.latitude
         }
-      }
-    });
-    this.setState({
+      },
       region: {
-        latitude: this.state.location.coords.latitude,
-        longitude: this.state.location.coords.longitude,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
         latitudeDelta: 0.01,
         longitudeDelta: 0.35
       }
-    });
-    console.log(this.state.location);
+    }), () => console.log(this.state.user));
+
+    //UPDATING USER LOCATION
+    console.log(this.state.user.email,
+      location.coords.latitude,
+      location.coords.longitude)
+    axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
+      email: this.state.user.email,
+      lat: location.coords.latitude,
+      long: location.coords.longitude
+    }).then(res => console.log(res.data))
+      .catch(err => console.log(err))
+
   };
 
-  _getLocationAsync = async () => {
-    const location = await Location.watchPositionAsync(
-      {
-        enableHighAccuracy: true,
-        distanceInterval: 250
-      },
-      newLocation => {
-        let coords = newLocation.coords;
+  // _updateLocationAsync = async () => {
+  //   const location = await Location.watchPositionAsync(
+  //     {
+  //       enableHighAccuracy: true,
+  //       distanceInterval: 250,
+  //     },
+  //     newLocation => {
+  //       let coords = newLocation.coords;
 
-        this.setState({
-          location: {
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-            latitudeDelta: 0.08,
-            longitudeDelta: 0.45
-          }
-        });
-      },
-      error => console.log(error)
-    );
-    return location;
-  };
+  //       this.setState({
+  //         location: {
+  //           latitude: coords.latitude,
+  //           longitude: coords.longitude,
+  //           latitudeDelta: 0.08,
+  //           longitudeDelta: 0.45
+  //         }
+  //       });
+  //     },
+  //     error => console.log(error)
+  //   );
+  //   return location;
+  // };
 
   //=========================================================
   // Methods Being Used For Client Side Requests
@@ -201,12 +238,23 @@ class MapLanding extends Component {
     }
   };
   // this calls the asyncStorage function
-  componentDidMount() {
-    this.getEmail();
-  }
+  // componentDidMount() {
+  //   this.getEmail();
+  // }
   // Method for User to Request Group Member's Position on Map
-  UserPress = () => {
+  UserPress = (member) => {
     console.log("A User's location was requested");
+    //setting the state to the group member that is pressed
+    this.setState({
+      region: {
+        latitude: member.coordinate.latitude,
+        longitude: member.coordinate.longitude,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.09
+      }
+    });
+
+
   };
   // Method for user to create a new group, will render a modal
   CreateGroupModal = () => {
@@ -215,8 +263,22 @@ class MapLanding extends Component {
     console.log("Modal Opened");
   };
   // Method for user to add a waypoint
-  addWayPoint = () => {
-    console.log("User Wants to add a Waypoint"); // Currently logging press until Cole Adds functionality - Emir
+  currentUserLocation = () => {
+    console.log("User Wants to add a Waypoint");
+    // Currently logging press until Cole Adds functionality - Emir
+    this.setState({
+      region: {
+        latitude: this.state.user.coordinate.latitude,
+        longitude: this.state.user.coordinate.longitude,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.09
+      },
+      // NEED TO MOVE THIS TO CLEAR WAYPOINT BUTTON SEPERATE BUTTON
+      waypoint: {
+        coordinate: {}
+      }
+    })
+
   };
   // Method for user to add group member
   addGroupMember = () => {
@@ -285,12 +347,12 @@ class MapLanding extends Component {
             }}
           >
             {/* THIS IS MAIN USER MARKER */}
-            {/* <MapView.Marker
+            <MapView.Marker
               title={this.state.user.name}
               key="Main user"
               coordinate={this.state.user.coordinate}
               pinColor={this.state.user.pinColor}
-            /> */}
+            />
           </MapView>
           <View
             style={{
@@ -346,7 +408,24 @@ class MapLanding extends Component {
         // Closing the fragment </>
       );
     } else {
+      // This is making the directions to the waypoint
+      let mapViewDirection = null;
+      if (
+        this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
+        this.state.waypoint.coordinate.hasOwnProperty("longitude")
+      ) {
+        mapViewDirection = (
+          <MapViewDirections
+            origin={this.state.user.coordinate}
+            destination={this.state.waypoint.coordinate}
+            apikey={GOOGLE_API_KEY}
+            strokeWidth={2}
+            strokeColor="red"
+          />
+        );
+      }
       return (
+
         // This is how we make a react native fragment <>
         <>
           <MapView
@@ -361,34 +440,34 @@ class MapLanding extends Component {
             }}
           >
             {/* THIS IS MAIN USER MARKER */}
-            {/* <MapView.Marker
-              title={this.state.user.name}
+            <MapView.Marker
+              title={this.state.user.first_name}
               key="Main user"
               coordinate={this.state.user.coordinate}
               pinColor={this.state.user.pinColor}
-            /> */}
+            />
 
             {/* THIS IS WAYPOINT MARKER */}
-            {/* <MapView.Marker
+            <MapView.Marker
               title={this.state.waypoint.name}
               key="waypoint"
               coordinate={this.state.waypoint.coordinate}
               pinColor={this.state.waypoint.pinColor}
-            /> */}
+            />
 
             {/* THIS IS THE GROUP MEMBERS MARKER */}
-            {/* {this.state.group.map((member, i) => {
+            {this.state.group.map((member, i) => {
               return (
                 <MapView.Marker
-                  title={member.name}
+                  title={member.first_name}
                   key={i}
                   coordinate={member.coordinate}
                   pinColor={member.pinColor}
                 />
               );
-            })} */}
+            })}
 
-            {/* {mapViewDirection} */}
+            {mapViewDirection}
           </MapView>
 
           <View
@@ -444,7 +523,7 @@ class MapLanding extends Component {
                 shadowOffset: { width: 1, height: 5 },
                 justifyContent: "center"
               }}
-              onPress={this.addWayPoint}
+              onPress={this.currentUserLocation}
             >
               <Image
                 source={require("../../assets/addWaypoint.png")}
@@ -493,7 +572,7 @@ class MapLanding extends Component {
                 return (
                   <TouchableOpacity
                     key={i}
-                    onPress={this.UserPress}
+                    onPress={() => this.UserPress(member)}
                     style={Styles.users}
                   >
                     <View
@@ -539,22 +618,6 @@ class MapLanding extends Component {
   // RENDER METHOD for mounting component
   //=========================================================
   render() {
-    // This is making the directions to the waypoint
-    let mapViewDirection = null;
-    if (
-      this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
-      this.state.waypoint.coordinate.hasOwnProperty("longitude")
-    ) {
-      mapViewDirection = (
-        <MapViewDirections
-          origin={this.state.user.coordinate}
-          destination={this.state.waypoint.coordinate}
-          apikey={GOOGLE_API_KEY}
-          strokeWidth={2}
-          strokeColor="red"
-        />
-      );
-    }
 
     return (
       <View style={Styles.mapContainer}>
