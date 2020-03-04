@@ -89,13 +89,13 @@ const Styles = {
   userHasGroup: {
     width: Dimensions.get("window").width,
     height: "60%",
-    zIndex: 1,
+    zIndex: 1
     // marginTop: 20
   },
 
   userHasNoGroup: {
     width: Dimensions.get("window").width,
-    height: "85%",
+    height: "85%"
     // marginTop: 20
   },
 
@@ -120,7 +120,7 @@ const Styles = {
     shadowOpacity: 1,
     elevation: 6,
     shadowRadius: 10,
-    shadowOffset: { width: 1, height: 5 },
+    shadowOffset: { width: 1, height: 5 }
   },
 
   modalContainerBackground: {
@@ -187,9 +187,9 @@ const Styles = {
   switch: {
     width: "90%",
     position: "absolute",
-    left: "7%",
+    left: "5%",
     right: 0,
-    bottom: 0,
+    bottom: -15,
     borderRadius: 50,
     height: "20%"
   },
