@@ -22,12 +22,22 @@ import axios from "axios";
 
 class MapLanding extends Component {
   state = {
+    //Member Data
     newMemberFirstName: "",
     newMemberLastName: "",
     newMemberEmail: "",
+
+    //Group name Data
     newGroup: "",
+
+    //Modal data
     modalVisible: false,
     modalVisible: false,
+
+    //slider data
+    slideValue: 0,
+
+    //drawer data
     drawerOpen: false,
     user: {
       first_name: "Niki",
@@ -234,10 +244,12 @@ class MapLanding extends Component {
   };
   // Method For Slider When User Creates An Emergency Alert for Group
   Emergency = event => {
-    if (event === 0) {
-      console.log(event + "= No Emergency");
+    if (event < 50) {
+      this.setState({ slideValue: event });
+      console.log(this.state.slideValue + "= No Emergency");
     } else {
       console.log(event + "= User has created an Emergency Alert.");
+      this.setState({ slideValue: event });
     }
   };
 
@@ -288,6 +300,10 @@ class MapLanding extends Component {
 
   closeModal = visible => {
     this.setState({ modalVisible: !visible });
+  };
+
+  slideReset = () => {
+    if (this.state.slideValue < 50) this.setState({ slideValue: 0 });
   };
 
   //=========================================================
@@ -462,9 +478,34 @@ class MapLanding extends Component {
         // Closing the fragment </>
       );
     } else {
+      const width = Dimensions.get("window").width;
+      const sliderStyle = {
+        // asjust the color of the background
+        sliderDummy: {
+          backgroundColor: "#3F3F3F",
+          // backgroundColor: "red",
+          width: "90%",
+          height: 50,
+          borderRadius: 50,
+          position: "absolute",
+          opacity: 0.5
+        },
+        //adjust the color of the background slider
+        //variable width
+        sliderReal: {
+          backgroundColor: "#DC2237",
+          width:
+            ((Dimensions.get("window").width * 0.9) / 50) *
+            this.state.slideValue,
+          height: 50,
+          borderRadius: 50
+        }
+      };
       return (
         // This is how we make a react native fragment <>
         <>
+          {/* modal */}
+          {/* ========================================================== */}
           <Modal
             animationType="fade"
             transparent={true}
@@ -600,6 +641,8 @@ class MapLanding extends Component {
               </View>
             </View>
           </Modal>
+          {/* ========================================================== */}
+
           <MapView
             style={Styles.userHasGroup}
             provider={PROVIDER_GOOGLE}
@@ -776,14 +819,42 @@ class MapLanding extends Component {
                 );
               })}
             </ScrollView>
+            <View
+              style={{
+                flexDirection: "row",
+                position: "absolute",
+                bottom: -9,
+                width: Dimensions.get("window").width,
+                left: "5%"
+              }}
+            >
+              <View style={sliderStyle.sliderDummy}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: "#FFFFFF",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    top: "30%"
+                  }}
+                >
+                  Slide for Emergency
+                </Text>
+              </View>
+              <View style={sliderStyle.sliderReal}></View>
+            </View>
             <Slider
               style={Styles.switch}
               step={1}
               thumbTintColor="#DC2237"
               minimumTrackTintColor="#DC2237"
               minimumValue={0}
-              maximumValue={1}
-              onSlidingComplete={this.Emergency}
+              maximumValue={50}
+              value={this.state.slideValue}
+              onValueChange={this.Emergency}
+              onSlidingComplete={this.slideReset}
+              maximumTrackTintColor="transparent"
+              minimumTrackTintColor="transparent"
             ></Slider>
           </View>
         </>
