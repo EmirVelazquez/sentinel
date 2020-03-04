@@ -13,16 +13,17 @@ class SignUp extends ValidationComponent {
   constructor(props) {
     super(props);
     // Retrieving input data
-    state = {
+    this.state = {
       signUpFName: "",
       signUpLName: "",
       signUpEmail: "",
       signUpPassword: "",
       hidePassword: true,
+      // For form validation
       signUpFNameInput: true,
       signUpLNameInput: true,
-      signUpEmail: true,
-      signUpPassword: true
+      signUpEmailInput: true,
+      signUpPasswordInput: true
     }
   }
 
@@ -115,22 +116,27 @@ class SignUp extends ValidationComponent {
 
   // Form submit
   handleFormSubmit = _ => {
-
+    console.log(this.state);
     // Logic for Authentication of characters
     //=========================================================
     // validate isn't working for blank fields on this page for some reason
     // it worked fine on home.jsx, this is the workaround:
     if (this.state.signUpFName === undefined || this.state.signUpLName === undefined || this.state.signUpEmail === undefined || this.state.signUpPassword === undefined) {
-      console.log('All fields are required.')
-      // notify to fill in all fields
-      this.setState({
-        signUpFNameInput: false,
-        signUpLNameInput: false,
-        signUpEmail: false,
-        signUpPassword: false
-      })
+      if (this.state.signUpFName === undefined) {
+        this.setState({ signUpFNameInput: false });
+      }
+      if (this.state.signUpLName === undefined) {
+        this.setState({ signUpLNameInput: false });
+      }
+      if (this.state.signUpEmail === undefined) {
+        this.setState({ signUpEmailInput: false });
+      }
+      if (this.state.signUpPassword === undefined) {
+        this.setState({ signUpPasswordInput: false });
+      }
     }
     else {
+      // Validating the form entries
       this.validate({
         signUpFName: { minlength: 2, maxlength: 16, required: true },
         signUpLName: { minlength: 2, maxlength: 16, required: true },
@@ -144,7 +150,7 @@ class SignUp extends ValidationComponent {
         // Stores email in asyncstorage
         this.storeEmail();
       }
-      // Form validation
+      // Form validation response
       else {
         const fieldArray = ['signUpFName', 'signUpLName', 'signUpEmail', 'signUpPassword'];
         // Looping through fields to see which is invalid
@@ -194,7 +200,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            {this.state.signUpFNameInput ? (<Text style={Styles.inputText}>First Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Entry</Text>)}
+            {this.state.signUpFNameInput ? (<Text style={Styles.inputText}>First Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid First Name</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,
@@ -223,7 +229,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            {this.state.signUpLNameInput ? (<Text style={Styles.inputText}>Last Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Entry</Text>)}
+            {this.state.signUpLNameInput ? (<Text style={Styles.inputText}>Last Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Last Name</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,
@@ -253,7 +259,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            {this.state.emailInput ? (<Text style={Styles.inputText}>Email</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Email</Text>)}
+            {this.state.signUpEmailInput ? (<Text style={Styles.inputText}>Email</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Email</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,
@@ -285,7 +291,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 22
             }}
           >
-            {this.state.passwordInput ? (<Text style={Styles.inputText}>Password</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Password</Text>)}
+            {this.state.signUpPasswordInput ? (<Text style={Styles.inputText}>Password</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Password</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,

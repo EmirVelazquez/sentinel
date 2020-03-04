@@ -20,6 +20,7 @@ class Home extends ValidationComponent {
     password: "",
     hidePassword: true,
     loggedIn: false,
+    // For form validation
     count: 0,
     emailInput: true,
     passwordInput: true
@@ -115,14 +116,14 @@ class Home extends ValidationComponent {
     // Validating the form entries
     this.validate({
       email: { email: true, required: true },
-      password: { minlength: 3, maxlength: 24, required: true },
+      password: { minlength: 3, maxlength: 24, required: true }
     });
     // Form entries are all valid
     if (this.isFormValid()) {
       // Get token and send to map
       this.logIn();
     }
-    // Form validation
+    // Form validation response
     else {
       const fieldArray = ['email', 'password'];
       // Looping through fields to see which is invalid
