@@ -275,14 +275,15 @@ class MapLanding extends ValidationComponent {
   currentUserLocation = () => {
     console.log("User Wants to add a Waypoint");
     // Currently logging press until Cole Adds functionality - Emir
-    //DOES NOT WOR
+    //DOES NOT WORK ERROR THIS.STATE.USER NULL
+    console.log(this.state.user)
     this.setState({
-      //   region: {
-      //     latitude: this.state.user.coordinate.latitude,
-      //     longitude: this.state.user.coordinate.longitude,
-      //     latitudeDelta: 0.001,
-      //     longitudeDelta: 0.09
-      //   },
+      region: {
+        latitude: this.state.user.coordinate.latitude,
+        longitude: this.state.user.coordinate.longitude,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.09
+      },
       // NEED TO MOVE THIS TO CLEAR WAYPOINT BUTTON SEPERATE BUTTON
       waypoint: {
         coordinate: {}
@@ -373,10 +374,13 @@ class MapLanding extends ValidationComponent {
     });
     // Form entry is valid
     if (this.isFormValid()) {
-      this.setState({
+      this.setState(prevState => ({
         newGroupInput: true,
-        user: { groupName: this.state.newGroup }
-      });
+        user: {
+          ...prevState.user,
+          groupName: this.state.newGroup
+        }
+      }));
       this.setModalVisible(!this.state.modalVisible);
       console.log("Modal Closed");
     }
