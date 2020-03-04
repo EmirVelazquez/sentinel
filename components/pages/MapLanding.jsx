@@ -53,55 +53,54 @@ class MapLanding extends ValidationComponent {
       email: "",
       coordinate: {},
       pinColor: "#ff0000",
-      // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
-      groupName: "" // Using this to test when the user has not created a group - Emir
+      groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
     group: [
-      {
-        first_name: "Ricky",
-        last_name: "Bobby",
-        coordinate: {
-          longitude: -96.78,
-          latitude: 32.7844
-        },
-        pinColor: "#1F4CC6"
-      },
-      {
-        first_name: "Forrest",
-        last_name: "Gump",
-        coordinate: {
-          longitude: -96.8419,
-          latitude: 32.8173
-        },
-        pinColor: "#8D8C8C"
-      },
-      {
-        first_name: "Michael",
-        last_name: "Scott",
-        coordinate: {
-          longitude: -96.7812,
-          latitude: 32.8252
-        },
-        pinColor: "#7F1DE1"
-      },
-      {
-        first_name: "Luke",
-        last_name: "SkyWalker",
-        coordinate: {
-          longitude: -96.7912,
-          latitude: 32.8552
-        },
-        pinColor: "#E9058E"
-      },
-      {
-        first_name: "Rick",
-        last_name: "Astley",
-        coordinate: {
-          longitude: -96.7712,
-          latitude: 32.8152
-        },
-        pinColor: "#D74D00"
-      }
+      // {
+      //   first_name: "Ricky",
+      //   last_name: "Bobby",
+      //   coordinate: {
+      //     longitude: -96.78,
+      //     latitude: 32.7844
+      //   },
+      //   pinColor: "#1F4CC6"
+      // },
+      // {
+      //   first_name: "Forrest",
+      //   last_name: "Gump",
+      //   coordinate: {
+      //     longitude: -96.8419,
+      //     latitude: 32.8173
+      //   },
+      //   pinColor: "#8D8C8C"
+      // },
+      // {
+      //   first_name: "Michael",
+      //   last_name: "Scott",
+      //   coordinate: {
+      //     longitude: -96.7812,
+      //     latitude: 32.8252
+      //   },
+      //   pinColor: "#7F1DE1"
+      // },
+      // {
+      //   first_name: "Luke",
+      //   last_name: "SkyWalker",
+      //   coordinate: {
+      //     longitude: -96.7912,
+      //     latitude: 32.8552
+      //   },
+      //   pinColor: "#E9058E"
+      // },
+      // {
+      //   first_name: "Rick",
+      //   last_name: "Astley",
+      //   coordinate: {
+      //     longitude: -96.7712,
+      //     latitude: 32.8152
+      //   },
+      //   pinColor: "#D74D00"
+      // }
     ],
     waypoint: {
       name: "waypoint",
@@ -129,18 +128,20 @@ class MapLanding extends ValidationComponent {
       .then(res => {
         //this is calling the current logged in user
         //console.log(res.data);
-        //console.log(res.data.first_name)
-
+        // console.log("PARSED COORDINATE")
+        // console.log(JSON.parse(res.data.coordinate))
 
         this.setState(prevState => ({
           user: {
             ...prevState.user,
             first_name: res.data.first_name,
             last_name: res.data.last_name,
-            email: res.data.email
+            email: res.data.email,
+            coordinate: JSON.parse(res.data.coordinate)
           }
         }), () => {
-          //console.log(this.state.user)
+          console.log("line 143 with parsed coordinate")
+          console.log(this.state.user)
         });
 
 
@@ -151,7 +152,33 @@ class MapLanding extends ValidationComponent {
               res.data.GroupId
             )
             .then(res => {
-              //console.log("this is all the members in the group", res.data);
+
+              console.log("line 156")
+              console.log("this is all the members in the group", res.data);
+
+              //LOOPING THROUGH RES.DATA AND STRUCTURING EACH OBJECT
+              // const groupArray = res.data
+              // let member;
+              // for (var i = 0; i < groupArray.length; i++) {
+              //   member = {
+              //     first_name: groupArray[i].first_name,
+              //     last_name: groupArray[i].last_name,
+              //     coordinate: {
+              //       longitude: groupArray[i].long,
+              //       latitude: groupArray[i].lat
+              //     },
+              //     pinColor: groupArray[i].pinColor
+              //   }
+              //   //console.log(member)
+              // }
+              // this.setState(prevState => ({
+              //   ...prevState.group,
+              //   group: member
+              // }))
+              // console.log("THIS IS THE GROUP")
+              // console.log(this.state.group)
+
+
             })
         }
       });
@@ -181,6 +208,7 @@ class MapLanding extends ValidationComponent {
   // Google Maps Section (Use this section Cole...Please - Emir)
   //============================================================
   componentDidMount() {
+<<<<<<< HEAD
     // if (Platform.OS === "android" && !Constants.isDevice) {
     //   this.setState({
     //     errorMessage:
@@ -193,6 +221,19 @@ class MapLanding extends ValidationComponent {
     this.getEmail();
     //   console.log(this.state.user)
     // }
+=======
+    if (Platform.OS === "android" && !Constants.isDevice) {
+      this.setState({
+        errorMessage:
+          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+      });
+    } else {
+      // this is used to get the current location
+      this._getLocationAsync();
+      // this calls the asyncStorage function
+      this.getEmail();
+    }
+>>>>>>> 321714396246140c4cffc455d5e882f05a77e2ac
   }
 
   //getting the current location of the user
@@ -227,13 +268,9 @@ class MapLanding extends ValidationComponent {
     }), () => console.log(this.state.user));
 
     //UPDATING USER LOCATION
-    console.log(this.state.user.email,
-      location.coords.latitude,
-      location.coords.longitude)
     axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
       email: this.state.user.email,
-      lat: location.coords.latitude,
-      long: location.coords.longitude
+      coordinate: JSON.stringify({ latitude: location.coords.latitude, longitude: location.coords.longitude })
     }).then(res => console.log(res.data))
       .catch(err => console.log(err))
 
@@ -281,10 +318,6 @@ class MapLanding extends ValidationComponent {
       // Error retrieving data
     }
   };
-  // this calls the asyncStorage function
-  // componentDidMount() {
-  //   this.getEmail();
-  // }
   // Method for User to Request Group Member's Position on Map
   UserPress = (member) => {
     console.log("A User's location was requested");
@@ -369,7 +402,7 @@ class MapLanding extends ValidationComponent {
       newGroup: event.toLowerCase()
     });
     console.log("New Group Change: " + event);
-  };
+  }
   // New member modal submit
   handleFormSubmit = () => {
     // Validating the form entries
@@ -415,7 +448,10 @@ class MapLanding extends ValidationComponent {
           ...prevState.user,
           groupName: this.state.newGroup
         }
-      }));
+      }), () => {
+        console.log("line 416")
+        console.log(this.state.user)
+      });
       this.setModalVisible(!this.state.modalVisible);
       console.log("Modal Closed");
     }
@@ -442,7 +478,11 @@ class MapLanding extends ValidationComponent {
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
   updateLandingPageMap = () => {
+<<<<<<< HEAD
     if (!this.state.user.groupName) {
+=======
+    if (this.state.user.groupNumber === "") {
+>>>>>>> 321714396246140c4cffc455d5e882f05a77e2ac
       return (
         // This is how we make a react native fragment <>
         <>
