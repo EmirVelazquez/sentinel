@@ -25,13 +25,16 @@ class MapLanding extends Component {
     newMemberFirstName: "",
     newMemberLastName: "",
     newMemberEmail: "",
+    newGroup: "",
+    modalVisible: false,
     modalVisible: false,
 
     user: {
       name: "User",
       coordinate: {},
       pinColor: "#ff0000",
-      groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
+      groupName: ""
+      // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
       // groupName: "", // Using this to test when the user has not created a group - Emir
     },
     group: [
@@ -201,6 +204,8 @@ class MapLanding extends Component {
   addGroupMember = () => {
     console.log("User Wants to add a group member... Opening Modal"); // Currently logging after press
     this.setModalVisible(!this.state.modalVisible);
+    console.log("modalVisible: " + this.state.modalVisible);
+    console.log("modalVisible:" + this.state.modalVisible);
     console.log("Modal Opened");
   };
   // Method For Slider When User Creates An Emergency Alert for Group
@@ -233,10 +238,23 @@ class MapLanding extends Component {
     });
     console.log("New Member Email Change: " + event);
   };
+  handleNewGroupChange = event => {
+    this.setState({
+      newGroup: event.toLowerCase()
+    });
+    console.log("New Group Change: " + event);
+  };
 
   handleFormSubmit = () => {
     // Add validation Logic
     this.setModalVisible(!this.state.modalVisible);
+    console.log("Modal Closed");
+  };
+
+  handleGroupFormSubmit = () => {
+    // Add validation Logic
+    this.setModalVisible(!this.state.modalVisible);
+    this.setState({ user: { groupName: this.state.newGroup } });
     console.log("Modal Closed");
   };
 
@@ -252,6 +270,66 @@ class MapLanding extends Component {
       return (
         // This is how we make a react native fragment <>
         <>
+          {/* ================================================================================================== */}
+
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.modalVisible}
+            presentationStyle="overFullScreen"
+            onRequestClose={() => {
+              this.setModalVisible(!this.state.modalVisible);
+              console.log("Modal Closed");
+            }}
+          >
+            <View style={Styles.modalContainerBackground}>
+              <View style={Styles.modalContainer}>
+                <Text style={Styles.header}>New Group</Text>
+                <View
+                  style={{
+                    height: 60,
+                    width: "115%",
+                    backgroundColor: "rgb(53,53,53)",
+                    color: "white",
+                    borderRadius: 5,
+                    alignSelf: "center",
+                    marginBottom: 10,
+                    marginTop: 10
+                  }}
+                >
+                  <Text style={Styles.inputText}>Group Name</Text>
+                  <TextInput
+                    name="newGroup"
+                    style={{
+                      marginLeft: 12,
+                      marginBottom: 16,
+                      fontSize: 18,
+                      color: "white",
+                      height: 30,
+                      width: "94%"
+                    }}
+                    onChangeText={this.handleNewGroupChange}
+                    newGroup={this.state.newGroup}
+                  ></TextInput>
+                </View>
+
+                <Button
+                  style={{
+                    height: 50,
+                    width: "115%",
+                    alignSelf: "center",
+                    borderRadius: 50,
+                    backgroundColor: "#1F4CC6",
+                    marginBottom: 50
+                  }}
+                  onPress={this.handleGroupFormSubmit}
+                >
+                  <Text style={Styles.buttonText}>Submit</Text>
+                </Button>
+              </View>
+            </View>
+          </Modal>
+          {/* ================================================================================================== */}
           <MapView
             style={Styles.userHasNoGroup}
             provider={PROVIDER_GOOGLE}
@@ -328,6 +406,117 @@ class MapLanding extends Component {
       return (
         // This is how we make a react native fragment <>
         <>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={this.state.modalVisible}
+            presentationStyle="overFullScreen"
+            onRequestClose={() => {
+              this.setModalVisible(!this.state.modalVisible);
+              console.log("Modal Closed");
+            }}
+          >
+            <View style={Styles.modalContainerBackground}>
+              <View style={Styles.modalContainer}>
+                <Text style={Styles.header}>New Member</Text>
+                <View
+                  style={{
+                    height: 60,
+                    width: "115%",
+                    backgroundColor: "rgb(53,53,53)",
+                    color: "white",
+                    borderRadius: 5,
+                    alignSelf: "center",
+                    marginBottom: 10,
+                    marginTop: 10
+                  }}
+                >
+                  <Text style={Styles.inputText}>First Name</Text>
+                  <TextInput
+                    name="newMemberFirstName"
+                    style={{
+                      marginLeft: 12,
+                      marginBottom: 16,
+                      fontSize: 18,
+                      color: "white",
+                      height: 30,
+                      width: "94%"
+                    }}
+                    onChangeText={this.handleNewMemberFirstNameChange}
+                    newMemberFirstName={this.state.newMemberFirstName}
+                    onSubmitEditing={() => this.newMemberLastName.focus()}
+                  ></TextInput>
+                </View>
+                <View
+                  style={{
+                    height: 60,
+                    width: "115%",
+                    backgroundColor: "rgb(53,53,53)",
+                    color: "white",
+                    borderRadius: 5,
+                    alignSelf: "center",
+                    marginBottom: 10
+                  }}
+                >
+                  <Text style={Styles.inputText}>Last Name</Text>
+                  <TextInput
+                    name="newMemberLastName"
+                    style={{
+                      marginLeft: 12,
+                      marginBottom: 16,
+                      fontSize: 18,
+                      color: "white",
+                      height: 30,
+                      width: "94%"
+                    }}
+                    onChangeText={this.handleNewMemberLastNameChange}
+                    newMemberLastName={this.state.newMemberLastName}
+                    onSubmitEditing={() => this.newMemberEmail.focus()}
+                  ></TextInput>
+                </View>
+                <View
+                  style={{
+                    height: 60,
+                    width: "115%",
+                    backgroundColor: "rgb(53,53,53)",
+                    color: "white",
+                    borderRadius: 5,
+                    alignSelf: "center",
+                    marginBottom: 10
+                  }}
+                >
+                  <Text style={Styles.inputText}>Email</Text>
+                  <TextInput
+                    name="newMemberEmail"
+                    style={{
+                      marginLeft: 12,
+                      marginBottom: 16,
+                      fontSize: 18,
+                      color: "white",
+                      height: 30,
+                      width: "94%"
+                    }}
+                    onChangeText={this.handleNewMemberEmailChange}
+                    newMemberEmail={this.state.newMemberEmail}
+                    keyboardType="email-address"
+                  ></TextInput>
+                </View>
+                <Button
+                  style={{
+                    height: 50,
+                    width: "115%",
+                    alignSelf: "center",
+                    borderRadius: 50,
+                    backgroundColor: "#1F4CC6",
+                    marginBottom: 50
+                  }}
+                  onPress={this.handleFormSubmit}
+                >
+                  <Text style={Styles.buttonText}>Submit</Text>
+                </Button>
+              </View>
+            </View>
+          </Modal>
           <MapView
             style={Styles.userHasGroup}
             provider={PROVIDER_GOOGLE}
@@ -537,117 +726,6 @@ class MapLanding extends Component {
 
     return (
       <View style={Styles.mapContainer}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.modalVisible}
-          presentationStyle="overFullScreen"
-          onRequestClose={() => {
-            this.setModalVisible(!this.state.modalVisible);
-            console.log("Modal Closed");
-          }}
-        >
-          <View style={Styles.modalContainerBackground}>
-            <View style={Styles.modalContainer}>
-              <Text style={Styles.header}>New Member</Text>
-              <View
-                style={{
-                  height: 60,
-                  width: "115%",
-                  backgroundColor: "rgb(53,53,53)",
-                  color: "white",
-                  borderRadius: 5,
-                  alignSelf: "center",
-                  marginBottom: 10,
-                  marginTop: 10
-                }}
-              >
-                <Text style={Styles.inputText}>First Name</Text>
-                <TextInput
-                  name="newMemberFirstName"
-                  style={{
-                    marginLeft: 12,
-                    marginBottom: 16,
-                    fontSize: 18,
-                    color: "white",
-                    height: 30,
-                    width: "94%"
-                  }}
-                  onChangeText={this.handleNewMemberFirstNameChange}
-                  newMemberFirstName={this.state.newMemberFirstName}
-                  onSubmitEditing={() => this.newMemberLastName.focus()}
-                ></TextInput>
-              </View>
-              <View
-                style={{
-                  height: 60,
-                  width: "115%",
-                  backgroundColor: "rgb(53,53,53)",
-                  color: "white",
-                  borderRadius: 5,
-                  alignSelf: "center",
-                  marginBottom: 10
-                }}
-              >
-                <Text style={Styles.inputText}>Last Name</Text>
-                <TextInput
-                  name="newMemberLastName"
-                  style={{
-                    marginLeft: 12,
-                    marginBottom: 16,
-                    fontSize: 18,
-                    color: "white",
-                    height: 30,
-                    width: "94%"
-                  }}
-                  onChangeText={this.handleNewMemberLastNameChange}
-                  newMemberLastName={this.state.newMemberLastName}
-                  onSubmitEditing={() => this.newMemberEmail.focus()}
-                ></TextInput>
-              </View>
-              <View
-                style={{
-                  height: 60,
-                  width: "115%",
-                  backgroundColor: "rgb(53,53,53)",
-                  color: "white",
-                  borderRadius: 5,
-                  alignSelf: "center",
-                  marginBottom: 10
-                }}
-              >
-                <Text style={Styles.inputText}>Email</Text>
-                <TextInput
-                  name="newMemberEmail"
-                  style={{
-                    marginLeft: 12,
-                    marginBottom: 16,
-                    fontSize: 18,
-                    color: "white",
-                    height: 30,
-                    width: "94%"
-                  }}
-                  onChangeText={this.handleNewMemberEmailChange}
-                  newMemberEmail={this.state.newMemberEmail}
-                  keyboardType="email-address"
-                ></TextInput>
-              </View>
-              <Button
-                style={{
-                  height: 50,
-                  width: "115%",
-                  alignSelf: "center",
-                  borderRadius: 50,
-                  backgroundColor: "#1F4CC6",
-                  marginBottom: 50
-                }}
-                onPress={this.handleFormSubmit}
-              >
-                <Text style={Styles.buttonText}>Submit</Text>
-              </Button>
-            </View>
-          </View>
-        </Modal>
         {/* This calls the method to render the layout based on group state */}
         <this.updateLandingPageMap />
       </View>

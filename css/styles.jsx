@@ -107,7 +107,7 @@ const Styles = {
     alignSelf: "center",
     backgroundColor: "#121212",
     // opacity: 1.5
-    borderRadius: 30
+    borderRadius: 10
   },
 
   modalContainerBackground: {
