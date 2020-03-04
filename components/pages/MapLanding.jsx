@@ -156,7 +156,12 @@ class MapLanding extends ValidationComponent {
 
               console.log("line 156")
               console.log("this is all the members in the group", res.data);
-              this.setState({ group: res.data })
+              var filteredGroup = res.data.filter((member) => {
+                return member.email !== this.state.user.email
+              })
+              console.log("THIS IS FILTERED GROUP")
+              console.log(filteredGroup)
+              this.setState({ group: filteredGroup })
 
             })
         }
@@ -296,14 +301,21 @@ class MapLanding extends ValidationComponent {
         longitude: this.state.user.coordinate.longitude,
         latitudeDelta: 0.001,
         longitudeDelta: 0.09
-      },
-      // NEED TO MOVE THIS TO CLEAR WAYPOINT BUTTON SEPERATE BUTTON USING SET STATE
-      waypoint: {
-        coordinate: {}
       }
     })
-
   };
+
+  removeWaypoint = () => {
+    this.setState({ waypoint: { coordinate: {} } })
+    this.setState({
+      region: {
+        latitude: this.state.waypoint.coordinate.latitude,
+        longitude: this.state.waypoint.coordinate.longitude,
+        latitudeDelta: .1,
+        longitudeDelta: 1
+      }
+    })
+  }
   // Method for user to add group member
   addGroupMember = () => {
     console.log("User Wants to add a group member... Opening Modal"); // Currently logging after press
@@ -608,7 +620,8 @@ class MapLanding extends ValidationComponent {
             strokeColor="red"
           />
         );
-      };
+      }
+
       //-----------------------------------------------------------------------------------
       //this is conditional for group markers
       let memberMarkers = null;
@@ -916,7 +929,7 @@ class MapLanding extends ValidationComponent {
                 shadowOffset: { width: 1, height: 5 },
                 justifyContent: "center"
               }}
-              onPress={this.currentUserLocation}
+              onPress={this.removeWaypoint}
             >
               <Image
                 source={require("../../assets/addWaypoint.png")}
@@ -961,7 +974,31 @@ class MapLanding extends ValidationComponent {
               snapToAlignment={"center"}
               decelerationRate={0}
             >
-
+              <TouchableOpacity
+                key="main user"
+                onPress={this.currentUserLocation}
+                style={Styles.users}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 50,
+                    alignSelf: "center",
+                    borderColor: `${this.state.user.pinColor}`, // Taking the color from the state - Emir
+                    borderWidth: 2,
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  {/* Taking the full name initials and setting inside circle - Emir */}
+                  <Text style={{ color: "#FFFFFF", textTransform: "capitalize" }}>
+                    {this.state.user.first_name.charAt(0)}
+                    {this.state.user.last_name.charAt(0)}
+                  </Text>
+                </View>
+                <Text style={Styles.userText}>{this.state.user.first_name}</Text>
+              </TouchableOpacity>
               {memberCircles}
 
             </ScrollView>
