@@ -29,13 +29,8 @@ class MapLanding extends Component {
     modalVisible: false,
     drawerOpen: false,
     user: {
-<<<<<<< HEAD
-      name: "User",
-      email: "",
-=======
       first_name: "Niki",
       last_name: "Lauda",
->>>>>>> 36f5d35f3632aae7fe1587af3ea59b7879988a45
       coordinate: {},
       pinColor: "#ff0000",
       groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
