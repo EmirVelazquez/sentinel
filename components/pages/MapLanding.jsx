@@ -121,16 +121,16 @@ class MapLanding extends ValidationComponent {
         //console.log(res.data.first_name)
 
 
-        // this.setState(prevState => ({
-        //   user: {
-        //     ...prevState.user,
-        //     first_name: res.data.first_name,
-        //     last_name: res.data.last_name,
-        //     email: res.data.email
-        //   }
-        // }), () => {
-        //   //console.log(this.state.user)
-        // });
+        this.setState(prevState => ({
+          user: {
+            ...prevState.user,
+            first_name: res.data.first_name,
+            last_name: res.data.last_name,
+            email: res.data.email
+          }
+        }), () => {
+          //console.log(this.state.user)
+        });
 
 
         if (res.data.GroupId) {
@@ -275,13 +275,14 @@ class MapLanding extends ValidationComponent {
   currentUserLocation = () => {
     console.log("User Wants to add a Waypoint");
     // Currently logging press until Cole Adds functionality - Emir
+    //DOES NOT WOR
     this.setState({
-      region: {
-        latitude: this.state.user.coordinate.latitude,
-        longitude: this.state.user.coordinate.longitude,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.09
-      },
+      //   region: {
+      //     latitude: this.state.user.coordinate.latitude,
+      //     longitude: this.state.user.coordinate.longitude,
+      //     latitudeDelta: 0.001,
+      //     longitudeDelta: 0.09
+      //   },
       // NEED TO MOVE THIS TO CLEAR WAYPOINT BUTTON SEPERATE BUTTON
       waypoint: {
         coordinate: {}
