@@ -35,8 +35,7 @@ class MapLanding extends Component {
       coordinate: {},
       pinColor: "#ff0000",
       // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
-      groupName: "", // Using this to test when the user has not created a group - Emir
-
+      groupName: "" // Using this to test when the user has not created a group - Emir
     },
     group: [
       {
@@ -101,20 +100,25 @@ class MapLanding extends Component {
   //============================================================
   //this get the current user info from data base
   //========================================================
-  currentUser = (value) => {
+  currentUser = value => {
     console.log(value);
-    axios.get("https://sentinel-api.herokuapp.com/api/user/" + value)
+    axios
+      .get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
         //this is calling the current loged in user
         console.log(res.data);
         if (res.data.GroupId) {
-          axios.get("https://sentinel-api.herokuapp.com/api/user/group/" + res.data.GroupId)
+          axios
+            .get(
+              "https://sentinel-api.herokuapp.com/api/user/group/" +
+                res.data.GroupId
+            )
             .then(res => {
               console.log("this is all the members in the group", res.data);
-            })
+            });
         }
-      })
-  }
+      });
+  };
 
   //============================================================
 
@@ -192,7 +196,6 @@ class MapLanding extends Component {
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
-
       const value = await AsyncStorage.getItem("email");
       if (value !== null) {
         // We have data!!
@@ -281,11 +284,11 @@ class MapLanding extends Component {
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
-  };
-
-  closeModal = (visible) => {
-    this.setState({ modalVisible: !visible });
   }
+
+  closeModal = visible => {
+    this.setState({ modalVisible: !visible });
+  };
 
   //=========================================================
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
@@ -295,8 +298,8 @@ class MapLanding extends Component {
       return (
         // This is how we make a react native fragment <>
         <>
+          {/* New Group Modal */}
           {/* ================================================================================================== */}
-
           <Modal
             animationType="fade"
             transparent={true}
@@ -309,6 +312,30 @@ class MapLanding extends Component {
           >
             <View style={Styles.modalContainerBackground}>
               <View style={Styles.modalContainer}>
+                <TouchableOpacity
+                  style={{
+                    height: 20,
+                    width: 20,
+                    top: 10,
+                    left: "105%"
+                    // backgroundColor: "red"
+                  }}
+                  onPress={this.closeModal}
+                >
+                  <Image
+                    source={require("../../assets/closeNav.png")}
+                    style={{
+                      height: 20,
+                      width: 20
+
+                      // height: 20,
+                      // width: 20,
+                      // top: 10,
+                      // left: "105%",
+                      // backgroundColor: "white"
+                    }}
+                  />
+                </TouchableOpacity>
                 <Text style={Styles.header}>New Group</Text>
                 <View
                   style={{
@@ -355,6 +382,7 @@ class MapLanding extends Component {
             </View>
           </Modal>
           {/* ================================================================================================== */}
+
           <MapView
             style={Styles.userHasNoGroup}
             provider={PROVIDER_GOOGLE}
@@ -397,7 +425,11 @@ class MapLanding extends Component {
               onPress={this.toggleOpen}
             >
               <Image // Render Nav icon based on side drawer open state
-                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
+                source={
+                  this.state.drawerOpen
+                    ? require("../../assets/closeNav.png")
+                    : require("../../assets/openNav.png")
+                }
                 style={{
                   width: 22,
                   height: 16.2,
@@ -445,6 +477,30 @@ class MapLanding extends Component {
           >
             <View style={Styles.modalContainerBackground}>
               <View style={Styles.modalContainer}>
+                <TouchableOpacity
+                  style={{
+                    height: 20,
+                    width: 20,
+                    top: 10,
+                    left: "105%"
+                    // backgroundColor: "red"
+                  }}
+                  onPress={this.closeModal}
+                >
+                  <Image
+                    source={require("../../assets/closeNav.png")}
+                    style={{
+                      height: 20,
+                      width: 20
+
+                      // height: 20,
+                      // width: 20,
+                      // top: 10,
+                      // left: "105%",
+                      // backgroundColor: "white"
+                    }}
+                  />
+                </TouchableOpacity>
                 <Text style={Styles.header}>New Member</Text>
                 <View
                   style={{
@@ -609,7 +665,11 @@ class MapLanding extends Component {
               onPress={this.toggleOpen}
             >
               <Image // Render Nav icon based on side drawer open state
-                source={this.state.drawerOpen ? require("../../assets/closeNav.png") : require("../../assets/openNav.png")}
+                source={
+                  this.state.drawerOpen
+                    ? require("../../assets/closeNav.png")
+                    : require("../../assets/openNav.png")
+                }
                 style={{
                   width: 22,
                   height: 16.2,
@@ -764,236 +824,236 @@ class MapLanding extends Component {
 
 const mapTheme = [
   {
-    "elementType": "geometry",
-    "stylers": [
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#1d2c4d"
+        color: "#1d2c4d"
       }
     ]
   },
   {
-    "elementType": "labels.text.fill",
-    "stylers": [
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#8ec3b9"
+        color: "#8ec3b9"
       }
     ]
   },
   {
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "color": "#1a3646"
+        color: "#1a3646"
       }
     ]
   },
   {
-    "featureType": "administrative.country",
-    "elementType": "geometry.stroke",
-    "stylers": [
+    featureType: "administrative.country",
+    elementType: "geometry.stroke",
+    stylers: [
       {
-        "color": "#4b6878"
+        color: "#4b6878"
       }
     ]
   },
   {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "administrative.land_parcel",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#64779e"
+        color: "#64779e"
       }
     ]
   },
   {
-    "featureType": "administrative.province",
-    "elementType": "geometry.stroke",
-    "stylers": [
+    featureType: "administrative.province",
+    elementType: "geometry.stroke",
+    stylers: [
       {
-        "color": "#4b6878"
+        color: "#4b6878"
       }
     ]
   },
   {
-    "featureType": "landscape.man_made",
-    "elementType": "geometry.stroke",
-    "stylers": [
+    featureType: "landscape.man_made",
+    elementType: "geometry.stroke",
+    stylers: [
       {
-        "color": "#334e87"
+        color: "#334e87"
       }
     ]
   },
   {
-    "featureType": "landscape.natural",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "landscape.natural",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#023e58"
+        color: "#023e58"
       }
     ]
   },
   {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "poi",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#283d6a"
+        color: "#283d6a"
       }
     ]
   },
   {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "poi",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#6f9ba5"
+        color: "#6f9ba5"
       }
     ]
   },
   {
-    "featureType": "poi",
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    featureType: "poi",
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "color": "#1d2c4d"
+        color: "#1d2c4d"
       }
     ]
   },
   {
-    "featureType": "poi.park",
-    "elementType": "geometry.fill",
-    "stylers": [
+    featureType: "poi.park",
+    elementType: "geometry.fill",
+    stylers: [
       {
-        "color": "#023e58"
+        color: "#023e58"
       }
     ]
   },
   {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "poi.park",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#3C7680"
+        color: "#3C7680"
       }
     ]
   },
   {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#304a7d"
+        color: "#304a7d"
       }
     ]
   },
   {
-    "featureType": "road",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#98a5be"
+        color: "#98a5be"
       }
     ]
   },
   {
-    "featureType": "road",
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    featureType: "road",
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "color": "#1d2c4d"
+        color: "#1d2c4d"
       }
     ]
   },
   {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#2c6675"
+        color: "#2c6675"
       }
     ]
   },
   {
-    "featureType": "road.highway",
-    "elementType": "geometry.stroke",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "geometry.stroke",
+    stylers: [
       {
-        "color": "#255763"
+        color: "#255763"
       }
     ]
   },
   {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#b0d5ce"
+        color: "#b0d5ce"
       }
     ]
   },
   {
-    "featureType": "road.highway",
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "color": "#023e58"
+        color: "#023e58"
       }
     ]
   },
   {
-    "featureType": "transit",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "transit",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#98a5be"
+        color: "#98a5be"
       }
     ]
   },
   {
-    "featureType": "transit",
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    featureType: "transit",
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "color": "#1d2c4d"
+        color: "#1d2c4d"
       }
     ]
   },
   {
-    "featureType": "transit.line",
-    "elementType": "geometry.fill",
-    "stylers": [
+    featureType: "transit.line",
+    elementType: "geometry.fill",
+    stylers: [
       {
-        "color": "#283d6a"
+        color: "#283d6a"
       }
     ]
   },
   {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "transit.station",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#3a4762"
+        color: "#3a4762"
       }
     ]
   },
   {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#0e1626"
+        color: "#0e1626"
       }
     ]
   },
   {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "water",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#4e6d70"
+        color: "#4e6d70"
       }
     ]
   }
-]
+];
 
 export default MapLanding;
