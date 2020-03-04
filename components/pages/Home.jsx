@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, TextInput, AsyncStorage } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -11,6 +11,7 @@ import Logo from "../Logo";
 
 import Styles from "../../css/styles";
 import Separator from "../Separator";
+import LogoSecond from "../LogoSecond";
 
 class Home extends ValidationComponent {
   //Initializing state to capture input
@@ -18,7 +19,12 @@ class Home extends ValidationComponent {
     email: "",
     password: "",
     hidePassword: true,
-    loggedIn: false
+    loggedIn: false,
+    // For form validation
+    count: 0,
+    emailInput: true,
+    passwordInput: true
+
   };
 
   // AsyncStorage function to store current user infomation
@@ -37,7 +43,7 @@ class Home extends ValidationComponent {
   // Pull token from asyncstorage and decode - gets id and email
   getToken = _ => {
     AsyncStorage.getItem('jwt', (err, token) => {
-      if (!err) {
+      if (!err && token != null) {
         const key = 'secretkey';
         if (JWT.decode(token, key)) {
           this.setState({
@@ -49,8 +55,7 @@ class Home extends ValidationComponent {
         }
       }
       else {
-        console.log(err);
-        Actions.Home();
+        console.log("No token found");
       }
     });
   }
@@ -71,7 +76,7 @@ class Home extends ValidationComponent {
         }
         // Email doesn't exist or password is incorrect
         else {
-          // need to inform user / turn text red
+          // need to inform user 
         }
       })
       .catch(err => {
@@ -106,22 +111,32 @@ class Home extends ValidationComponent {
 
   // Form submit
   handleFormSubmit = _ => {
+    // State count used for logo conditional rendering
+    this.setState({ count: this.state.count + 1 });
+    // Validating the form entries
     this.validate({
       email: { email: true, required: true },
-      password: { minlength: 3, maxlength: 24, required: true },
+      password: { minlength: 3, maxlength: 24, required: true }
     });
+    // Form entries are all valid
     if (this.isFormValid()) {
       // Get token and send to map
       this.logIn();
     }
+    // Form validation response
     else {
-      console.log('Entries not valid:');
-      // form error styling below
       const fieldArray = ['email', 'password'];
+      // Looping through fields to see which is invalid
       fieldArray.map((field, i) => {
+        // If error, change text
         if (this.isFieldInError(field)) {
-          // displaying all invalid fields
-          console.log(field);
+          this.setState({ [field + 'Input']: false });
+        }
+        // No error, original text
+        else {
+          if (!this.isFieldInError(field)) {
+            this.setState({ [field + 'Input']: true });
+          }
         }
       });
     }
@@ -138,6 +153,7 @@ class Home extends ValidationComponent {
   //Routing
   //=========================================================
   goToSignUp = () => {
+    console.log('go to sign up');
     Actions.SignUp();
   };
   //=========================================================
@@ -150,7 +166,9 @@ class Home extends ValidationComponent {
     return (
       <ScrollView>
         <View style={Styles.container}>
-          <Logo />
+
+          {this.state.count ? (<LogoSecond />) : (<Logo />)}
+
 
           <Text style={Styles.header}>Sentinel</Text>
           <Text style={Styles.paragraph}>Please sign in to continue</Text>
@@ -169,7 +187,8 @@ class Home extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            <Text style={Styles.inputText}>Email</Text>
+
+            {this.state.emailInput ? (<Text style={Styles.inputText}>Email</Text>) : (<Text style={Styles.inputTextInvalid}>Email Incorrect</Text>)}
             <TextInput
               name="email"
               style={{
@@ -200,7 +219,8 @@ class Home extends ValidationComponent {
               position: "relative"
             }}
           >
-            <Text style={Styles.inputText}>Password</Text>
+
+            {this.state.passwordInput ? (<Text style={Styles.inputText}>Password</Text>) : (<Text style={Styles.inputTextInvalid}>Password Incorrect</Text>)}
             <TouchableOpacity
               onPress={this.goToForgotEmail}
               style={{
