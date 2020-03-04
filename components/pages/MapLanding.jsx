@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
-import MenuDrawer from "react-native-side-drawer";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
@@ -33,8 +32,8 @@ class MapLanding extends Component {
       last_name: "Lauda",
       coordinate: {},
       pinColor: "#ff0000",
-      groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
-      // groupName: "", // Using this to test when the user has not created a group - Emir
+      // groupName: "SMU Class" // Using this to test when the user has a created a group - Emir
+      groupName: "", // Using this to test when the user has not created a group - Emir
     },
     group: [
       {
@@ -270,40 +269,6 @@ class MapLanding extends Component {
     this.setState({ modalVisible: !visible });
   }
 
-  //=========================================================
-  // Side Drawer Methods
-  //=========================================================
-  toggleOpen = () => {
-    this.setState({ drawerOpen: !this.state.drawerOpen });
-  }
-
-  sideDrawerContents = () => {
-    return (
-      <View style={{ flex: 1, height: Dimensions.get("window").height, backgroundColor: "#000000", padding: "10%" }}>
-        <View style={{ width: "100%" }}>
-          <Image source={require("../../assets/iconLogo.png")} style={{ width: 60, height: 60, left: "70%" }} />
-        </View>
-        <Text style={{ color: "#FFFFFF", fontSize: 18 }}>Hello,</Text>
-        <Text style={{ color: "#FFFFFF", marginBottom: "20%", fontSize: 18 }}>{this.state.user.first_name} {this.state.user.last_name}</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/inboxInv.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Invites</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/memberIcon.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Manage Group</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/settingsCog.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Settings</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Image source={require("../../assets/logOut.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
-          <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16, color: "#1BCBC0" }}>Log Out</Text>
-        </View>
-      </View>
-    )
-  };
   //=========================================================
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
@@ -601,127 +566,119 @@ class MapLanding extends Component {
 
     return (
       <View style={Styles.mapContainer}>
-        <MenuDrawer // The side drawer has to hold every thing
-          open={this.state.drawerOpen} // Value toggling open and close of drawer (boolean)
-          drawerContent={this.sideDrawerContents()} // Displays JSX returned in the method
-          drawerPercentage={60} // Percentage of screensize the drawer will cover (0-100)
-          animationTime={250} // Value depicting the time (in ms) the menu will slide open & close
-          overlay={false} // When false the menu will push the background screen to the side
-          opacity={0.4}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={this.state.modalVisible}
-            presentationStyle="overFullScreen"
-            onRequestClose={() => {
-              this.setModalVisible(!this.state.modalVisible);
-              console.log("Modal Closed");
-            }}
-          >
-            <TouchableOpacity style={Styles.modalContainerBackground} onPress={this.closeModal}>
-              <View style={Styles.modalContainer}>
-                <Text style={Styles.header}>New Member</Text>
-                <View
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          presentationStyle="overFullScreen"
+          onRequestClose={() => {
+            this.setModalVisible(!this.state.modalVisible);
+            console.log("Modal Closed");
+          }}
+        >
+          <TouchableOpacity style={Styles.modalContainerBackground} onPress={this.closeModal}>
+            <View style={Styles.modalContainer}>
+              <Text style={Styles.header}>New Member</Text>
+              <View
+                style={{
+                  height: 60,
+                  width: "115%",
+                  backgroundColor: "rgb(53,53,53)",
+                  color: "white",
+                  borderRadius: 6,
+                  alignSelf: "center",
+                  marginBottom: 10,
+                  marginTop: 10
+                }}
+              >
+                <Text style={Styles.inputText}>First Name</Text>
+                <TextInput
+                  name="newMemberFirstName"
                   style={{
-                    height: 60,
-                    width: "115%",
-                    backgroundColor: "rgb(53,53,53)",
+                    marginLeft: 12,
+                    marginBottom: 16,
+                    fontSize: 18,
                     color: "white",
-                    borderRadius: 6,
-                    alignSelf: "center",
-                    marginBottom: 10,
-                    marginTop: 10
+                    height: 30,
+                    width: "94%"
                   }}
-                >
-                  <Text style={Styles.inputText}>First Name</Text>
-                  <TextInput
-                    name="newMemberFirstName"
-                    style={{
-                      marginLeft: 12,
-                      marginBottom: 16,
-                      fontSize: 18,
-                      color: "white",
-                      height: 30,
-                      width: "94%"
-                    }}
-                    onChangeText={this.handleNewMemberFirstNameChange}
-                    newMemberFirstName={this.state.newMemberFirstName}
-                    onSubmitEditing={() => this.newMemberLastName.focus()}
-                  ></TextInput>
-                </View>
-                <View
-                  style={{
-                    height: 60,
-                    width: "115%",
-                    backgroundColor: "rgb(53,53,53)",
-                    color: "white",
-                    borderRadius: 5,
-                    alignSelf: "center",
-                    marginBottom: 10
-                  }}
-                >
-                  <Text style={Styles.inputText}>Last Name</Text>
-                  <TextInput
-                    name="newMemberLastName"
-                    style={{
-                      marginLeft: 12,
-                      marginBottom: 16,
-                      fontSize: 18,
-                      color: "white",
-                      height: 30,
-                      width: "94%"
-                    }}
-                    onChangeText={this.handleNewMemberLastNameChange}
-                    newMemberLastName={this.state.newMemberLastName}
-                    onSubmitEditing={() => this.newMemberEmail.focus()}
-                  ></TextInput>
-                </View>
-                <View
-                  style={{
-                    height: 60,
-                    width: "115%",
-                    backgroundColor: "rgb(53,53,53)",
-                    color: "white",
-                    borderRadius: 5,
-                    alignSelf: "center",
-                    marginBottom: 10
-                  }}
-                >
-                  <Text style={Styles.inputText}>Email</Text>
-                  <TextInput
-                    name="newMemberEmail"
-                    style={{
-                      marginLeft: 12,
-                      marginBottom: 16,
-                      fontSize: 18,
-                      color: "white",
-                      height: 30,
-                      width: "94%"
-                    }}
-                    onChangeText={this.handleNewMemberEmailChange}
-                    newMemberEmail={this.state.newMemberEmail}
-                    keyboardType="email-address"
-                  ></TextInput>
-                </View>
-                <Button
-                  style={{
-                    height: 50,
-                    width: "115%",
-                    alignSelf: "center",
-                    borderRadius: 50,
-                    backgroundColor: "#1F4CC6",
-                    marginBottom: 50
-                  }}
-                  onPress={this.handleFormSubmit}
-                >
-                  <Text style={Styles.buttonText}>Submit</Text>
-                </Button>
+                  onChangeText={this.handleNewMemberFirstNameChange}
+                  newMemberFirstName={this.state.newMemberFirstName}
+                  onSubmitEditing={() => this.newMemberLastName.focus()}
+                ></TextInput>
               </View>
-            </TouchableOpacity>
-          </Modal>
-          {/* This calls the method to render the layout based on group state */}
-          <this.updateLandingPageMap />
-        </MenuDrawer>
+              <View
+                style={{
+                  height: 60,
+                  width: "115%",
+                  backgroundColor: "rgb(53,53,53)",
+                  color: "white",
+                  borderRadius: 5,
+                  alignSelf: "center",
+                  marginBottom: 10
+                }}
+              >
+                <Text style={Styles.inputText}>Last Name</Text>
+                <TextInput
+                  name="newMemberLastName"
+                  style={{
+                    marginLeft: 12,
+                    marginBottom: 16,
+                    fontSize: 18,
+                    color: "white",
+                    height: 30,
+                    width: "94%"
+                  }}
+                  onChangeText={this.handleNewMemberLastNameChange}
+                  newMemberLastName={this.state.newMemberLastName}
+                  onSubmitEditing={() => this.newMemberEmail.focus()}
+                ></TextInput>
+              </View>
+              <View
+                style={{
+                  height: 60,
+                  width: "115%",
+                  backgroundColor: "rgb(53,53,53)",
+                  color: "white",
+                  borderRadius: 5,
+                  alignSelf: "center",
+                  marginBottom: 10
+                }}
+              >
+                <Text style={Styles.inputText}>Email</Text>
+                <TextInput
+                  name="newMemberEmail"
+                  style={{
+                    marginLeft: 12,
+                    marginBottom: 16,
+                    fontSize: 18,
+                    color: "white",
+                    height: 30,
+                    width: "94%"
+                  }}
+                  onChangeText={this.handleNewMemberEmailChange}
+                  newMemberEmail={this.state.newMemberEmail}
+                  keyboardType="email-address"
+                ></TextInput>
+              </View>
+              <Button
+                style={{
+                  height: 50,
+                  width: "115%",
+                  alignSelf: "center",
+                  borderRadius: 50,
+                  backgroundColor: "#1F4CC6",
+                  marginBottom: 50
+                }}
+                onPress={this.handleFormSubmit}
+              >
+                <Text style={Styles.buttonText}>Submit</Text>
+              </Button>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+        {/* This calls the method to render the layout based on group state */}
+        <this.updateLandingPageMap />
       </View>
     );
   }
