@@ -201,7 +201,8 @@ const Styles = {
   userText: {
     textAlign: "center",
     color: "#8D8C8C",
-    marginTop: 10
+    marginTop: 10,
+    textTransform: "capitalize"
   }
 };
 export default Styles;

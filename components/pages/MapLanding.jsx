@@ -55,53 +55,53 @@ class MapLanding extends ValidationComponent {
       pinColor: "#ff0000",
       groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
-    group: [
-      // {
-      //   first_name: "Ricky",
-      //   last_name: "Bobby",
-      //   coordinate: {
-      //     longitude: -96.78,
-      //     latitude: 32.7844
-      //   },
-      //   pinColor: "#1F4CC6"
-      // },
-      // {
-      //   first_name: "Forrest",
-      //   last_name: "Gump",
-      //   coordinate: {
-      //     longitude: -96.8419,
-      //     latitude: 32.8173
-      //   },
-      //   pinColor: "#8D8C8C"
-      // },
-      // {
-      //   first_name: "Michael",
-      //   last_name: "Scott",
-      //   coordinate: {
-      //     longitude: -96.7812,
-      //     latitude: 32.8252
-      //   },
-      //   pinColor: "#7F1DE1"
-      // },
-      // {
-      //   first_name: "Luke",
-      //   last_name: "SkyWalker",
-      //   coordinate: {
-      //     longitude: -96.7912,
-      //     latitude: 32.8552
-      //   },
-      //   pinColor: "#E9058E"
-      // },
-      // {
-      //   first_name: "Rick",
-      //   last_name: "Astley",
-      //   coordinate: {
-      //     longitude: -96.7712,
-      //     latitude: 32.8152
-      //   },
-      //   pinColor: "#D74D00"
-      // }
-    ],
+    group: "",
+    // {
+    //   first_name: "Ricky",
+    //   last_name: "Bobby",
+    //   coordinate: {
+    //     longitude: -96.78,
+    //     latitude: 32.7844
+    //   },
+    //   pinColor: "#1F4CC6"
+    // },
+    // {
+    //   first_name: "Forrest",
+    //   last_name: "Gump",
+    //   coordinate: {
+    //     longitude: -96.8419,
+    //     latitude: 32.8173
+    //   },
+    //   pinColor: "#8D8C8C"
+    // },
+    // {
+    //   first_name: "Michael",
+    //   last_name: "Scott",
+    //   coordinate: {
+    //     longitude: -96.7812,
+    //     latitude: 32.8252
+    //   },
+    //   pinColor: "#7F1DE1"
+    // },
+    // {
+    //   first_name: "Luke",
+    //   last_name: "SkyWalker",
+    //   coordinate: {
+    //     longitude: -96.7912,
+    //     latitude: 32.8552
+    //   },
+    //   pinColor: "#E9058E"
+    // },
+    // {
+    //   first_name: "Rick",
+    //   last_name: "Astley",
+    //   coordinate: {
+    //     longitude: -96.7712,
+    //     latitude: 32.8152
+    //   },
+    //   pinColor: "#D74D00"
+    // }
+
     waypoint: {
       name: "waypoint",
       coordinate: {},
@@ -136,6 +136,7 @@ class MapLanding extends ValidationComponent {
             first_name: res.data.first_name,
             last_name: res.data.last_name,
             email: res.data.email,
+            groupNumber: res.data.GroupId,
             coordinate: JSON.parse(res.data.coordinate)
           }
         }), () => {
@@ -152,31 +153,10 @@ class MapLanding extends ValidationComponent {
             )
             .then(res => {
 
+
               console.log("line 156")
               console.log("this is all the members in the group", res.data);
-
-              //LOOPING THROUGH RES.DATA AND STRUCTURING EACH OBJECT
-              // const groupArray = res.data
-              // let member;
-              // for (var i = 0; i < groupArray.length; i++) {
-              //   member = {
-              //     first_name: groupArray[i].first_name,
-              //     last_name: groupArray[i].last_name,
-              //     coordinate: {
-              //       longitude: groupArray[i].long,
-              //       latitude: groupArray[i].lat
-              //     },
-              //     pinColor: groupArray[i].pinColor
-              //   }
-              //   //console.log(member)
-              // }
-              // this.setState(prevState => ({
-              //   ...prevState.group,
-              //   group: member
-              // }))
-              // console.log("THIS IS THE GROUP")
-              // console.log(this.state.group)
-
+              this.setState({ group: res.data })
 
             })
         }
@@ -626,6 +606,55 @@ class MapLanding extends ValidationComponent {
             strokeColor="red"
           />
         );
+      };
+      //-----------------------------------------------------------------------------------
+      //this is conditional for group markers
+      let memberMarkers = null;
+      let memberCircles = null;
+      if (this.state.group.length > 0) {
+        memberMarkers = (this.state.group.map((member, i) => {
+          return (
+            <MapView.Marker
+              title={member.first_name}
+              key={i}
+              coordinate={JSON.parse(member.coordinate)}
+              pinColor={member.pinColor}
+            />
+          )
+        })
+        )
+        memberCircles = (
+          this.state.group.map((member, i) => {
+            return (
+              <TouchableOpacity
+                key={i}
+                onPress={() => this.UserPress(member)}
+                style={Styles.users}
+              >
+                <View
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: 50,
+                    alignSelf: "center",
+                    borderColor: `${member.pinColor}`, // Taking the color from the state - Emir
+                    borderWidth: 2,
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  {/* Taking the full name initials and setting inside circle - Emir */}
+                  <Text style={{ color: "#FFFFFF", textTransform: "capitalize" }}>
+                    {member.first_name.charAt(0)}
+                    {member.last_name.charAt(0)}
+                  </Text>
+                </View>
+                <Text style={Styles.userText}>{member.first_name}</Text>
+              </TouchableOpacity>
+            );
+          })
+        )
+
       }
       const width = Dimensions.get("window").width;
       const sliderStyle = {
@@ -823,17 +852,7 @@ class MapLanding extends ValidationComponent {
             />
 
             {/* THIS IS THE GROUP MEMBERS MARKER */}
-            {this.state.group.map((member, i) => {
-              return (
-                <MapView.Marker
-                  title={member.first_name}
-                  key={i}
-                  coordinate={member.coordinate}
-                  pinColor={member.pinColor}
-                />
-              );
-            })}
-
+            {memberMarkers}
             {mapViewDirection}
           </MapView>
 
@@ -940,35 +959,9 @@ class MapLanding extends ValidationComponent {
               snapToAlignment={"center"}
               decelerationRate={0}
             >
-              {this.state.group.map((member, i) => {
-                return (
-                  <TouchableOpacity
-                    key={i}
-                    onPress={() => this.UserPress(member)}
-                    style={Styles.users}
-                  >
-                    <View
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: 50,
-                        alignSelf: "center",
-                        borderColor: `${member.pinColor}`, // Taking the color from the state - Emir
-                        borderWidth: 2,
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
-                      {/* Taking the full name initials and setting inside circle - Emir */}
-                      <Text style={{ color: "#FFFFFF" }}>
-                        {member.first_name.charAt(0)}
-                        {member.last_name.charAt(0)}
-                      </Text>
-                    </View>
-                    <Text style={Styles.userText}>{member.first_name}</Text>
-                  </TouchableOpacity>
-                );
-              })}
+
+              {memberCircles}
+
             </ScrollView>
             <View
               style={{
