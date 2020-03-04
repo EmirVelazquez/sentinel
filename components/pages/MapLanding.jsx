@@ -216,7 +216,9 @@ class MapLanding extends ValidationComponent {
     //UPDATING USER LOCATION
     axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
       email: this.state.user.email,
-      coordinate: JSON.stringify({ latitude: location.coords.latitude, longitude: location.coords.longitude })
+      coordinate: JSON.stringify({ latitude: location.coords.latitude, longitude: location.coords.longitude }),
+      lat: location.coords.latitude,
+      long: location.coords.longitude
     }).then(res => console.log(res.data))
       .catch(err => console.log(err))
 
@@ -269,8 +271,8 @@ class MapLanding extends ValidationComponent {
     //setting the state to the group member that is pressed
     this.setState({
       region: {
-        latitude: member.coordinate.latitude,
-        longitude: member.coordinate.longitude,
+        latitude: member.lat,
+        longitude: member.long,
         latitudeDelta: 0.001,
         longitudeDelta: 0.09
       }
