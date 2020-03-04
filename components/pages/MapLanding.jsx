@@ -181,18 +181,18 @@ class MapLanding extends ValidationComponent {
   // Google Maps Section (Use this section Cole...Please - Emir)
   //============================================================
   componentDidMount() {
-    if (Platform.OS === "android" && !Constants.isDevice) {
-      this.setState({
-        errorMessage:
-          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-      });
-    } else {
-      // this is used to get the current location
-      this._getLocationAsync();
-      // this calls the asyncStorage function
-      this.getEmail();
-      console.log(this.state.user)
-    }
+    // if (Platform.OS === "android" && !Constants.isDevice) {
+    //   this.setState({
+    //     errorMessage:
+    //       "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+    //   });
+    // } else {
+    //   // this is used to get the current location
+    this._getLocationAsync();
+    //   // this calls the asyncStorage function
+    this.getEmail();
+    //   console.log(this.state.user)
+    // }
   }
 
   //getting the current location of the user
