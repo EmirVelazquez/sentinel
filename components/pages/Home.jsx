@@ -117,24 +117,24 @@ class Home extends ValidationComponent {
       email: { email: true, required: true },
       password: { minlength: 3, maxlength: 24, required: true },
     });
+    // Form entries are all valid
     if (this.isFormValid()) {
       // Get token and send to map
       this.logIn();
     }
     // Form validation
     else {
-      console.log('Entries not valid:');
       const fieldArray = ['email', 'password'];
       // Looping through fields to see which is invalid
       fieldArray.map((field, i) => {
-        // If error 
+        // If error, change text
         if (this.isFieldInError(field)) {
-          this.setState({ [field + 'Input']: false })
+          this.setState({ [field + 'Input']: false });
         }
+        // No error, original text
         else {
-          // No error
           if (!this.isFieldInError(field)) {
-            this.setState({ [field + 'Input']: true })
+            this.setState({ [field + 'Input']: true });
           }
         }
       });

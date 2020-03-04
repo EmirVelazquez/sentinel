@@ -19,6 +19,10 @@ class SignUp extends ValidationComponent {
       signUpEmail: "",
       signUpPassword: "",
       hidePassword: true,
+      signUpFNameInput: true,
+      signUpLNameInput: true,
+      signUpEmail: true,
+      signUpPassword: true
     }
   }
 
@@ -119,6 +123,12 @@ class SignUp extends ValidationComponent {
     if (this.state.signUpFName === undefined || this.state.signUpLName === undefined || this.state.signUpEmail === undefined || this.state.signUpPassword === undefined) {
       console.log('All fields are required.')
       // notify to fill in all fields
+      this.setState({
+        signUpFNameInput: false,
+        signUpLNameInput: false,
+        signUpEmail: false,
+        signUpPassword: false
+      })
     }
     else {
       this.validate({
@@ -127,20 +137,27 @@ class SignUp extends ValidationComponent {
         signUpEmail: { email: true, required: true },
         signUpPassword: { minlength: 3, maxlength: 24, required: true },
       });
+      // Form entries are all valid
       if (this.isFormValid()) {
         // Add info to db, get token and store in asyncstorage
         this.signUp();
         // Stores email in asyncstorage
         this.storeEmail();
       }
+      // Form validation
       else {
-        console.log('Entries not valid:');
-        // form error styling below
         const fieldArray = ['signUpFName', 'signUpLName', 'signUpEmail', 'signUpPassword'];
+        // Looping through fields to see which is invalid
         fieldArray.map((field, i) => {
+          // If error, change text
           if (this.isFieldInError(field)) {
-            // displaying all invalid fields
-            console.log(field);
+            this.setState({ [field + 'Input']: false });
+          }
+          // No error, original text
+          else {
+            if (!this.isFieldInError(field)) {
+              this.setState({ [field + 'Input']: true });
+            }
           }
         });
       }
@@ -177,7 +194,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            <Text style={Styles.inputText}>First Name</Text>
+            {this.state.signUpFNameInput ? (<Text style={Styles.inputText}>First Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Entry</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,
@@ -206,7 +223,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            <Text style={Styles.inputText}>Last Name</Text>
+            {this.state.signUpLNameInput ? (<Text style={Styles.inputText}>Last Name</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Entry</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,
@@ -236,7 +253,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 10
             }}
           >
-            <Text style={Styles.inputText}>Email</Text>
+            {this.state.emailInput ? (<Text style={Styles.inputText}>Email</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Email</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,
@@ -268,7 +285,7 @@ class SignUp extends ValidationComponent {
               marginBottom: 22
             }}
           >
-            <Text style={Styles.inputText}>Password</Text>
+            {this.state.passwordInput ? (<Text style={Styles.inputText}>Password</Text>) : (<Text style={Styles.inputTextInvalid}>Invalid Password</Text>)}
             <TextInput
               style={{
                 marginLeft: 12,
