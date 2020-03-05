@@ -4,6 +4,7 @@ import MapViewDirections from "react-native-maps-directions";
 import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView, Modal, TextInput } from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
+import * as Constants from 'expo';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
@@ -109,12 +110,11 @@ class MapLanding extends ValidationComponent {
   //this get the current user info from data base
   //========================================================
   currentUser = value => {
-    console.log("this is the email state", this.state.user.email);
     console.log(this.state.newGroup)
+    console.log("this is the email state", this.state.user.email);
     axios
       .get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
-        console.log('currentUser response line 117');
         //this is calling the current logged in user
         //console.log(res.data);
         // console.log("PARSED COORDINATE")
@@ -142,7 +142,9 @@ class MapLanding extends ValidationComponent {
               res.data.GroupId
             )
             .then(res => {
-              console.log("line 145")
+
+
+              console.log("line 156")
               console.log("this is all the members in the group", res.data);
               var filteredGroup = res.data.filter((member) => {
                 return member.email !== this.state.user.email
@@ -156,11 +158,34 @@ class MapLanding extends ValidationComponent {
       });
   };
 
+  // / function to create a new group
+  createGroup = () => {
+    axios.post("https://sentinel-api.herokuapp.com/api/group", {
+      name: this.state.newGroup
+    })
+      .then(res => {
+        // this.getEmail(value);
+        console.log("this is the res ", res)
+        // if (res.status === 200) {
+        axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
+
+          email: this.state.user.email,
+          GroupId: res.data.id
+        })
+        // }
+      })
+  }
+
   //============================================================
   // Google Maps Section (Use this section Cole...Please - Emir)
   //============================================================
   componentDidMount() {
-    console.log('componentDidMount line 163')
+    // if (Platform.OS === "android" && !Constants.isDevice) {
+    //   this.setState({
+    //     errorMessage:
+    //       "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+    //   });
+    // } else {
     // this is used to get the current location
     this._getLocationAsync();
     // this calls the asyncStorage function
@@ -243,7 +268,7 @@ class MapLanding extends ValidationComponent {
       if (value !== null) {
         // We have data!!
         // console.log(value);
-        this.setState({ user: { email: value } });
+        // this.setState({ user: { email: value } });
         this.currentUser(value);
       }
     } catch (error) {
@@ -287,7 +312,14 @@ class MapLanding extends ValidationComponent {
 
   removeWaypoint = () => {
     this.setState({ waypoint: { coordinate: {} } })
-
+    this.setState({
+      region: {
+        latitude: this.state.waypoint.coordinate.latitude,
+        longitude: this.state.waypoint.coordinate.longitude,
+        latitudeDelta: .1,
+        longitudeDelta: 1
+      }
+    })
   }
   // Method for user to add group member
   addGroupMember = () => {
@@ -385,6 +417,7 @@ class MapLanding extends ValidationComponent {
         console.log(this.state.user)
       });
       this.setModalVisible(!this.state.modalVisible);
+      this.createGroup();
       console.log("Modal Closed");
     }
     // Form entry is invalid
@@ -392,7 +425,7 @@ class MapLanding extends ValidationComponent {
       this.setState({ newGroupInput: false });
     }
   }
-  setModalVisible = visible => {
+  setModalVisible(visible) {
     this.setState({ modalVisible: visible });
 
   }
@@ -420,7 +453,7 @@ class MapLanding extends ValidationComponent {
   // Method Used to Change Layout Based on Group Existing (Use this section Justin...please - Emir)
   //=========================================================
   updateLandingPageMap = () => {
-    if (this.state.user.groupNumber === "") {
+    if (!this.state.user.groupNumber) {
       return (
         // This is how we make a react native fragment <>
         <>
@@ -584,10 +617,8 @@ class MapLanding extends ValidationComponent {
       // This is making the directions to the waypoint
       let mapViewDirection = null;
       if (
-        // this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
-        // this.state.waypoint.coordinate.hasOwnProperty("longitude")
-        this.state.waypoint.coordinate.latitude > 0 || this.state.waypoint.coordinate.latitude < 0 &&
-        this.state.waypoint.coordinate.longitude > 0 || this.state.waypoint.coordinate.longitude < 0
+        this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
+        this.state.waypoint.coordinate.hasOwnProperty("longitude")
       ) {
         mapViewDirection = (
           <MapViewDirections
@@ -971,8 +1002,8 @@ class MapLanding extends ValidationComponent {
                 >
                   {/* Taking the full name initials and setting inside circle - Emir */}
                   <Text style={{ color: "#FFFFFF", textTransform: "capitalize" }}>
-                    {this.state.user.first_name.charAt(0)}
-                    {this.state.user.last_name.charAt(0)}
+                    {/* {this.state.user.first_name.charAt(0)}
+                    {this.state.user.last_name.charAt(0)} */}
                   </Text>
                 </View>
                 <Text style={Styles.userText}>{this.state.user.first_name}</Text>
