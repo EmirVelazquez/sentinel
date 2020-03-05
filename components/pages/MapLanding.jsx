@@ -1066,6 +1066,7 @@ class MapLanding extends ValidationComponent {
         onChange={(isOpen) => this.updateMenuState(isOpen)}
         menuPosition={"left"}
         disableGestures={true}
+        openMenuOffset={Dimensions.get("window").width / 2}
       >
         <View style={Styles.mapContainer}>
           {/* This calls the method to render the layout based on group state */}
