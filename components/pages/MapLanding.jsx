@@ -114,6 +114,7 @@ class MapLanding extends ValidationComponent {
     axios
       .get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
+        console.log('currentUser response line 117');
         //this is calling the current logged in user
         //console.log(res.data);
         // console.log("PARSED COORDINATE")
@@ -141,9 +142,7 @@ class MapLanding extends ValidationComponent {
               res.data.GroupId
             )
             .then(res => {
-
-
-              console.log("line 156")
+              console.log("line 145")
               console.log("this is all the members in the group", res.data);
               var filteredGroup = res.data.filter((member) => {
                 return member.email !== this.state.user.email
@@ -161,17 +160,20 @@ class MapLanding extends ValidationComponent {
   // Google Maps Section (Use this section Cole...Please - Emir)
   //============================================================
   componentDidMount() {
-    if (Platform.OS === "android" && !Constants.isDevice) {
-      this.setState({
-        errorMessage:
-          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-      });
-    } else {
-      // this is used to get the current location
-      this._getLocationAsync();
-      // this calls the asyncStorage function
-      this.getEmail();
-    }
+    console.log('componentDidMount line 163')
+    // if (Platform.OS === "android" && !Constants.isDevice) {
+    //   console.log('if 165 setting state errorMessage');
+    //   this.setState({
+    //     errorMessage:
+    //       "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
+    //   });
+    // } else {
+    //   console.log('else 171 so far so good')
+    // this is used to get the current location
+    this._getLocationAsync();
+    // this calls the asyncStorage function
+    this.getEmail();
+    // }
   }
 
   //getting the current location of the user
@@ -404,7 +406,7 @@ class MapLanding extends ValidationComponent {
       this.setState({ newGroupInput: false });
     }
   }
-  setModalVisible(visible) {
+  setModalVisible = visible => {
     this.setState({ modalVisible: visible });
 
   }
