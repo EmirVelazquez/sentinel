@@ -418,6 +418,7 @@ class MapLanding extends ValidationComponent {
       });
       this.setModalVisible(!this.state.modalVisible);
       this.createGroup();
+      this.getEmail();
       console.log("Modal Closed");
     }
     // Form entry is invalid
