@@ -4,12 +4,14 @@ import MapViewDirections from "react-native-maps-directions";
 import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView, Modal, TextInput } from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
+import * as Constants from 'expo';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
 import axios from "axios";
 import ValidationComponent from 'react-native-form-validator';
 import SideMenu from "react-native-side-menu";
+
 
 class MapLanding extends ValidationComponent {
   state = {
@@ -26,7 +28,6 @@ class MapLanding extends ValidationComponent {
     newMemberLastNameInput: true,
     newMemberEmailInput: true,
     newGroupInput: true,
-    // End form validation
 
     //Modal data
     modalVisible: false,
@@ -40,7 +41,7 @@ class MapLanding extends ValidationComponent {
       first_name: "",
       last_name: "",
       email: "",
-      coordinate: {},
+      coordinate: { latitude: 0, longitude: 0 },
       pinColor: "#ff0000",
       groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
@@ -93,10 +94,10 @@ class MapLanding extends ValidationComponent {
 
     waypoint: {
       name: "waypoint",
-      coordinate: {},
+      coordinate: { latitude: 0, longitude: 0 },
       pinColor: "#0000ff"
     },
-    location: {},
+    location: { latitude: 0, longitude: 0 },
     region: {
       latitude: 32.7473,
       longitude: -97.0945,
@@ -1063,7 +1064,6 @@ class MapLanding extends ValidationComponent {
         </View>
       </View>
     </>
-
     return (
       <SideMenu // Render the side drawer on MapLanding always
         menu={drawerItems}
@@ -1080,7 +1080,6 @@ class MapLanding extends ValidationComponent {
     );
   }
 }
-
 const darkModeMap = [
   {
     elementType: "geometry",
@@ -1314,5 +1313,4 @@ const darkModeMap = [
     ]
   }
 ];
-
 export default MapLanding;
