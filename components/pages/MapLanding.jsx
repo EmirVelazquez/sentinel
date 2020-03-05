@@ -755,12 +755,6 @@ class MapLanding extends ValidationComponent {
                     style={{
                       height: 20,
                       width: 20
-
-                      // height: 20,
-                      // width: 20,
-                      // top: 10,
-                      // left: "105%",
-                      // backgroundColor: "white"
                     }}
                   />
                 </TouchableOpacity>
@@ -959,7 +953,7 @@ class MapLanding extends ValidationComponent {
               onPress={this.removeWaypoint}
             >
               <Image
-                source={require("../../assets/addWaypoint.png")}
+                source={require("../../assets/removeWaypoint.png")}
                 style={{
                   width: 16,
                   height: 24,
@@ -1110,6 +1104,7 @@ class MapLanding extends ValidationComponent {
         onChange={(isOpen) => this.updateMenuState(isOpen)}
         menuPosition={"left"}
         disableGestures={true}
+        openMenuOffset={Dimensions.get("window").width / 2}
       >
         <View style={Styles.mapContainer}>
           {/* This calls the method to render the layout based on group state */}
