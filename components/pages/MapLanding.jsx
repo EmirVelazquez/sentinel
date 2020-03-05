@@ -176,6 +176,19 @@ class MapLanding extends ValidationComponent {
       })
   }
 
+  ///===========================================================
+  //   add new member to group
+
+  addMember = () => {
+
+    let memberEmail = this.state.newMemberEmail.toLowerCase()
+    axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
+
+      email: memberEmail,
+      GroupId: this.state.user.groupNumber
+    })
+  }
+
   //============================================================
   // Google Maps Section (Use this section Cole...Please - Emir)
   //============================================================
@@ -378,6 +391,9 @@ class MapLanding extends ValidationComponent {
     // Form entries are valid
     if (this.isFormValid()) {
       this.setModalVisible(!this.state.modalVisible);
+      console.log("this is the new memeber email", this.state.newMemberEmail)
+      this.addMember()
+      this.getEmail()
       console.log("Modal Closed");
     }
     // Form validation response
