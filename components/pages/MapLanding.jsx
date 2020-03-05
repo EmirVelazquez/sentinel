@@ -754,12 +754,6 @@ class MapLanding extends ValidationComponent {
                     style={{
                       height: 20,
                       width: 20
-
-                      // height: 20,
-                      // width: 20,
-                      // top: 10,
-                      // left: "105%",
-                      // backgroundColor: "white"
                     }}
                   />
                 </TouchableOpacity>
@@ -958,7 +952,7 @@ class MapLanding extends ValidationComponent {
               onPress={this.removeWaypoint}
             >
               <Image
-                source={require("../../assets/addWaypoint.png")}
+                source={require("../../assets/removeWaypoint.png")}
                 style={{
                   width: 16,
                   height: 24,
@@ -1019,8 +1013,8 @@ class MapLanding extends ValidationComponent {
                 >
                   {/* Taking the full name initials and setting inside circle - Emir */}
                   <Text style={{ color: "#FFFFFF", textTransform: "capitalize" }}>
-                    {/* {this.state.user.first_name.charAt(0)}
-                    {this.state.user.last_name.charAt(0)} */}
+                    {this.state.user.first_name.charAt(0)}
+                    {this.state.user.last_name.charAt(0)}
                   </Text>
                 </View>
                 <Text style={Styles.userText}>{this.state.user.first_name}</Text>
