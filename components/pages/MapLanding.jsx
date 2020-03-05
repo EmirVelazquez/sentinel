@@ -285,14 +285,7 @@ class MapLanding extends ValidationComponent {
 
   removeWaypoint = () => {
     this.setState({ waypoint: { coordinate: {} } })
-    this.setState({
-      region: {
-        latitude: this.state.waypoint.coordinate.latitude,
-        longitude: this.state.waypoint.coordinate.longitude,
-        latitudeDelta: .1,
-        longitudeDelta: 1
-      }
-    })
+
   }
   // Method for user to add group member
   addGroupMember = () => {
@@ -589,8 +582,10 @@ class MapLanding extends ValidationComponent {
       // This is making the directions to the waypoint
       let mapViewDirection = null;
       if (
-        this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
-        this.state.waypoint.coordinate.hasOwnProperty("longitude")
+        // this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
+        // this.state.waypoint.coordinate.hasOwnProperty("longitude")
+        this.state.waypoint.coordinate.latitude > 0 || this.state.waypoint.coordinate.latitude < 0 &&
+        this.state.waypoint.coordinate.longitude > 0 || this.state.waypoint.coordinate.longitude < 0
       ) {
         mapViewDirection = (
           <MapViewDirections
