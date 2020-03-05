@@ -1315,8 +1315,4 @@ const darkModeMap = [
     ]
   }
 ];
-<<<<<<< HEAD
-
-=======
->>>>>>> 042c52c3a8e4a94ff967bc3703d27413a2c1c422
 export default MapLanding;
