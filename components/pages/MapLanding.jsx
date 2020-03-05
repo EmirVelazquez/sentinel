@@ -4,7 +4,6 @@ import MapViewDirections from "react-native-maps-directions";
 import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView, Modal, TextInput } from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
-import * as Constants from 'expo';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
@@ -41,7 +40,7 @@ class MapLanding extends ValidationComponent {
       first_name: "",
       last_name: "",
       email: "",
-      coordinate: { latitude: 0, longitude: 0 },
+      coordinate: { latitude: 0, longitude: 1 },
       pinColor: "#ff0000",
       groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
@@ -161,14 +160,6 @@ class MapLanding extends ValidationComponent {
   //============================================================
   componentDidMount() {
     console.log('componentDidMount line 163')
-    // if (Platform.OS === "android" && !Constants.isDevice) {
-    //   console.log('if 165 setting state errorMessage');
-    //   this.setState({
-    //     errorMessage:
-    //       "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-    //   });
-    // } else {
-    //   console.log('else 171 so far so good')
     // this is used to get the current location
     this._getLocationAsync();
     // this calls the asyncStorage function
