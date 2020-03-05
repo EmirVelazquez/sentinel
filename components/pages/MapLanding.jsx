@@ -4,7 +4,6 @@ import MapViewDirections from "react-native-maps-directions";
 import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView, Modal, TextInput } from "react-native";
 import Styles from "./../../css/styles";
 import Button from "apsl-react-native-button";
-import * as Constants from 'expo';
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
 import { GOOGLE_API_KEY } from "react-native-dotenv";
@@ -41,7 +40,7 @@ class MapLanding extends ValidationComponent {
       first_name: "",
       last_name: "",
       email: "",
-      coordinate: { latitude: 0, longitude: 0 },
+      coordinate: { latitude: 0, longitude: 1 },
       pinColor: "#ff0000",
       groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
@@ -114,6 +113,7 @@ class MapLanding extends ValidationComponent {
     axios
       .get("https://sentinel-api.herokuapp.com/api/user/" + value)
       .then(res => {
+        console.log('currentUser response line 117');
         //this is calling the current logged in user
         //console.log(res.data);
         // console.log("PARSED COORDINATE")
@@ -141,9 +141,7 @@ class MapLanding extends ValidationComponent {
               res.data.GroupId
             )
             .then(res => {
-
-
-              console.log("line 156")
+              console.log("line 145")
               console.log("this is all the members in the group", res.data);
               var filteredGroup = res.data.filter((member) => {
                 return member.email !== this.state.user.email
@@ -161,17 +159,12 @@ class MapLanding extends ValidationComponent {
   // Google Maps Section (Use this section Cole...Please - Emir)
   //============================================================
   componentDidMount() {
-    if (Platform.OS === "android" && !Constants.isDevice) {
-      this.setState({
-        errorMessage:
-          "Oops, this will not work on Sketch in an Android emulator. Try it on your device!"
-      });
-    } else {
-      // this is used to get the current location
-      this._getLocationAsync();
-      // this calls the asyncStorage function
-      this.getEmail();
-    }
+    console.log('componentDidMount line 163')
+    // this is used to get the current location
+    this._getLocationAsync();
+    // this calls the asyncStorage function
+    this.getEmail();
+    // }
   }
 
   //getting the current location of the user
@@ -397,7 +390,7 @@ class MapLanding extends ValidationComponent {
       this.setState({ newGroupInput: false });
     }
   }
-  setModalVisible(visible) {
+  setModalVisible = visible => {
     this.setState({ modalVisible: visible });
 
   }
