@@ -11,6 +11,7 @@ import { GOOGLE_API_KEY } from "react-native-dotenv";
 import axios from "axios";
 import ValidationComponent from 'react-native-form-validator';
 import SideMenu from "react-native-side-menu";
+import { Actions } from "react-native-router-flux";
 
 
 class MapLanding extends ValidationComponent {
@@ -274,6 +275,11 @@ class MapLanding extends ValidationComponent {
   //=========================================================
   // Methods Being Used For Client Side Requests
   //=========================================================
+  // Method to log the user out
+  logUserOut = () => {
+    AsyncStorage.clear();
+    Actions.home();
+  }
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
@@ -1090,10 +1096,12 @@ class MapLanding extends ValidationComponent {
           <Image source={require("../../assets/settingsCog.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
           <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Settings</Text>
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          onPress={this.logUserOut}
+          style={{ flexDirection: "row" }}>
           <Image source={require("../../assets/logOut.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
           <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16, color: "#1BCBC0" }}>Log Out</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </>
     return (
