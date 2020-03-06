@@ -1,4 +1,5 @@
 import React from "react";
+import { YellowBox } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { Text, View, Slider, TouchableOpacity, Dimensions, AsyncStorage, Image, ScrollView, Modal, TextInput } from "react-native";
@@ -13,6 +14,7 @@ import SideMenu from "react-native-side-menu";
 
 
 class MapLanding extends ValidationComponent {
+  // YellowBox.ignoreWarnings([]);
   state = {
     //Member Data
     newMemberFirstName: "",
