@@ -17,17 +17,17 @@ At first we thought this would be a great tool for parents to keep track of thei
 
 ### Technologies
 - Front End
-  1. React Native: Along with too many react native npm's to list
-  2. Figma: Wireframe and Design
-  3. Expo: Testing
-  4. Axios: Client Side Requests to database
-  5. JWT: Login Authorization
-  6. Google Developer Tools: Google Maps API
+  - React Native: Along with too many react native npm's to list
+  - Figma: Wireframe and Design
+  - Expo: Testing
+  - Axios: Client Side Requests to database
+  - JWT: Login Authorization
+  - Google Developer Tools: Google Maps API
 - Back End
-  1. Node.js: Server-side scripting
-  2. MySQL: Database
-  4. Sequelize: Promise-based ORM
-  3. Express: Framework used for Node.js
-  4. .ENV: Environment Variables
-  5. Axios: Handle requests from client side
-  6. BCrypt HASH: Password hashing
+  - Node.js: Server-side scripting
+  - MySQL: Database
+  - Sequelize: Promise-based ORM
+  - Express: Framework used for Node.js
+  - .ENV: Environment Variables
+  - Axios: Handle requests from client side
+  - BCrypt HASH: Password hashing
