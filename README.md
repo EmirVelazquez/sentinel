@@ -9,5 +9,3 @@ Sentinel is the solution to a problem all of us could relate with, which was the
 At first we thought this would be a great tool for parents to keep track of their children since most children have cell phones. Ultimately, our perspective changed when we realized the potential that the app could have with businesses as well. A company who has a fleet of vehicles with employees who drive around the city or states, can keep track of their vehicle locations. It can be used by anyone at a theme park, concert, and any place where there is potential of getting separated.
 <h3>Team</h3>
 - Emir Velazquez, Front End and App Design <a href="https://github.com/EmirVelazquez"><img src="assets/Social/gitHub.png" alt="GitHub Logo"></img></a>
-
-
