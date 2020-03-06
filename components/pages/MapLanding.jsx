@@ -13,7 +13,6 @@ import ValidationComponent from 'react-native-form-validator';
 import SideMenu from "react-native-side-menu";
 import { Actions } from "react-native-router-flux";
 
-
 class MapLanding extends ValidationComponent {
   state = {
     //Member Data
@@ -42,7 +41,7 @@ class MapLanding extends ValidationComponent {
       first_name: "",
       last_name: "",
       email: "",
-      coordinate: { latitude: 0, longitude: 1 },
+      coordinate: { latitude: 0, longitude: 0 },
       pinColor: "#ff0000",
       groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
@@ -641,8 +640,8 @@ class MapLanding extends ValidationComponent {
       // This is making the directions to the waypoint
       let mapViewDirection = null;
       if (
-        this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
-        this.state.waypoint.coordinate.hasOwnProperty("longitude")
+        this.state.waypoint.coordinate.latitude > 0 || this.state.waypoint.coordinate.latitude < 0 &&
+        this.state.waypoint.coordinate.longitude > 0 || this.state.waypoint.coordinate.longitude
       ) {
         mapViewDirection = (
           <MapViewDirections
