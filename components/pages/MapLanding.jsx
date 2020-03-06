@@ -186,7 +186,8 @@ class MapLanding extends ValidationComponent {
     axios.put("https://sentinel-api.herokuapp.com/api/user/group", {
 
       email: memberEmail,
-      GroupId: this.state.user.groupNumber
+      GroupId: this.state.user.groupNumber,
+      pinColor: '#7F7FD8',
     })
   }
 
@@ -563,7 +564,7 @@ class MapLanding extends ValidationComponent {
             provider={PROVIDER_GOOGLE}
             region={this.state.region}
             onPress={e => {
-              console.log(e.nativeEvent.coordinate);
+              console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!", e.nativeEvent.coordinate);
               this.setState({
                 waypoint: { coordinate: e.nativeEvent.coordinate }
               });
