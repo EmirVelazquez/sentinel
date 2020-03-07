@@ -74,7 +74,7 @@ const Styles = {
     marginLeft: 12,
     fontSize: 12,
     marginTop: 9,
-    color: "#DC143C",
+    color: "#DC2237",
     width: "50%" // This change may also help to not cover the Forgot button on the home page - Emir
   },
 
