@@ -11,7 +11,7 @@ import { GOOGLE_API_KEY } from "react-native-dotenv";
 import axios from "axios";
 import ValidationComponent from 'react-native-form-validator';
 import SideMenu from "react-native-side-menu";
-
+import { Actions } from "react-native-router-flux";
 
 class MapLanding extends ValidationComponent {
   state = {
@@ -41,7 +41,7 @@ class MapLanding extends ValidationComponent {
       first_name: "",
       last_name: "",
       email: "",
-      coordinate: { latitude: 0, longitude: 1 },
+      coordinate: { latitude: 0, longitude: 0 },
       pinColor: "#ff0000",
       groupNumber: "", // This is going to change display if a groupId exists for the user - Emir
     },
@@ -275,6 +275,11 @@ class MapLanding extends ValidationComponent {
   //=========================================================
   // Methods Being Used For Client Side Requests
   //=========================================================
+  // Method to log the user out
+  logUserOut = () => {
+    AsyncStorage.clear();
+    Actions.home();
+  }
   // Method to get email from sign up or log in page
   getEmail = async () => {
     try {
@@ -434,8 +439,8 @@ class MapLanding extends ValidationComponent {
         console.log(this.state.user)
       });
       this.setModalVisible(!this.state.modalVisible);
-      this.createGroup();
-      this.getEmail();
+      this.createGroup()
+      this.getEmail()
       console.log("Modal Closed");
     }
     // Form entry is invalid
@@ -635,8 +640,8 @@ class MapLanding extends ValidationComponent {
       // This is making the directions to the waypoint
       let mapViewDirection = null;
       if (
-        this.state.waypoint.coordinate.hasOwnProperty("latitude") &&
-        this.state.waypoint.coordinate.hasOwnProperty("longitude")
+        this.state.waypoint.coordinate.latitude > 0 || this.state.waypoint.coordinate.latitude < 0 &&
+        this.state.waypoint.coordinate.longitude > 0 || this.state.waypoint.coordinate.longitude
       ) {
         mapViewDirection = (
           <MapViewDirections
@@ -1091,10 +1096,12 @@ class MapLanding extends ValidationComponent {
           <Image source={require("../../assets/settingsCog.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
           <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16 }}>Settings</Text>
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          onPress={this.logUserOut}
+          style={{ flexDirection: "row" }}>
           <Image source={require("../../assets/logOut.png")} style={{ width: 15, height: 15, marginRight: "2%" }} />
           <Text style={{ color: "#FFFFFF", marginBottom: "10%", fontSize: 16, color: "#1BCBC0" }}>Log Out</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </>
     return (
