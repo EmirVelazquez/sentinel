@@ -189,7 +189,7 @@ const Styles = {
     position: "absolute",
     left: "5%",
     right: 0,
-    bottom: -15,
+    bottom: -10,
     borderRadius: 50,
     height: "20%"
   },
