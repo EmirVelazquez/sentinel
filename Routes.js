@@ -17,6 +17,7 @@ const Routes = () => (
       <Scene key="MapLanding" component={MapLanding} hideNavBar />
       <Scene key="ForgotEmail" component={ForgotEmail} hideNavBar />
       <Scene key="ForgotEmailSubmit" component={ForgotEmailSubmit} hideNavBar />
+      <Scene key="Settings" component={Settings} hideNavBar />
       {/* <Scene key="NewMember" component={NewMember} hideNavBar /> */}
     </Stack>
   </Router>
