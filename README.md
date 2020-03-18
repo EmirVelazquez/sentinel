@@ -18,8 +18,10 @@ At first we thought this would be a great tool for parents to keep track of thei
 ### Technologies
 - Front End
   - React Native: Along with too many react native npm's to list
-  - Figma: Wireframe and Design
-  - Expo: Testing
+  - JavaScript: Programming language used
+  - CSS: Used to style the React Native components
+  - Figma: Wireframe and Design of App
+  - Expo: App Testing with mobile phone and phone emulator
   - Axios: Client Side Requests to database
   - JWT: Login Authorization
   - Google Developer Tools: Google Maps API
@@ -27,7 +29,7 @@ At first we thought this would be a great tool for parents to keep track of thei
   - Node.js: Server-side scripting
   - MySQL: Database
   - Sequelize: Promise-based ORM
-  - Express: Framework used for Node.js
+  - Express.js: Framework used for Node.js
   - .ENV: Environment Variables
   - Axios: Handle requests from client side
   - BCrypt HASH: Password hashing
